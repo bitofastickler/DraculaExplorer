@@ -90,3 +90,61 @@ python app.py                                 # launches Gradio demo
 - Charts use **matplotlib only**.
 - Defaults are sane for a small corpus; tune topic count `n_topics`, cluster `k`, etc. in `scripts/generate_static_charts.py`.
 - Optional future: Sentence-Transformers + FAISS/Chroma for semantic retrieval; kept out of the core for simplicity.
+
+## Chapters
+
+1. **CHAPTER I — Jonathan Harker's Journal**  
+2. **CHAPTER II — Jonathan Harker's Journal**  
+3. **CHAPTER III — Jonathan Harker's Journal**  
+4. **CHAPTER IV — Jonathan Harker's Journal**  
+5. **CHAPTER V — Letters — Lucy and Mina** *(epistolary)*  
+6. **CHAPTER VI — Mina Murray's Journal**  
+7. **CHAPTER VII — Cutting from "The Dailygraph," 8 August** *(newspaper)*  
+8. **CHAPTER VIII — Mina Murray's Journal**  
+9. **CHAPTER IX — Mina Murray's Journal**  
+10. **CHAPTER X — Mina Murray's Journal**  
+11. **CHAPTER XI — Lucy Westenra's Diary**  
+12. **CHAPTER XII — Dr. Seward's Diary**  
+13. **CHAPTER XIII — Dr. Seward's Diary**  
+14. **CHAPTER XIV — Mina Harker's Journal**  
+15. **CHAPTER XV — Dr. Seward's Diary**  
+16. **CHAPTER XVI — Dr. Seward's Diary**  
+17. **CHAPTER XVII — Dr. Seward's Diary**  
+18. **CHAPTER XVIII — Dr. Seward's Diary**  
+19. **CHAPTER XIX — Jonathan Harker's Journal**  
+20. **CHAPTER XX — Jonathan Harker's Journal**  
+21. **CHAPTER XXI — Dr. Seward's Diary**  
+22. **CHAPTER XXII — Jonathan Harker's Journal**  
+23. **CHAPTER XXIII — Dr. Seward's Diary**  
+24. **CHAPTER XXIV — Dr. Seward's Phonograph Diary, spoken by Van Helsing** *(Van Helsing dictating)*  
+25. **CHAPTER XXV — Dr. Seward's Diary**  
+26. **CHAPTER XXVI — Dr. Seward's Diary**  
+27. **CHAPTER XXVII — Mina Harker's Journal**
+
+> **Narrator key:** Jonathan Harker, Mina Murray/Harker, Lucy Westenra, Dr. John Seward, Abraham Van Helsing (via Seward’s phonograph), plus ephemera (letters, newspaper cutting).
+
+---
+
+## Main Characters (quick reference)
+
+- **Count Dracula** — Ancient Transylvanian noble and vampire. Charismatic, predatory, a strategist who exploits modern logistics (steamships, rail) to expand his reach. Symbol of invasive, undead aristocracy.
+
+- **Jonathan Harker** — Young English solicitor. His travel diary (Ch. I–IV) is the reader’s first lens on Dracula’s castle and methods. Later becomes an active hunter; steady, precise, legal-minded.
+
+- **Mina Murray / Mina Harker** — Schoolteacher, later Jonathan’s wife. Organized, analytical, and emotionally resilient; her journals and typing/compilation literally hold the team’s evidence together. Moral center of the group.
+
+- **Lucy Westenra** — Mina’s close friend. Charming and kind, courted by three suitors. Her illness and transformation are the novel’s most immediate tragedy and motivate the hunters’ resolve.
+
+- **Dr. John Seward** — Physician who runs a London asylum; narrator for many middle chapters. Clinical observer whose diary/phonograph notes track Renfield and the medical fight to diagnose Lucy.
+
+- **Professor Abraham Van Helsing** — Dutch polymath physician and mentor to Seward. Combines science, folklore, and faith; coordinates the group’s tactics. Dictates one chapter’s notes to Seward’s phonograph.
+
+- **Arthur Holmwood (Lord Godalming)** — Lucy’s fiancé (later husband) and one of the hunters. Represents duty and sacrifice; funds and backs the group.
+
+- **Quincey P. Morris** — American adventurer and hunter. Practical, brave, and decisive; key actor in the final pursuit.
+
+- **R. M. Renfield** — Seward’s patient. His fixation on consuming life (flies → spiders → birds) mirrors Dracula’s predation. Acts as a tragic barometer for the Count’s proximity and influence.
+
+- **Mrs. Westenra** — Lucy’s mother; well-meaning but misinformed early on, which worsens Lucy’s condition.
+
+- **Sister Agatha & other minor figures** — Helpers who appear in hospital/rail/ship contexts; small but pivotal in the investigative chain.
