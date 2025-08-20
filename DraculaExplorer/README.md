@@ -1,3 +1,5 @@
+<img width="329" height="504" alt="image" src="https://github.com/user-attachments/assets/570ba84d-b9cb-4a11-812d-0acf2d7129f9" />
+
 # Dracula Explorer (in progress)
 
 Public-domain NLP/RAG mini-project exploring Bram Stoker's *Dracula*. This repo ships a clean JSON corpus
