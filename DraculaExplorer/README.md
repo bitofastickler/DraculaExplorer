@@ -4,10 +4,6 @@ Public-domain NLP/RAG mini-project exploring Bram Stoker's *Dracula*. This repo 
 (chapter titles + narrator attribution) and a tiny analysis stack (TF–IDF retrieval, topic modeling, clustering,
 and character co‑occurrence) with static README visuals **and** a lightweight Gradio demo.
 
-## Resume bullet (fits this scope)
-
-> **Dracula Explorer (in progress)**: Public-domain NLP/RAG project—parsed Dracula into a structured JSON corpus with chapter titles & narrator attribution; built TF-IDF retrieval, topic modeling (NMF), K-Means clustering, and character co-occurrence analysis with matplotlib visuals; lightweight demo via FastAPI/Gradio. (Python, pandas, spaCy, NLTK, scikit-learn, matplotlib; evaluating Sentence-Transformers + FAISS/Chroma).
-
 ---
 
 ## Repo layout
