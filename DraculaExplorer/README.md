@@ -38,7 +38,7 @@ python scripts/generate_static_charts.py      # writes PNGs to assets/charts
 python app.py                                 # launches Gradio demo
 ```
 
-## README visuals
+## Textual Analysis Visuals
 
 ### Topic prevalence across chapters
 ![Topic timeline](assets/charts/topic_timeline.png)
