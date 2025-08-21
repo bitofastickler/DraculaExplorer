@@ -48,25 +48,38 @@ def load_chunks(data_dir: str | Path) -> CorpusChunks:
 
 # Ranks entries and shows best chunks to avoid mixing chapters in top-k
 def build_entry_matrix(df, X):
-    # X is chunk-by-vocab (scipy csr). Collapse to entry level.
-    import numpy as np
-    entry_groups = df.groupby('entry_index').indices  # {entry_idx: [row_ids]}
-    entry_rows = []
+    """
+    Collapse chunk-level TF-IDF (X) to entry-level centroids.
+    Returns: (entry_X [n_entries x vocab], entry_meta list[dict], entry_groups dict[entry -> row_ids])
+    """
+    entry_groups = df.groupby("entry_index", sort=False).indices
+
+    rows_dense = []
     entry_meta = []
+
+    has_chap = "chapter_number" in df.columns
+    has_narr = "narrator" in df.columns
+    has_date = "date_iso" in df.columns
+    has_title = "section_title" in df.columns
+
     for eidx, rows in entry_groups.items():
-        sub = X[rows]
-        vec = sub.mean(axis=0)          # centroid per entry
-        entry_rows.append(vec)
-        # take first row’s metadata (chapter, narrator, date, etc.)
+        sub = X[rows]                                    # sparse
+        centroid = np.asarray(sub.mean(axis=0)).ravel()  # safe to dense
+        rows_dense.append(centroid)
+
         r0 = rows[0]
+        rec = df.iloc[r0]                                # pandas Series
+
         entry_meta.append({
-            'entry_index': int(df.iloc[r0].entry_index),
-            'chapter_number': int(df.iloc[r0].chapter_number),
-            'narrator': df.iloc[r0].narrator,
-            'date_iso': df.iloc[r0].date_iso,
-            'section_title': df.iloc[r0].section_title,
+            "entry_index": int(rec["entry_index"]),
+            "chapter_number": int(rec["chapter_number"]) if has_chap and pd.notna(rec["chapter_number"]) else None,
+            "narrator": rec["narrator"] if has_narr else None,
+            "date_iso": rec["date_iso"] if has_date else None,
+            # use Series.get(...) with default to avoid AttributeError/KeyError
+            "section_title": rec.get("section_title", None) if has_title else None,
         })
-    entry_X = np.vstack([v.A if hasattr(v, "A") else v.toarray() for v in entry_rows])
+
+    entry_X = np.vstack(rows_dense)
     return entry_X, entry_meta, entry_groups
 
 CANON = {
