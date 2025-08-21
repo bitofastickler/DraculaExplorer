@@ -12,8 +12,10 @@ import os, json, requests
 from pathlib import Path
 import numpy as np
 import pandas as pd
+import re
 from sklearn.feature_extraction.text import TfidfVectorizer
 from sklearn.metrics.pairwise import cosine_similarity
+
 
 @dataclass
 class CorpusChunks:
@@ -44,6 +46,53 @@ def load_chunks(data_dir: str | Path) -> CorpusChunks:
         return CorpusChunks(df[keep].copy())
     raise FileNotFoundError("Place dracula_ascii_rag.json OR dracula_corrected_entries.json under data/." )
 
+# Ranks entries and shows best chunks to avoid mixing chapters in top-k
+def build_entry_matrix(df, X):
+    # X is chunk-by-vocab (scipy csr). Collapse to entry level.
+    import numpy as np
+    entry_groups = df.groupby('entry_index').indices  # {entry_idx: [row_ids]}
+    entry_rows = []
+    entry_meta = []
+    for eidx, rows in entry_groups.items():
+        sub = X[rows]
+        vec = sub.mean(axis=0)          # centroid per entry
+        entry_rows.append(vec)
+        # take first row’s metadata (chapter, narrator, date, etc.)
+        r0 = rows[0]
+        entry_meta.append({
+            'entry_index': int(df.iloc[r0].entry_index),
+            'chapter_number': int(df.iloc[r0].chapter_number),
+            'narrator': df.iloc[r0].narrator,
+            'date_iso': df.iloc[r0].date_iso,
+            'section_title': df.iloc[r0].section_title,
+        })
+    entry_X = np.vstack([v.A if hasattr(v, "A") else v.toarray() for v in entry_rows])
+    return entry_X, entry_meta, entry_groups
+
+CANON = {
+    r'jon+?athan': 'Jonathan Harker',
+    r'\bmina\b': 'Mina Harker',
+    r'\blucy\b': 'Lucy Westenra',
+    r'seward|dr\.?\s*seward': 'Dr. John Seward',
+    r'van\s+helsing|helsing': 'Abraham Van Helsing',
+    r'arthur|holmwood|godalming': 'Arthur Holmwood',
+    r'\bquincey\b': 'Quincey Morris',
+    r'\brenfield\b': 'Renfield',
+    r'\bdracula\b': 'Count Dracula',
+}
+
+def extract_constraints(q: str):
+    ql = q.lower()
+    narrator = None
+    for pat, name in CANON.items():
+        if re.search(pat, ql):
+            narrator = name
+            break
+    first = bool(re.search(r'\b(first|opening|beginning|start)\b', ql))
+    m = re.search(r'\bchapter\s+(\d+)\b', ql)
+    chapter = int(m.group(1)) if m else None
+    return {'narrator': narrator, 'first': first, 'chapter': chapter}
+
 class TfIdfRetriever:
     def __init__(self, min_df=2, max_df=0.9, ngram_range=(1,2)):
         self.vec = TfidfVectorizer(lowercase=True, stop_words="english",
@@ -51,24 +100,66 @@ class TfIdfRetriever:
         self.X = None
         self.meta = None
         self._texts = None
+        # new:
+        self.entry_X = None
+        self.entry_meta = None
+        self.entry_groups = None
+        self.df = None
 
     def fit(self, corpus: CorpusChunks):
-        self._texts = corpus.df["text"].fillna("").tolist()
-        self.meta = corpus.df[["entry_index","chapter_number","narrator","date_iso"]].to_dict("records")
-        self.X = self.vec.fit_transform(self._texts)
+        self.df = corpus.df.reset_index(drop=True)
+        self._texts = self.df["text"].fillna("").tolist()
+        self.meta = self.df[["entry_index","chapter_number","narrator","date_iso"]].to_dict("records")
+        self.X = self.vec.fit_transform(self._texts)                 # chunk-level
+        # NEW: entry-level centroid matrix + metadata
+        self.entry_X, self.entry_meta, self.entry_groups = build_entry_matrix(self.df, self.X)
         return self
 
-    def search(self, query: str, topk: int = 5) -> List[Dict[str,Any]]:
-        qv = self.vec.transform([query])
-        sims = cosine_similarity(qv, self.X).ravel()
-        idx = np.argsort(-sims)[:topk]
-        out = []
-        for i in idx:
-            m = dict(self.meta[i])
-            m["score"] = float(sims[i])
-            m["text"] = self._texts[i]
-            out.append(m)
-        return out
+    # More sophisticated search with constraints - focuses on narrator, chapter, and keeps a sense of chronology
+    def search(self, query: str, topk: int = 5):
+        cons = extract_constraints(query)
+        qd = self.vec.transform([query]).toarray()                   # dense
+        sims = cosine_similarity(qd, self.entry_X).ravel()           # entry-level similarity
+
+        bonus = np.zeros_like(sims, dtype=float)
+
+        if cons['narrator']:
+            mask = np.array([m['narrator'] == cons['narrator'] for m in self.entry_meta])
+            if mask.sum() >= max(3, topk):   # allow soft filtering if we have enough matches
+                sims = sims * (mask.astype(float) * 0.6 + 0.4)   # bias toward narrator
+            bonus += np.where(mask, 0.25, 0.0)
+
+        if cons['chapter'] is not None:
+            mask = np.array([m['chapter_number'] == cons['chapter'] for m in self.entry_meta])
+            bonus += np.where(mask, 0.35, 0.0)
+
+        if cons['first']:
+            chapters = np.array([m['chapter_number'] if m['chapter_number'] is not None else 9999
+                                 for m in self.entry_meta], dtype=float)
+            if cons['narrator']:
+                mask = np.array([m['narrator'] == cons['narrator'] for m in self.entry_meta])
+            else:
+                mask = np.ones_like(chapters, dtype=bool)
+            # reward earlier chapters within masked set
+            masked = chapters.copy()
+            masked[~mask] = masked.max() + 10
+            rng = masked.max() - masked.min() + 1e-6
+            rank_bonus = (masked.max() - masked) / rng
+            bonus += 0.30 * rank_bonus
+
+        final = sims + bonus
+        order = np.argsort(-final)[:topk]
+
+        results = []
+        for i in order:
+            m = dict(self.entry_meta[i])
+            # representative chunk: first row for this entry
+            rows = list(self.entry_groups[m['entry_index']])
+            r0 = rows[0]
+            m["score"] = float(final[i])
+            m["text"] = self._texts[r0]          # preview
+            results.append(m)
+        return results
 
 def build_prompt(question: str, passages: List[Dict[str,Any]]) -> str:
     header = "You are a concise literary assistant. Use the CONTEXT from Bram Stoker's Dracula to answer the QUESTION.\n"
