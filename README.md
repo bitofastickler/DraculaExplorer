@@ -79,7 +79,7 @@ python app.py                                 # launches Gradio demo
 
 **What it is:** For each entry (our atomic unit), we detect which canonical character names appear, then count pairwise co‑mentions across entries.
 
-**How to read:** Darker cells mean two characters are frequently mentioned together.  
+**How to read:** Lighter cells mean two characters are frequently mentioned together.  
 **Caveat:** Simple name matching only (no coreference); pronouns aren’t resolved.
 
 **Why it matters:** Rough map of who tends to share scenes/plot beats.
