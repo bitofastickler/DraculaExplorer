@@ -50,11 +50,7 @@ DraculaExplorer/
 ```
 ## Data
 
-Put one of these in data/:
-
-dracula_corrected_entries.json – {"entries":[...]} with chapter_number, narrator, date_iso, text
-
-or dracula_ascii_rag.json – list of entries with the same fields
+dracula_ascii_rag.json – {"entries":[...]} with chapter_number, narrator, date_iso, text
 
 ## Setup
 
@@ -114,33 +110,6 @@ Evidence-first prompting: The model is asked to list short evidence bullets (wit
 
 <img width="1512" height="858" alt="image" src="https://github.com/user-attachments/assets/c464d919-de61-42a1-8d65-7af5242c3525" />
 
-## Data inputs
-
-Place **one** of the following into `data/`:
-
-- `dracula_corrected_entries.json` ({"entries": [...]} including chapter_number, narrator, text, date_iso)
-- or `dracula_ascii_rag.json` (array of chunks with `entry_index`, `chapter_number`, `narrator`, `text`, etc.)
-
-> For quick start, copy the files you generated earlier into `data/`.
-
-### Quickstart
-
-```bash
-# 0) Dependencies
-python -m pip install -r requirements.txt
-
-# 1) Make sure Ollama is installed & running (system app, not pip)
-#    Windows: winget install Ollama.Ollama
-#    macOS:   brew install ollama
-#    Then pull a small model once:
-ollama pull llama3.2:3b
-
-# 2) Health check (data + Ollama)
-python scripts/health_check.py
-
-# 3) Launch the chat UI
-python app_chatbot.py
-```
 
 ## Textual Analysis Visuals
 
