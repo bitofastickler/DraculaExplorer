@@ -45,6 +45,36 @@ def load_chunks(data_dir: str | Path) -> CorpusChunks:
             if k not in df.columns: df[k] = None
         return CorpusChunks(df[keep].copy())
     raise FileNotFoundError("Place dracula_ascii_rag.json OR dracula_corrected_entries.json under data/." )
+# --- context builders ---
+
+def collect_entry_text(df, groups, texts, entry_index, window=2, max_chars=2400):
+    """
+    Return a joined text for one entry, expanded with ±window neighboring entries
+    in chronological order. Truncated to max_chars.
+    """
+    # rows for this entry
+    center = list(groups[entry_index])
+    row = center[0]
+    # find neighboring rows within same narrator window (relaxed if missing)
+    narrator = df.iloc[row]["narrator"] if "narrator" in df.columns else None
+    lo = max(0, row - window)
+    hi = min(len(df) - 1, row + window)
+    rows = list(range(lo, hi + 1))
+    if narrator:
+        rows = [r for r in rows if df.iloc[r]["narrator"] == narrator]
+        if not rows:  # fallback if narrator filtering removed everything
+            rows = list(range(lo, hi + 1))
+    joined = "\n".join(texts[r] for r in rows)
+    return joined[:max_chars]
+
+def build_chapter_texts(df, texts):
+    """
+    Build {chapter_number -> full chapter text} and the group index.
+    """
+    chap_groups = df.groupby("chapter_number").indices
+    chap_texts = {int(ch): "\n".join(texts[i] for i in rows) for ch, rows in chap_groups.items()}
+    return chap_texts, chap_groups
+
 
 # Ranks entries and shows best chunks to avoid mixing chapters in top-k
 def build_entry_matrix(df, X):
@@ -113,19 +143,32 @@ class TfIdfRetriever:
         self.X = None
         self.meta = None
         self._texts = None
-        # new:
         self.entry_X = None
         self.entry_meta = None
         self.entry_groups = None
         self.df = None
+        # NEW: chapter-level index
+        self.chapter_texts = None
+        self.chapter_groups = None
+        self.chapter_X = None
+        self._chapter_ids = None
 
     def fit(self, corpus: CorpusChunks):
         self.df = corpus.df.reset_index(drop=True)
         self._texts = self.df["text"].fillna("").tolist()
         self.meta = self.df[["entry_index","chapter_number","narrator","date_iso"]].to_dict("records")
-        self.X = self.vec.fit_transform(self._texts)                 # chunk-level
-        # NEW: entry-level centroid matrix + metadata
+
+        # chunk TF-IDF
+        self.X = self.vec.fit_transform(self._texts)
+
+        # entry centroids
         self.entry_X, self.entry_meta, self.entry_groups = build_entry_matrix(self.df, self.X)
+
+        # NEW: chapter index (reuse same vocabulary)
+        self.chapter_texts, self.chapter_groups = build_chapter_texts(self.df, self._texts)
+        self._chapter_ids = sorted(self.chapter_texts.keys())
+        chap_inputs = [self.chapter_texts[ch] for ch in self._chapter_ids]
+        self.chapter_X = self.vec.transform(chap_inputs)
         return self
 
     # More sophisticated search with constraints - focuses on narrator, chapter, and keeps a sense of chronology
@@ -173,6 +216,25 @@ class TfIdfRetriever:
             m["text"] = self._texts[r0]          # preview
             results.append(m)
         return results
+    
+    # NEW: expose richer contexts for generation
+    def entry_context(self, entry_index, window=2, max_chars=2400):
+        return collect_entry_text(self.df, self.entry_groups, self._texts,
+                                  entry_index, window=window, max_chars=max_chars)
+
+    def top_chapter_contexts(self, query, topn=1, max_chars=2000):
+        q = self.vec.transform([query]).toarray()
+        sims = cosine_similarity(q, self.chapter_X).ravel()
+        order = sims.argsort()[::-1][:topn]
+        out = []
+        for oi in order:
+            ch = self._chapter_ids[oi]
+            out.append({
+                "chapter_number": ch,
+                "text": self.chapter_texts[ch][:max_chars],
+                "score": float(sims[oi]),
+            })
+        return out
 
 def build_prompt(question: str, passages: List[Dict[str,Any]]) -> str:
     header = "You are a concise literary assistant. Use the CONTEXT from Bram Stoker's Dracula to answer the QUESTION.\n"
