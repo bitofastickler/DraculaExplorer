@@ -10,16 +10,36 @@ and character co‑occurrence) with static README visuals **and** a lightweight 
 
 ## Repo layout
 ```
-/src
-  pipeline.py           # builds TF-IDF, topics, clusters, co-occurrence
-  visuals.py            # returns matplotlib Figures
-/scripts
-  generate_static_charts.py   # writes PNGs to assets/charts
-/assets/charts          # PNGs embedded below
-/data                   # place JSON here (see below)
-app.py                  # Gradio demo
-README.md
-requirements.txt
+DraculaExplorer/
+├─ assets/
+│ └─ charts/ # pre-generated figures embedded in README
+│ ├─ chapter_map.png
+│ ├─ chapter_similarity.png
+│ ├─ character_cooccurrence.png
+│ ├─ topic_terms_t0.png
+│ ├─ topic_timeline.png
+│ └─ README_charts.md # short explainer for the charts (optional)
+├─ data/
+│ └─ dracula_ascii_rag.json # structured corpus (entries with meta)
+├─ notebooks/
+│ └─ README.md # notes on exploratory notebooks (placeholder)
+├─ scripts/
+│ ├─ generate_static_charts.py # regenerates figures into assets/charts/
+│ └─ health_check.py # verifies data file + Ollama availability
+├─ src/
+│ ├─ init.py
+│ ├─ pipeline.py # TF-IDF, topics (NMF), clustering, similarity
+│ ├─ visuals.py # matplotlib plot helpers used by scripts/*
+│ ├─ rag.py # lightweight RAG backend (TF-IDF + Ollama/HF)
+│ └─ chatbot.py # chat wrapper over rag.py (history + prompt)
+├─ app.py # (optional) minimal viz/demo app
+├─ app_rag.py # one-shot Q&A UI (table of retrieved passages)
+├─ app_chatbot.py # chat UI with sources table (local Ollama)
+├─ demo_rag_cli.py # CLI: ask a question from the terminal
+├─ LICENSE
+├─ README_RAG.md # deeper RAG notes (optional)
+├─ README.md # main project README (this file)
+└─ requirements.txt # Python deps (pip)
 ```
 
 ## Data inputs
