@@ -8,12 +8,10 @@ Public-domain NLP/RAG mini-project exploring Bram Stoker’s Dracula. Ships a cl
 ## Features
 
   - Structured corpus of Dracula (entries with chapter_number, narrator, date_iso, text).
-  
   - Static visuals embedded in the README (topic timeline, chapter map/similarity, co-occurrence).
-  
   - RAG Q&A (table view) and Chatbot UI with citations and source table.
-  
   - Offline-first: works with small local models via Ollama (e.g., llama3.2:3b).
+  - Healthcheck python script to assist with set up and troubleshooting
 
 ```
 
@@ -59,16 +57,52 @@ dracula_corrected_entries.json – {"entries":[...]} with chapter_number, narrat
 or dracula_ascii_rag.json – list of entries with the same fields
 
 ## Setup
-python -m pip install -r requirements.txt
-# optional sanity check
-  python scripts/health_check.py
-  
-  
-  Ollama is a separate system app (not a pip package). Install it and pull a small model once:
-  
-  winget install Ollama.Ollama
-  ollama pull llama3.2:3b
 
+### 0) Prereqs
+- Python 3.10+ (Conda/Miniconda OK)
+- Git
+- Ollama (system app, not a Python package)
+
+### 1) Install Python deps
+```bash
+# from the repo root
+python -m pip install --upgrade pip
+python -m pip install -r requirements.txt
+```
+### 2) Install Olama and Pull a Small Model
+Windows (PowerShell)
+```bash
+winget install Ollama.Ollama
+ollama pull llama3.2:3b
+```
+
+macOS (Homebrew)
+```bash
+brew install ollama
+ollama pull llama3.2:3b
+```
+
+Linux
+```bash
+curl -fsSL https://ollama.com/install.sh | sh
+ollama pull llama3.2:3b
+```
+### 3) Sanity Check
+```bash
+python scripts/health_check.py
+# Expect:
+# [OK] Parsed data\...\(N records).
+# [OK] Ollama reachable.
+```
+### 4) Run
+Chatbot (local & offline via Ollama)
+```bash
+python app_chatbot.py
+```
+Q&A (table, no chat)
+```bash
+python app_rag.py
+```
 
 ## How the Chatbot Works (brief)
 
