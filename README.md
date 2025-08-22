@@ -1,15 +1,24 @@
 <img width="329" height="504" alt="image" src="https://github.com/user-attachments/assets/570ba84d-b9cb-4a11-812d-0acf2d7129f9" />
 
-# Dracula Explorer (in progress)
+# Dracula Explorer
 
-Public-domain NLP/RAG mini-project exploring Bram Stoker's *Dracula*. This repo ships a clean JSON corpus
-(chapter titles + narrator attribution) and a tiny analysis stack (TF–IDF retrieval, topic modeling, clustering,
-and character co‑occurrence) with static README visuals **and** a lightweight Gradio demo.
+Public-domain NLP/RAG mini-project exploring Bram Stoker’s Dracula. Ships a clean JSON corpus (chapter titles + narrator attribution), classic analysis (TF-IDF, topics, clustering, character co-occurrence) with static charts and a lightweight local, offline RAG chat agent powered by Ollama.
 
 ---
+## Features
+
+  - Structured corpus of Dracula (entries with chapter_number, narrator, date_iso, text).
+  
+  - Static visuals embedded in the README (topic timeline, chapter map/similarity, co-occurrence).
+  
+  - RAG Q&A (table view) and Chatbot UI with citations and source table.
+  
+  - Offline-first: works with small local models via Ollama (e.g., llama3.2:3b).
+
+```
 
 ## Repo layout
-```
+
 DraculaExplorer/
 ├─ assets/
 │ └─ charts/ # pre-generated figures embedded in README
@@ -41,6 +50,35 @@ DraculaExplorer/
 ├─ README.md # main project README (this file)
 └─ requirements.txt # Python deps (pip)
 ```
+## Data
+
+Put one of these in data/:
+
+dracula_corrected_entries.json – {"entries":[...]} with chapter_number, narrator, date_iso, text
+
+or dracula_ascii_rag.json – list of entries with the same fields
+
+## Setup
+python -m pip install -r requirements.txt
+# optional sanity check
+  python scripts/health_check.py
+  
+  
+  Ollama is a separate system app (not a pip package). Install it and pull a small model once:
+  
+  winget install Ollama.Ollama
+  ollama pull llama3.2:3b
+
+
+## How the Chatbot Works (brief)
+
+Entry-level retrieval: TF-IDF is computed over chunks, then collapsed to entry centroids, so we rank by entry (prevents mixing chapters).
+
+Soft constraints from the query: If you ask for “Jonathan’s first entry” or mention a chapter, the retriever adds a gentle bias toward that narrator/chapter and prefers earlier chapters for “first.”
+
+Evidence-first prompting: The model is asked to list short evidence bullets (with [1] cites) before composing the answer—reduces drift and keeps responses grounded.
+
+<img width="1512" height="858" alt="image" src="https://github.com/user-attachments/assets/c464d919-de61-42a1-8d65-7af5242c3525" />
 
 ## Data inputs
 
@@ -51,13 +89,23 @@ Place **one** of the following into `data/`:
 
 > For quick start, copy the files you generated earlier into `data/`.
 
-## Quick start
+### Quickstart
 
 ```bash
-python -m venv .venv && . .venv/bin/activate  # (Windows: .venv\Scripts\activate)
-pip install -r requirements.txt
-python scripts/generate_static_charts.py      # writes PNGs to assets/charts
-python app.py                                 # launches Gradio demo
+# 0) Dependencies
+python -m pip install -r requirements.txt
+
+# 1) Make sure Ollama is installed & running (system app, not pip)
+#    Windows: winget install Ollama.Ollama
+#    macOS:   brew install ollama
+#    Then pull a small model once:
+ollama pull llama3.2:3b
+
+# 2) Health check (data + Ollama)
+python scripts/health_check.py
+
+# 3) Launch the chat UI
+python app_chatbot.py
 ```
 
 ## Textual Analysis Visuals
