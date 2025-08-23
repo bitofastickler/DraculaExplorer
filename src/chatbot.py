@@ -9,12 +9,58 @@ from typing import List, Dict, Any, Optional, Tuple
 from pathlib import Path
 from .rag import load_chunks, TfIdfRetriever, generate_with_ollama, generate_with_hf, extract_constraints
 import numpy as np
-import re
+import re, json
 
 GLOBAL_PAT = re.compile(
     r"(lucy).*(vampir|bite|stake|bloofer|coffin|kill|slay)|"
     r"(van\s*helsing).*(kill|stake)|"
     r"(did|does)\s+dracula", re.I)
+
+def _coerce_json(s: str):
+    s = s.strip()
+    s = re.sub(r"^```(json)?\s*|\s*```$", "", s, flags=re.I)  # strip code fences
+    return json.loads(s)
+
+def _render_answer_first(struct, passages):
+    n = len(passages)
+    # collect clean evidence (2–4 items max)
+    ev = []
+    for item in struct.get("evidence", [])[:4]:
+        claim = (item.get("claim") or item.get("quote") or "").strip()
+        srcs  = [i for i in item.get("sources", []) if isinstance(i, int) and 1 <= i <= n]
+        if claim and srcs:
+            claim = re.sub(r"\s+", " ", claim).strip()[:240]
+            ev.append((claim, srcs))
+
+    ans = (struct.get("answer") or "").strip()
+    lines = []
+    if ans:
+        lines += [f"Answer: {ans}"]
+    if ev:
+        lines.append("Evidence:")
+        for claim, srcs in ev:
+            cites = "".join(f"[{i}]" for i in srcs)
+            lines.append(f"- {claim} {cites}")
+    return "\n".join(lines) if lines else "No supported answer found."
+
+def build_json_prompt(question, chat_context, passages):
+    n = len(passages)
+    head = (
+        "You are a concise assistant. Use ONLY the CONTEXT.\n"
+        "Return ONLY valid JSON (no markdown) with keys:\n"
+        '{"answer": str, "evidence": [{"claim": str, "sources": [int, ...]}]}\n'
+        "Requirements:\n"
+        "- 'answer': 1–3 sentences that directly answer the question, summary first.\n"
+        f"- Provide 2–4 evidence bullets. Each must include 'sources' integers in 1..{n} mapping to the CONTEXT blocks.\n"
+        "- Each claim ≤ 240 chars; quote or paraphrase is fine.\n"
+        "- Do NOT add extra keys or text outside JSON.\n"
+    )
+    convo = f"\n(Recent conversation for tone only):\n{chat_context}\n" if chat_context else ""
+    ctx = []
+    for j, p in enumerate(passages, 1):
+        meta = f"(entry {p.get('entry_index')} | ch {p.get('chapter_number')} | {p.get('narrator')} | {p.get('date_iso')})"
+        ctx.append(f"[{j}] {meta}\n{p['text']}")
+    return head + "\nCONTEXT:\n" + "\n\n".join(ctx) + f"\n\nQUESTION: {question}\nJSON:"
 
 def is_global_fact(q: str) -> bool:
     return bool(GLOBAL_PAT.search(q))
