@@ -32,24 +32,23 @@ def _coerce_json(s: str):
 
 def _render_answer_first(struct, passages):
     n = len(passages)
-    # collect clean evidence (2–4 items max)
+    seen = set()
     ev = []
-    for item in struct.get("evidence", [])[:4]:
+    for item in struct.get("evidence", [])[:6]:
         claim = (item.get("claim") or item.get("quote") or "").strip()
-        srcs  = [i for i in item.get("sources", []) if isinstance(i, int) and 1 <= i <= n]
-        if claim and srcs:
+        srcs  = tuple(i for i in item.get("sources", []) if isinstance(i, int) and 1 <= i <= n)
+        if claim and srcs and (claim, srcs) not in seen:
+            seen.add((claim, srcs))
             claim = re.sub(r"\s+", " ", claim).strip()[:240]
             ev.append((claim, srcs))
-
+        if len(ev) >= 3:  # show up to 3
+            break
     ans = (struct.get("answer") or "").strip()
-    lines = []
-    if ans:
-        lines += [f"Answer: {ans}"]
+    lines = [f"Answer: {ans}"] if ans else []
     if ev:
         lines.append("Evidence:")
         for claim, srcs in ev:
-            cites = "".join(f"[{i}]" for i in srcs)
-            lines.append(f"- {claim} {cites}")
+            lines.append(f"- {claim} " + "".join(f"[{i}]" for i in srcs))
     return "\n".join(lines) if lines else "No supported answer found."
 
 def build_json_prompt(question, chat_context, passages):
