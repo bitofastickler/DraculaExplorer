@@ -18,8 +18,17 @@ GLOBAL_PAT = re.compile(
 
 def _coerce_json(s: str):
     s = s.strip()
-    s = re.sub(r"^```(json)?\s*|\s*```$", "", s, flags=re.I)  # strip code fences
-    return json.loads(s)
+    s = re.sub(r"^```(json)?\s*|\s*```$", "", s, flags=re.I)
+    # try straight parse
+    try:
+        return json.loads(s)
+    except Exception:
+        pass
+    # fallback: extract first {...} block
+    m = re.search(r"\{.*\}", s, flags=re.S)
+    if m:
+        return json.loads(m.group(0))
+    raise
 
 def _render_answer_first(struct, passages):
     n = len(passages)
@@ -44,6 +53,12 @@ def _render_answer_first(struct, passages):
     return "\n".join(lines) if lines else "No supported answer found."
 
 def build_json_prompt(question, chat_context, passages):
+    if not passages:
+        # Degenerate prompt: tell the model to say it can't answer
+        return json.dumps({
+            "answer": "The provided context is empty, so I cannot answer.",
+            "evidence": []
+        })
     n = len(passages)
     head = (
         "You are a concise assistant. Use ONLY the CONTEXT.\n"
@@ -191,6 +206,13 @@ def ask_chat(question, state, topk=4, backend="ollama", model="llama3.2:3b", dat
                 "score": tc["score"],
             })
 
-    prompt = build_evidence_prompt(question, recent, passages)
-    text = generate_with_ollama(prompt, model=model) if backend == "ollama" else generate_with_hf(prompt, model_id=model)
+    prompt = build_json_prompt(question, recent, passages)
+    raw = generate_with_ollama(prompt, model=model) if backend == "ollama" else generate_with_hf(prompt, model_id=model)
+    try:
+        obj = _coerce_json(raw)
+        text = _render_answer_first(obj, passages)
+    except Exception:
+        # fallback: show raw if model returned non-JSON
+        text = raw
     return text, passages
+
