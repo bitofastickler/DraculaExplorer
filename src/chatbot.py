@@ -165,7 +165,7 @@ def ask_chat(
       1) Closed-book probe from model's native knowledge.
       2) Grounded verification with Dracula JSON (entry bundles + chapter snapshots).
     Renders: 'Answer: …' then 'Evidence:' bullets with [#] cites.
-    Adapts context size for larger models (e.g., gpt-oss:20b).
+    Also expands the retrieval query and softly reranks for Lucy+Dracula co-mentions.
     """
 
     import re, json
@@ -237,20 +237,45 @@ def ask_chat(
         proposed_answer, cb_conf, cb_need, cb_queries = None, 0.0, True, []
 
     # --- retrieval (Pass 2) ---
-    global_mode = is_global_fact(question)
 
-    # Build a retrieval query (optionally expanded with the probe's verify_queries)
-    expanded_q = question
-    if cb_queries:
-        expanded_q += " " + " ".join(cb_queries[:3])
+    # Simple query expansion to catch synonyms used in the book
+    LUCY_SYNS = "Lucy Westenra Miss Westenra Bloofer Lady"
+    DRAC_SYNS = "Dracula the Count Count"
+    VAMP_SYNS = "vampire vampiric bite blood garlic stake coffin tomb cemetery"
+    expanded_q = " ".join([question] + cb_queries[:3] + [LUCY_SYNS, DRAC_SYNS, VAMP_SYNS])
 
-    hits = retr.search(expanded_q, topk=max(topk, 6) if global_mode else topk)
+    global_mode = is_global_fact(question)  # your existing classifier
+    primary_topk = max(topk, 10) if global_mode else topk  # fish a bit wider for global facts
+    hits = retr.search(expanded_q, topk=primary_topk)
+
+    # Soft rerank: prefer bundles that co-mention Lucy & Dracula (not a hard filter)
+    LUCY_RE = re.compile(r"\b(lucy|miss\s+westenra|westenra|bloofer\s+lady)\b", re.I)
+    DRAC_RE = re.compile(r"\b(dracula|the\s+count|count)\b", re.I)
+    VAMP_RE = re.compile(r"\b(vampir\w*|bite\w*|fangs?|blood|garlic|stake\w*|coffin\w*|tomb|grave|cemetery)\b", re.I)
+
+    def _bonus_from_text(txt: str) -> float:
+        has_l = bool(LUCY_RE.search(txt))
+        has_d = bool(DRAC_RE.search(txt))
+        has_v = bool(VAMP_RE.search(txt))
+        bonus = 0.0
+        if has_l and has_d: bonus += 0.25
+        if has_v:           bonus += 0.10
+        if has_l ^ has_d:   bonus += 0.06  # only one mentioned
+        return bonus
+
+    # Precompute small bundles for reranking (cheap; we need them anyway)
+    decorated = []
+    for h in hits:
+        bundle_preview = retr.entry_context(h["entry_index"], window=2, max_chars=800)
+        decorated.append((h, h.get("score", 0.0) + _bonus_from_text(bundle_preview), bundle_preview))
+
+    decorated.sort(key=lambda t: t[1], reverse=True)
 
     passages: List[Dict[str, Any]] = []
     if global_mode:
         # A few distinct entry bundles across chapters (the arc)
         used_entries, used_chapters = set(), set()
-        for h in hits:
+        for h, _, preview in decorated:
             ch = h.get("chapter_number")
             if h["entry_index"] in used_entries or ch in used_chapters:
                 continue
@@ -277,7 +302,7 @@ def ask_chat(
                 "score": tc["score"],
             })
 
-        # Deterministic safety net: if question implies Lucy's fate, ensure Chapter 16 is present
+        # Deterministic safety net: ensure Chapter 16 for Lucy fate-style questions
         if re.search(r"\blucy\b.*\b(kill|stake|slay|bloofer)\b", question, re.I):
             have16 = any(p.get("chapter_number") == 16 for p in passages)
             if not have16:
@@ -295,8 +320,8 @@ def ask_chat(
 
     else:
         # Single best entry bundle + 1 chapter snapshot
-        if hits:
-            h0 = hits[0]
+        if decorated:
+            h0, _, _ = decorated[0]
             bundle = retr.entry_context(h0["entry_index"], window=2, max_chars=2000)
             passages.append({
                 "entry_index": h0["entry_index"],
@@ -350,5 +375,3 @@ def ask_chat(
         text = f"Answer: {proposed_answer or raw.strip()}"
 
     return text, passages
-
-
