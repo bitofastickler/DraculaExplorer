@@ -24,7 +24,7 @@ with gr.Blocks() as demo:
     gr.Markdown("# Dracula Chatbot — Local RAG (Ollama)")
     with gr.Row():
         topk = gr.Slider(1, 8, value=4, step=1, label="Top-k passages")
-        model = gr.Textbox(value="llama3.2:3b", label="Ollama model tag")
+        model = gr.Textbox(value="gpt-oss:20b", label="Ollama model tag")
     chat = gr.Chatbot(height=380)
     with gr.Row():
         msg = gr.Textbox(placeholder="Ask about Dracula…", scale=4)
