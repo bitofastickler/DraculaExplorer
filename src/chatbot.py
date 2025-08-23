@@ -61,29 +61,50 @@ def _render_answer_first(struct, passages):
     return "\n".join(lines) if lines else "No supported answer found."
 
 def build_json_prompt(question, chat_context, passages):
-    if not passages:
-        # Degenerate prompt: tell the model to say it can't answer
-        return json.dumps({
-            "answer": "The provided context is empty, so I cannot answer.",
-            "evidence": []
-        })
+    """
+    Ask the model for JSON ONLY:
+      { "answer": str, "evidence": [ { "claim": str, "sources": [int, ...] }, ... ] }
+    The UI will render: Answer first, then Evidence bullets with [#] cites.
+    """
     n = len(passages)
-    head = (
-        "You are a concise assistant. Use ONLY the CONTEXT.\n"
-        "Return ONLY valid JSON (no markdown) with keys:\n"
-        '{"answer": str, "evidence": [{"claim": str, "sources": [int, ...]}]}\n'
+    # Safety: if no passages, force a do-nothing JSON so caller can handle nicely.
+    if n == 0:
+        return (
+            '["answer": "Unknown based on the provided context.", "evidence": []]'
+        )
+
+    rules = (
+        "You are answering questions about Bram Stoker's Dracula using ONLY the provided CONTEXT.\n"
+        "Return JSON ONLY (no markdown, no prose before/after). Schema:\n"
+        '{ "answer": str, "evidence": [ { "claim": str, "sources": [int, ...] }, ... ] }\n'
         "Requirements:\n"
-        "- 'answer': 1–3 sentences that directly answer the question, summary first.\n"
-        f"- Provide 2–4 evidence bullets. Each must include 'sources' integers in 1..{n} mapping to the CONTEXT blocks.\n"
-        "- Each claim ≤ 240 chars; quote or paraphrase is fine.\n"
-        "- Do NOT add extra keys or text outside JSON.\n"
+        f"- sources are integers 1..{n} referring to the numbered CONTEXT blocks.\n"
+        "- answer: 1–3 sentences, summary first, directly answering the question.\n"
+        "- evidence: 2–4 items. Each item is ≤ 200 chars, either a short quote or precise paraphrase.\n"
+        "- Every evidence item MUST include at least one valid source id.\n"
+        "- If the context is insufficient, set answer to 'Unknown based on the provided context.' and return evidence: [].\n"
+        "- Prefer explicit, conclusive passages over hints. When multiple passages describe a sequence, summarize the outcome plainly.\n"
+        "- Do NOT invent details, dates, or actions not present in the CONTEXT.\n"
+        "- Output MUST be valid JSON. Do NOT wrap in ```json fences or add extra keys."
     )
-    convo = f"\n(Recent conversation for tone only):\n{chat_context}\n" if chat_context else ""
-    ctx = []
+
+    # Recent chat is tone only, never evidence. Keep short so we don't waste tokens.
+    convo = f"\n(Conversation context; NOT evidence):\n{chat_context}\n" if chat_context else ""
+
+    ctx_lines = []
     for j, p in enumerate(passages, 1):
         meta = f"(entry {p.get('entry_index')} | ch {p.get('chapter_number')} | {p.get('narrator')} | {p.get('date_iso')})"
-        ctx.append(f"[{j}] {meta}\n{p['text']}")
-    return head + "\nCONTEXT:\n" + "\n\n".join(ctx) + f"\n\nQUESTION: {question}\nJSON:"
+        # Keep context blocks compact; they’re numbered so the model can cite them.
+        ctx_lines.append(f"[{j}] {meta}\n{p['text']}")
+
+    ctx = "\n\n".join(ctx_lines)
+    return (
+        f"{rules}"
+        f"{convo}\n"
+        f"CONTEXT (numbered 1..{n}):\n{ctx}\n\n"
+        f"QUESTION: {question}\n"
+        "JSON:"
+    )
 
 def is_global_fact(q: str) -> bool:
     return bool(GLOBAL_PAT.search(q))
