@@ -182,54 +182,76 @@ def ask_chat(
     data_dir: str = "data",
 ):
     """
-    Hybrid QA:
-      1) Closed-book probe from model's native knowledge.
-      2) Grounded verification with Dracula JSON (entry bundles + chapter snapshots).
-    Renders: 'Answer: …' then 'Evidence:' bullets with [#] cites.
-    Also expands the retrieval query and softly reranks for Lucy+Dracula co-mentions.
+    Closed-book first, RAG second.
+
+    Step A (closed-book): Ask the model from its own knowledge and get {answer, confidence}.
+      - If confidence >= threshold and the user didn't request citations -> return immediately (no RAG).
+
+    Step B (grounded): Otherwise, retrieve from the Dracula JSON and answer with citations
+      (Answer → Evidence [#]) using your build_json_prompt.
     """
-
     import re, json
+    from typing import List, Dict, Any
 
-    CB_CONF_THRESH = 0.70  # require decent confidence before trusting the proposal
+    # -------- knobs --------
+    CB_CONF_THRESH = 0.70  # skip RAG when closed-book >= this (lower if you want more CB)
+    wants_sources = bool(re.search(r"\b(cite|citation|sources?|quote|chapter|where|passage|evidence)\b",
+                                   question, re.I))
 
-    # --- model-awareness for context sizing ---
+    # Model-aware context/temperature (helps larger local models like gpt-oss:20b)
     mlow = model.lower()
     is_large = any(tok in mlow for tok in ("20b", "13b", "12b", "9b", "8b", "7b"))
-    # global-mode knobs
-    bundle_window = 3 if is_large else 2       # ± entries per bundle
-    max_bundles   = 4 if is_large else 3       # number of entry bundles
-    chap_topn     = 2                           # chapter snapshots to add
-    bundle_chars  = 1300 if is_large else 1400  # per-bundle cap
-    chap_chars    = 1100 if is_large else 1200  # per-chapter cap
+    # retrieval bundle sizing
+    bundle_window = 3 if is_large else 2
+    max_bundles   = 4 if is_large else 3
+    chap_topn     = 2
+    bundle_chars  = 1300 if is_large else 1400
+    chap_chars    = 1100 if is_large else 1200
 
-    # --- small helpers ---
-
-    def _closed_book_prompt(q: str) -> str:
-        return (
-            "Answer from your general knowledge of Bram Stoker's *Dracula* only. "
-            "Do not assume any external context is available. "
-            "Return ONLY valid JSON:\n"
-            '{"answer": str, "confidence": float, "needs_context": bool, "verify_queries": [str, ...]}\n'
-            "Rules:\n"
-            "- confidence in [0,1]\n"
-            "- needs_context = true if you are not sure or think evidence would help\n"
-            "- verify_queries: 1–3 short phrases you would search for in the text (e.g., 'Lucy staking', 'Bloofer Lady', 'Chapter 16 tomb scene')\n"
-            f"QUESTION: {q}\nJSON:"
-        )
-
+    # -------- helpers --------
     def _gen(prompt_text: str) -> str:
-        # If your generate_with_ollama() supports options, pass them; else fall back.
         if backend == "ollama":
-            ollama_opts = {"num_ctx": 4096 if is_large else 3072, "temperature": 0.15}
+            opts = {"num_ctx": 4096 if is_large else 3072, "temperature": 0.15}
             try:
-                return generate_with_ollama(prompt_text, model=model, options=ollama_opts)  # type: ignore
+                return generate_with_ollama(prompt_text, model=model, options=opts)  # type: ignore[arg-type]
             except TypeError:
+                # older helper without options support
                 return generate_with_ollama(prompt_text, model=model)
         else:
             return generate_with_hf(prompt_text, model_id=model)
 
-    # function-attribute cache for retriever
+    def _closed_book_prompt(q: str) -> str:
+        return (
+            "Answer from your general knowledge of Bram Stoker's Dracula (no external text is provided). "
+            "Keep it concise (1–3 sentences). "
+            "Return JSON ONLY (no markdown): "
+            '{ "answer": str, "confidence": float } '
+            "Where confidence is in [0,1].\n"
+            f"QUESTION: {q}\nJSON:"
+        )
+
+    # -------- A) closed-book probe --------
+    recent = state.last_n_as_text(n_pairs=4, max_chars=1500)
+
+    proposed_answer, cb_conf = None, 0.0
+    try:
+        raw_cb = _gen(_closed_book_prompt(question))
+        obj_cb = _coerce_json(raw_cb)
+        proposed_answer = (obj_cb.get("answer") or "").strip()
+        cb_conf = float(obj_cb.get("confidence") or 0.0)
+    except Exception:
+        # If model returned non-JSON, accept a reasonable plaintext as a low-confidence guess
+        raw_cb = locals().get("raw_cb", "")
+        guess = raw_cb.strip()
+        if len(guess) > 40:
+            proposed_answer, cb_conf = guess, 0.50
+
+    # --- short-circuit if closed-book is confident and user didn't ask for citations ---
+    if proposed_answer and cb_conf >= CB_CONF_THRESH and not wants_sources:
+        return f"Answer: {proposed_answer}", []  # skip RAG entirely
+
+    # -------- B) grounded answer with RAG --------
+    # Cache retriever on the function object for speed
     try:
         _cache = ask_chat.__dict__
         retr = _cache.get("_retr")
@@ -240,63 +262,16 @@ def ask_chat(
     except Exception:
         retr = TfIdfRetriever().fit(load_chunks(data_dir))
 
-    recent = state.last_n_as_text(n_pairs=4, max_chars=1500)
+    global_mode = is_global_fact(question)
 
-    # --- Pass 1: closed-book probe ---
-    proposed_answer = None
-    cb_conf = 0.0
-    cb_queries: List[str] = []
-
-    try:
-        raw_cb = _gen(_closed_book_prompt(question))
-        obj_cb = _coerce_json(raw_cb)
-        proposed_answer = (obj_cb.get("answer") or "").strip()
-        cb_conf = float(obj_cb.get("confidence") or 0.0)
-        cb_need = bool(obj_cb.get("needs_context"))
-        cb_queries = [s for s in (obj_cb.get("verify_queries") or []) if isinstance(s, str)]
-    except Exception:
-        proposed_answer, cb_conf, cb_need, cb_queries = None, 0.0, True, []
-
-    # --- retrieval (Pass 2) ---
-
-    # Simple query expansion to catch synonyms used in the book
-    LUCY_SYNS = "Lucy Westenra Miss Westenra Bloofer Lady"
-    DRAC_SYNS = "Dracula the Count Count"
-    VAMP_SYNS = "vampire vampiric bite blood garlic stake coffin tomb cemetery"
-    expanded_q = " ".join([question] + cb_queries[:3] + [LUCY_SYNS, DRAC_SYNS, VAMP_SYNS])
-
-    global_mode = is_global_fact(question)  # your existing classifier
-    primary_topk = max(topk, 10) if global_mode else topk  # fish a bit wider for global facts
-    hits = retr.search(expanded_q, topk=primary_topk)
-
-    # Soft rerank: prefer bundles that co-mention Lucy & Dracula (not a hard filter)
-    LUCY_RE = re.compile(r"\b(lucy|miss\s+westenra|westenra|bloofer\s+lady)\b", re.I)
-    DRAC_RE = re.compile(r"\b(dracula|the\s+count|count)\b", re.I)
-    VAMP_RE = re.compile(r"\b(vampir\w*|bite\w*|fangs?|blood|garlic|stake\w*|coffin\w*|tomb|grave|cemetery)\b", re.I)
-
-    def _bonus_from_text(txt: str) -> float:
-        has_l = bool(LUCY_RE.search(txt))
-        has_d = bool(DRAC_RE.search(txt))
-        has_v = bool(VAMP_RE.search(txt))
-        bonus = 0.0
-        if has_l and has_d: bonus += 0.25
-        if has_v:           bonus += 0.10
-        if has_l ^ has_d:   bonus += 0.06  # only one mentioned
-        return bonus
-
-    # Precompute small bundles for reranking (cheap; we need them anyway)
-    decorated = []
-    for h in hits:
-        bundle_preview = retr.entry_context(h["entry_index"], window=2, max_chars=800)
-        decorated.append((h, h.get("score", 0.0) + _bonus_from_text(bundle_preview), bundle_preview))
-
-    decorated.sort(key=lambda t: t[1], reverse=True)
+    # Main hits
+    hits = retr.search(question, topk=max(topk, 6) if global_mode else topk)
 
     passages: List[Dict[str, Any]] = []
     if global_mode:
-        # A few distinct entry bundles across chapters (the arc)
+        # Gather distinct entry bundles across chapters (to capture an arc)
         used_entries, used_chapters = set(), set()
-        for h, _, preview in decorated:
+        for h in hits:
             ch = h.get("chapter_number")
             if h["entry_index"] in used_entries or ch in used_chapters:
                 continue
@@ -312,8 +287,8 @@ def ask_chat(
             })
             if len(passages) >= max_bundles:
                 break
-        # Add chapter snapshots
-        for tc in retr.top_chapter_contexts(expanded_q, topn=chap_topn, max_chars=chap_chars):
+        # add chapter snapshots
+        for tc in retr.top_chapter_contexts(question, topn=chap_topn, max_chars=chap_chars):
             passages.append({
                 "entry_index": None,
                 "chapter_number": tc["chapter_number"],
@@ -322,27 +297,10 @@ def ask_chat(
                 "text": tc["text"],
                 "score": tc["score"],
             })
-
-        # Deterministic safety net: ensure Chapter 16 for Lucy fate-style questions
-        if re.search(r"\blucy\b.*\b(kill|stake|slay|bloofer)\b", question, re.I):
-            have16 = any(p.get("chapter_number") == 16 for p in passages)
-            if not have16:
-                for tc in retr.top_chapter_contexts("Lucy Westenra staking Chapter 16 tomb", topn=3, max_chars=900):
-                    if tc["chapter_number"] == 16:
-                        passages.append({
-                            "entry_index": None,
-                            "chapter_number": 16,
-                            "narrator": None,
-                            "date_iso": None,
-                            "text": tc["text"],
-                            "score": tc["score"],
-                        })
-                        break
-
     else:
-        # Single best entry bundle + 1 chapter snapshot
-        if decorated:
-            h0, _, _ = decorated[0]
+        # single best entry bundle + one chapter snapshot
+        if hits:
+            h0 = hits[0]
             bundle = retr.entry_context(h0["entry_index"], window=2, max_chars=2000)
             passages.append({
                 "entry_index": h0["entry_index"],
@@ -352,7 +310,7 @@ def ask_chat(
                 "text": bundle,
                 "score": h0.get("score", 0.0),
             })
-        for tc in retr.top_chapter_contexts(expanded_q, topn=1, max_chars=1600):
+        for tc in retr.top_chapter_contexts(question, topn=1, max_chars=1600):
             passages.append({
                 "entry_index": None,
                 "chapter_number": tc["chapter_number"],
@@ -362,14 +320,14 @@ def ask_chat(
                 "score": tc["score"],
             })
 
+    # If retrieval fails, fall back to closed-book if we have it
     if not passages:
-        # Nothing to ground with — return closed-book if we have it, else a friendly miss
         if proposed_answer:
-            return f"Answer: {proposed_answer}\nEvidence:", []
+            return f"Answer: {proposed_answer}", []
         return "Answer: I couldn't retrieve any relevant context for that question.\nEvidence:", []
 
-    # --- Build grounded prompt (Pass 2)
-    if proposed_answer and cb_conf >= CB_CONF_THRESH:
+    # If we *do* have a closed-book guess, pass it as a proposal to verify/correct
+    if proposed_answer and cb_conf >= 0.40:
         q_with_proposal = (
             f"{question}\n"
             f"Proposed answer (from general knowledge): {proposed_answer}\n"
@@ -380,19 +338,20 @@ def ask_chat(
 
     prompt = build_json_prompt(q_with_proposal, recent, passages)
 
-    # --- generation with grounding ---
     try:
         raw = _gen(prompt)
     except Exception as e:
+        # If generation fails, still return the closed-book answer if we have one
         if proposed_answer:
-            return f"Answer: {proposed_answer}\nEvidence:", passages
+            return f"Answer: {proposed_answer}", passages
         return f"Answer: Generation backend error — {type(e).__name__}: {e}", passages
 
-    # --- parse & render (answer first, then bullets) ---
     try:
         obj = _coerce_json(raw)
-        text = _render_answer_first(obj, passages)
+        text = _render_answer_first(obj, passages)  # Answer first, then Evidence bullets
     except Exception:
+        # If JSON parse fails, prefer closed-book answer over raw blob
         text = f"Answer: {proposed_answer or raw.strip()}"
 
     return text, passages
+
