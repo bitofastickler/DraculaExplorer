@@ -49,30 +49,39 @@ def load_chunks(data_dir: str | Path) -> CorpusChunks:
 
 def collect_entry_text(df, groups, texts, entry_index, window=2, max_chars=2400):
     """
-    Return a joined text for one entry, expanded with ±window neighboring entries
-    in chronological order. Truncated to max_chars.
+    Join the full text of the target entry plus ±window *entries* (not rows).
+    Prefer keeping the same narrator; if that removes everything, fall back.
     """
-    # rows for this entry
-    center = list(groups[entry_index])
-    row = center[0]
-    # find neighboring rows within same narrator window (relaxed if missing)
-    narrator = df.iloc[row]["narrator"] if "narrator" in df.columns else None
-    lo = max(0, row - window)
-    hi = min(len(df) - 1, row + window)
-    rows = list(range(lo, hi + 1))
-    if narrator:
-        rows = [r for r in rows if df.iloc[r]["narrator"] == narrator]
-        if not rows:  # fallback if narrator filtering removed everything
-            rows = list(range(lo, hi + 1))
-    joined = "\n".join(texts[r] for r in rows)
+    # 1) preserve chronological order of entries
+    entry_order = list(dict.fromkeys(df["entry_index"].tolist()))  # stable unique
+    pos = entry_order.index(entry_index)
+
+    # 2) choose neighbor entries in entry space
+    start = max(0, pos - window)
+    end   = min(len(entry_order), pos + window + 1)
+    candidate_entries = entry_order[start:end]
+
+    # 3) narrator filter (same narrator as center, if available)
+    center_row = list(groups[entry_index])[0]
+    center_narr = df.iloc[center_row]["narrator"] if "narrator" in df.columns else None
+    if center_narr:
+        filtered = [e for e in candidate_entries
+                    if df.iloc[list(groups[e])[0]]["narrator"] == center_narr]
+        if filtered:
+            candidate_entries = filtered
+
+    # 4) gather ALL rows for each selected entry
+    row_ids = [i for e in candidate_entries for i in groups[e]]
+
+    joined = "\n".join(texts[i] for i in row_ids)
     return joined[:max_chars]
 
 def build_chapter_texts(df, texts):
-    """
-    Build {chapter_number -> full chapter text} and the group index.
-    """
-    chap_groups = df.groupby("chapter_number").indices
-    chap_texts = {int(ch): "\n".join(texts[i] for i in rows) for ch, rows in chap_groups.items()}
+    """Return ({chapter_number -> full text}, {chapter_number -> row_ids})."""
+    mask = df["chapter_number"].notna()
+    chap_groups = df[mask].groupby("chapter_number").indices
+    chap_texts = {int(ch): "\n".join(texts[i] for i in rows)
+                  for ch, rows in sorted(chap_groups.items(), key=lambda kv: int(kv[0]))}
     return chap_texts, chap_groups
 
 
