@@ -11,10 +11,19 @@ from .rag import load_chunks, TfIdfRetriever, generate_with_ollama, generate_wit
 import numpy as np
 import re, json
 
+_RETR = None
+
 GLOBAL_PAT = re.compile(
     r"(lucy).*(vampir|bite|stake|bloofer|coffin|kill|slay)|"
     r"(van\s*helsing).*(kill|stake)|"
     r"(did|does)\s+dracula", re.I)
+
+def _get_retriever(data_dir: str):
+    global _RETR
+    if _RETR is None:
+        corpus = load_chunks(data_dir)
+        _RETR = TfIdfRetriever().fit(corpus)
+    return _RETR
 
 def _coerce_json(s: str):
     s = s.strip()
@@ -143,21 +152,43 @@ def build_chat_prompt(question: str, chat_context: str, passages: List[Dict[str,
              "Cite passage numbers like [1], [2] when you quote or rely on them.\n")
     return f"{head}{convo}\nCONTEXT:\n{ctx}\n\nQUESTION: {question}\n{instr}ANSWER:"
 
-def ask_chat(question, state, topk=4, backend="ollama", model="llama3.2:3b", data_dir="data"):
+def ask_chat(
+    question: str,
+    state,
+    topk: int = 4,
+    backend: str = "ollama",
+    model: str = "llama3.2:3b",
+    data_dir: str = "data",
+):
+    """
+    Retrieve supporting passages, ask the local model for a JSON response,
+    then render: 'Answer: …' followed by 'Evidence:' bullets with [#] cites.
+    """
+
+    # --- reuse a cached retriever for speed ---
+    try:
+        _cache = ask_chat.__dict__          # function attribute cache
+        retr = _cache.get("_retr")
+        if retr is None or _cache.get("_data_dir") != data_dir:
+            retr = TfIdfRetriever().fit(load_chunks(data_dir))
+            _cache["_retr"] = retr
+            _cache["_data_dir"] = data_dir
+    except Exception:
+        # fallback: rebuild each time if caching ever hiccups
+        retr = TfIdfRetriever().fit(load_chunks(data_dir))
+
     recent = state.last_n_as_text(n_pairs=4, max_chars=1500)
 
-    corpus = load_chunks(data_dir)
-    retr = TfIdfRetriever().fit(corpus)
-
+    # --- retrieval ---
     global_mode = is_global_fact(question)
     hits = retr.search(question, topk=max(topk, 6) if global_mode else topk)
 
-    passages = []
+    passages: List[Dict[str, Any]] = []
     if global_mode:
-        # Take several distinct entries across chapters (arc view)
+        # Several distinct entry bundles across chapters (the arc)
         used_entries, used_chapters = set(), set()
         for h in hits:
-            ch = h["chapter_number"]
+            ch = h.get("chapter_number")
             if h["entry_index"] in used_entries or ch in used_chapters:
                 continue
             used_entries.add(h["entry_index"]); used_chapters.add(ch)
@@ -165,12 +196,12 @@ def ask_chat(question, state, topk=4, backend="ollama", model="llama3.2:3b", dat
             passages.append({
                 "entry_index": h["entry_index"],
                 "chapter_number": ch,
-                "narrator": h["narrator"],
-                "date_iso": h["date_iso"],
+                "narrator": h.get("narrator"),
+                "date_iso": h.get("date_iso"),
                 "text": bundle,
                 "score": h.get("score", 0.0),
             })
-            if len(passages) >= 3:  # 3 bundles is plenty for a 3B model
+            if len(passages) >= 3:
                 break
         # Add 1–2 chapter snapshots
         for tc in retr.top_chapter_contexts(question, topn=2, max_chars=1200):
@@ -189,9 +220,9 @@ def ask_chat(question, state, topk=4, backend="ollama", model="llama3.2:3b", dat
             bundle = retr.entry_context(h0["entry_index"], window=2, max_chars=2000)
             passages.append({
                 "entry_index": h0["entry_index"],
-                "chapter_number": h0["chapter_number"],
-                "narrator": h0["narrator"],
-                "date_iso": h0["date_iso"],
+                "chapter_number": h0.get("chapter_number"),
+                "narrator": h0.get("narrator"),
+                "date_iso": h0.get("date_iso"),
                 "text": bundle,
                 "score": h0.get("score", 0.0),
             })
@@ -205,13 +236,27 @@ def ask_chat(question, state, topk=4, backend="ollama", model="llama3.2:3b", dat
                 "score": tc["score"],
             })
 
+    # If retrieval found nothing, fail fast with a friendly message.
+    if not passages:
+        return "Answer: I couldn't retrieve any relevant context for that question.\nEvidence:", []
+
+    # --- generation (JSON contract) ---
     prompt = build_json_prompt(question, recent, passages)
-    raw = generate_with_ollama(prompt, model=model) if backend == "ollama" else generate_with_hf(prompt, model_id=model)
+    try:
+        raw = (
+            generate_with_ollama(prompt, model=model)
+            if backend == "ollama"
+            else generate_with_hf(prompt, model_id=model)
+        )
+    except Exception as e:
+        return f"Answer: Generation backend error — {type(e).__name__}: {e}", passages
+
+    # --- parse + render (Answer first, then bullets) ---
     try:
         obj = _coerce_json(raw)
         text = _render_answer_first(obj, passages)
     except Exception:
-        # fallback: show raw if model returned non-JSON
-        text = raw
-    return text, passages
+        # show raw model text if it didn't return valid JSON
+        text = f"Answer: {raw.strip()}"
 
+    return text, passages
