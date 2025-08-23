@@ -161,38 +161,88 @@ def ask_chat(
     data_dir: str = "data",
 ):
     """
-    Retrieve supporting passages, ask the local model for a JSON response,
-    then render: 'Answer: …' followed by 'Evidence:' bullets with [#] cites.
+    Hybrid QA:
+      1) Closed-book probe from model's native knowledge.
+      2) Grounded verification with Dracula JSON (entry bundles + chapter snapshots).
+    Renders: 'Answer: …' then 'Evidence:' bullets with [#] cites.
     """
+    import re, json
 
-    # --- reuse a cached retriever for speed ---
+    CB_CONF_THRESH = 0.70  # require decent confidence before trusting the proposal
+
+    # --- small helpers ---
+
+    def _closed_book_prompt(q: str) -> str:
+        return (
+            "Answer from your general knowledge of Bram Stoker's *Dracula* only. "
+            "Do not assume any external context is available. "
+            "Return ONLY valid JSON:\n"
+            '{"answer": str, "confidence": float, "needs_context": bool, "verify_queries": [str, ...]}\n'
+            "Rules:\n"
+            "- confidence in [0,1]\n"
+            "- needs_context = true if you are not sure or think evidence would help\n"
+            "- verify_queries: 1–3 short phrases you would search for in the text (e.g., 'Lucy staking', 'Bloofer Lady', 'Chapter 16 tomb scene')\n"
+            f"QUESTION: {q}\nJSON:"
+        )
+
+    def _gen(text: str) -> str:
+        return (
+            generate_with_ollama(text, model=model)
+            if backend == "ollama"
+            else generate_with_hf(text, model_id=model)
+        )
+
+    # function-attribute cache for retriever
     try:
-        _cache = ask_chat.__dict__          # function attribute cache
+        _cache = ask_chat.__dict__
         retr = _cache.get("_retr")
         if retr is None or _cache.get("_data_dir") != data_dir:
             retr = TfIdfRetriever().fit(load_chunks(data_dir))
             _cache["_retr"] = retr
             _cache["_data_dir"] = data_dir
     except Exception:
-        # fallback: rebuild each time if caching ever hiccups
         retr = TfIdfRetriever().fit(load_chunks(data_dir))
 
     recent = state.last_n_as_text(n_pairs=4, max_chars=1500)
 
-    # --- retrieval ---
+    # --- Pass 1: closed-book probe ---
+    proposed_answer = None
+    cb_conf = 0.0
+    cb_queries: List[str] = []
+
+    try:
+        raw_cb = _gen(_closed_book_prompt(question))
+        obj_cb = _coerce_json(raw_cb)  # uses your helper
+        proposed_answer = (obj_cb.get("answer") or "").strip()
+        cb_conf = float(obj_cb.get("confidence") or 0.0)
+        cb_need = bool(obj_cb.get("needs_context"))
+        cb_queries = [s for s in (obj_cb.get("verify_queries") or []) if isinstance(s, str)]
+    except Exception:
+        # if model returns non-JSON, just force grounding
+        proposed_answer, cb_conf, cb_need, cb_queries = None, 0.0, True, []
+
+    # --- retrieval (Pass 2) ---
+    # Determine if this is a story-wide (global) question
     global_mode = is_global_fact(question)
-    hits = retr.search(question, topk=max(topk, 6) if global_mode else topk)
+
+    # Build a retrieval query (optionally expanded with the probe's verify_queries)
+    expanded_q = question
+    if cb_queries:
+        expanded_q += " " + " ".join(cb_queries[:3])
+
+    # Primary hits
+    hits = retr.search(expanded_q, topk=max(topk, 6) if global_mode else topk)
 
     passages: List[Dict[str, Any]] = []
     if global_mode:
-        # Several distinct entry bundles across chapters (the arc)
+        # Gather a few distinct entry bundles across chapters (the arc)
         used_entries, used_chapters = set(), set()
         for h in hits:
             ch = h.get("chapter_number")
             if h["entry_index"] in used_entries or ch in used_chapters:
                 continue
-            used_entries.add(h["entry_index"]); used_chapters.add(ch)
             bundle = retr.entry_context(h["entry_index"], window=2, max_chars=1400)
+            used_entries.add(h["entry_index"]); used_chapters.add(ch)
             passages.append({
                 "entry_index": h["entry_index"],
                 "chapter_number": ch,
@@ -204,7 +254,7 @@ def ask_chat(
             if len(passages) >= 3:
                 break
         # Add 1–2 chapter snapshots
-        for tc in retr.top_chapter_contexts(question, topn=2, max_chars=1200):
+        for tc in retr.top_chapter_contexts(expanded_q, topn=2, max_chars=1200):
             passages.append({
                 "entry_index": None,
                 "chapter_number": tc["chapter_number"],
@@ -214,7 +264,7 @@ def ask_chat(
                 "score": tc["score"],
             })
     else:
-        # Normal mode: single best entry bundle + top chapter
+        # Single best entry bundle + top chapter
         if hits:
             h0 = hits[0]
             bundle = retr.entry_context(h0["entry_index"], window=2, max_chars=2000)
@@ -226,7 +276,7 @@ def ask_chat(
                 "text": bundle,
                 "score": h0.get("score", 0.0),
             })
-        for tc in retr.top_chapter_contexts(question, topn=1, max_chars=1600):
+        for tc in retr.top_chapter_contexts(expanded_q, topn=1, max_chars=1600):
             passages.append({
                 "entry_index": None,
                 "chapter_number": tc["chapter_number"],
@@ -236,27 +286,41 @@ def ask_chat(
                 "score": tc["score"],
             })
 
-    # If retrieval found nothing, fail fast with a friendly message.
     if not passages:
+        # Nothing to ground with — return closed-book if we have it, else a friendly miss
+        if proposed_answer:
+            return f"Answer: {proposed_answer}\nEvidence:", []
         return "Answer: I couldn't retrieve any relevant context for that question.\nEvidence:", []
 
-    # --- generation (JSON contract) ---
-    prompt = build_json_prompt(question, recent, passages)
-    try:
-        raw = (
-            generate_with_ollama(prompt, model=model)
-            if backend == "ollama"
-            else generate_with_hf(prompt, model_id=model)
+    # --- Build grounded prompt (Pass 2)
+    # If we have a decent closed-book proposal, include it to be verified/corrected.
+    if proposed_answer and cb_conf >= CB_CONF_THRESH:
+        q_with_proposal = (
+            f"{question}\n"
+            f"Proposed answer (from general knowledge): {proposed_answer}\n"
+            "Use the CONTEXT to verify this; if the proposal conflicts with the evidence, correct it succinctly."
         )
+    else:
+        q_with_proposal = question
+
+    prompt = build_json_prompt(q_with_proposal, recent, passages)
+
+    # --- generation with grounding ---
+    try:
+        raw = _gen(prompt)
     except Exception as e:
+        # fall back to closed-book answer on backend errors
+        if proposed_answer:
+            return f"Answer: {proposed_answer}\nEvidence:", passages
         return f"Answer: Generation backend error — {type(e).__name__}: {e}", passages
 
-    # --- parse + render (Answer first, then bullets) ---
+    # --- parse & render (answer first, then bullets) ---
     try:
         obj = _coerce_json(raw)
         text = _render_answer_first(obj, passages)
     except Exception:
-        # show raw model text if it didn't return valid JSON
-        text = f"Answer: {raw.strip()}"
+        # If JSON parse fails, show closed-book answer if it exists, else raw
+        text = f"Answer: {proposed_answer or raw.strip()}"
 
     return text, passages
+
