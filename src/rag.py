@@ -157,10 +157,24 @@ class TfIdfRetriever:
         self.entry_groups = None
         self.df = None
         # NEW: chapter-level index
-        self.chapter_texts = None
-        self.chapter_groups = None
-        self.chapter_X = None
-        self._chapter_ids = None
+        # chapter index (reuse same vectorizer)
+        self.chapter_texts, self.chapter_groups = build_chapter_texts(self.df, self._texts)
+        self._chapter_ids = sorted(self.chapter_texts.keys())
+        chap_inputs = [self.chapter_texts[ch] for ch in self._chapter_ids]
+        self.chapter_X = self.vec.transform(chap_inputs)
+
+        def entry_context(self, entry_index, window=2, max_chars=2400):
+            return collect_entry_text(self.df, self.entry_groups, self._texts, entry_index, window, max_chars)
+
+        def top_chapter_contexts(self, query, topn=1, max_chars=2000):
+            q = self.vec.transform([query]).toarray()
+            sims = cosine_similarity(q, self.chapter_X).ravel()
+            order = sims.argsort()[::-1][:topn]
+            out = []
+            for oi in order:
+                ch = self._chapter_ids[oi]
+                out.append({"chapter_number": ch, "text": self.chapter_texts[ch][:max_chars], "score": float(sims[oi])})
+            return out
 
     def fit(self, corpus: CorpusChunks):
         self.df = corpus.df.reset_index(drop=True)
