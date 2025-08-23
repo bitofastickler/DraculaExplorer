@@ -271,10 +271,16 @@ def build_prompt(question: str, passages: List[Dict[str,Any]]) -> str:
     return f"{header}\nCONTEXT:\n" + "\n\n".join(ctx_lines) + f"\n\nQUESTION: {question}\n{instr}ANSWER:"
 
 # --- Generation backends ---
-def generate_with_ollama(prompt: str, model: str = "llama3.2:3b", host: str = "http://localhost:11434") -> str:
-    r = requests.post(f"{host}/api/generate", json={"model": model, "prompt": prompt, "stream": False}, timeout=180)
+def generate_with_ollama(prompt: str, model: str = "gpt-oss:20b",
+                         host: str = "http://localhost:11434",
+                         options: dict | None = None) -> str:
+    payload = {"model": model, "prompt": prompt, "stream": False}
+    if options:
+        payload["options"] = options
+    r = requests.post(f"{host}/api/generate", json=payload, timeout=300)
     r.raise_for_status()
     return r.json().get("response", "")
+
 
 def generate_with_hf(prompt: str, model_id: str, hf_token: Optional[str] = None, max_new_tokens: int = 400) -> str:
     token = hf_token or os.getenv("HF_API_TOKEN") or os.getenv("HUGGINGFACEHUB_API_TOKEN")

@@ -165,10 +165,22 @@ def ask_chat(
       1) Closed-book probe from model's native knowledge.
       2) Grounded verification with Dracula JSON (entry bundles + chapter snapshots).
     Renders: 'Answer: …' then 'Evidence:' bullets with [#] cites.
+    Adapts context size for larger models (e.g., gpt-oss:20b).
     """
+
     import re, json
 
     CB_CONF_THRESH = 0.70  # require decent confidence before trusting the proposal
+
+    # --- model-awareness for context sizing ---
+    mlow = model.lower()
+    is_large = any(tok in mlow for tok in ("20b", "13b", "12b", "9b", "8b", "7b"))
+    # global-mode knobs
+    bundle_window = 3 if is_large else 2       # ± entries per bundle
+    max_bundles   = 4 if is_large else 3       # number of entry bundles
+    chap_topn     = 2                           # chapter snapshots to add
+    bundle_chars  = 1300 if is_large else 1400  # per-bundle cap
+    chap_chars    = 1100 if is_large else 1200  # per-chapter cap
 
     # --- small helpers ---
 
@@ -185,12 +197,16 @@ def ask_chat(
             f"QUESTION: {q}\nJSON:"
         )
 
-    def _gen(text: str) -> str:
-        return (
-            generate_with_ollama(text, model=model)
-            if backend == "ollama"
-            else generate_with_hf(text, model_id=model)
-        )
+    def _gen(prompt_text: str) -> str:
+        # If your generate_with_ollama() supports options, pass them; else fall back.
+        if backend == "ollama":
+            ollama_opts = {"num_ctx": 4096 if is_large else 3072, "temperature": 0.15}
+            try:
+                return generate_with_ollama(prompt_text, model=model, options=ollama_opts)  # type: ignore
+            except TypeError:
+                return generate_with_ollama(prompt_text, model=model)
+        else:
+            return generate_with_hf(prompt_text, model_id=model)
 
     # function-attribute cache for retriever
     try:
@@ -212,17 +228,15 @@ def ask_chat(
 
     try:
         raw_cb = _gen(_closed_book_prompt(question))
-        obj_cb = _coerce_json(raw_cb)  # uses your helper
+        obj_cb = _coerce_json(raw_cb)
         proposed_answer = (obj_cb.get("answer") or "").strip()
         cb_conf = float(obj_cb.get("confidence") or 0.0)
         cb_need = bool(obj_cb.get("needs_context"))
         cb_queries = [s for s in (obj_cb.get("verify_queries") or []) if isinstance(s, str)]
     except Exception:
-        # if model returns non-JSON, just force grounding
         proposed_answer, cb_conf, cb_need, cb_queries = None, 0.0, True, []
 
     # --- retrieval (Pass 2) ---
-    # Determine if this is a story-wide (global) question
     global_mode = is_global_fact(question)
 
     # Build a retrieval query (optionally expanded with the probe's verify_queries)
@@ -230,18 +244,17 @@ def ask_chat(
     if cb_queries:
         expanded_q += " " + " ".join(cb_queries[:3])
 
-    # Primary hits
     hits = retr.search(expanded_q, topk=max(topk, 6) if global_mode else topk)
 
     passages: List[Dict[str, Any]] = []
     if global_mode:
-        # Gather a few distinct entry bundles across chapters (the arc)
+        # A few distinct entry bundles across chapters (the arc)
         used_entries, used_chapters = set(), set()
         for h in hits:
             ch = h.get("chapter_number")
             if h["entry_index"] in used_entries or ch in used_chapters:
                 continue
-            bundle = retr.entry_context(h["entry_index"], window=2, max_chars=1400)
+            bundle = retr.entry_context(h["entry_index"], window=bundle_window, max_chars=bundle_chars)
             used_entries.add(h["entry_index"]); used_chapters.add(ch)
             passages.append({
                 "entry_index": h["entry_index"],
@@ -251,10 +264,10 @@ def ask_chat(
                 "text": bundle,
                 "score": h.get("score", 0.0),
             })
-            if len(passages) >= 3:
+            if len(passages) >= max_bundles:
                 break
-        # Add 1–2 chapter snapshots
-        for tc in retr.top_chapter_contexts(expanded_q, topn=2, max_chars=1200):
+        # Add chapter snapshots
+        for tc in retr.top_chapter_contexts(expanded_q, topn=chap_topn, max_chars=chap_chars):
             passages.append({
                 "entry_index": None,
                 "chapter_number": tc["chapter_number"],
@@ -263,8 +276,25 @@ def ask_chat(
                 "text": tc["text"],
                 "score": tc["score"],
             })
+
+        # Deterministic safety net: if question implies Lucy's fate, ensure Chapter 16 is present
+        if re.search(r"\blucy\b.*\b(kill|stake|slay|bloofer)\b", question, re.I):
+            have16 = any(p.get("chapter_number") == 16 for p in passages)
+            if not have16:
+                for tc in retr.top_chapter_contexts("Lucy Westenra staking Chapter 16 tomb", topn=3, max_chars=900):
+                    if tc["chapter_number"] == 16:
+                        passages.append({
+                            "entry_index": None,
+                            "chapter_number": 16,
+                            "narrator": None,
+                            "date_iso": None,
+                            "text": tc["text"],
+                            "score": tc["score"],
+                        })
+                        break
+
     else:
-        # Single best entry bundle + top chapter
+        # Single best entry bundle + 1 chapter snapshot
         if hits:
             h0 = hits[0]
             bundle = retr.entry_context(h0["entry_index"], window=2, max_chars=2000)
@@ -293,7 +323,6 @@ def ask_chat(
         return "Answer: I couldn't retrieve any relevant context for that question.\nEvidence:", []
 
     # --- Build grounded prompt (Pass 2)
-    # If we have a decent closed-book proposal, include it to be verified/corrected.
     if proposed_answer and cb_conf >= CB_CONF_THRESH:
         q_with_proposal = (
             f"{question}\n"
@@ -309,7 +338,6 @@ def ask_chat(
     try:
         raw = _gen(prompt)
     except Exception as e:
-        # fall back to closed-book answer on backend errors
         if proposed_answer:
             return f"Answer: {proposed_answer}\nEvidence:", passages
         return f"Answer: Generation backend error — {type(e).__name__}: {e}", passages
@@ -319,8 +347,8 @@ def ask_chat(
         obj = _coerce_json(raw)
         text = _render_answer_first(obj, passages)
     except Exception:
-        # If JSON parse fails, show closed-book answer if it exists, else raw
         text = f"Answer: {proposed_answer or raw.strip()}"
 
     return text, passages
+
 
