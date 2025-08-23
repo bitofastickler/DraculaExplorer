@@ -7,8 +7,28 @@ from __future__ import annotations
 from dataclasses import dataclass, field
 from typing import List, Dict, Any, Optional, Tuple
 from pathlib import Path
-from .rag import load_chunks, TfIdfRetriever, generate_with_ollama, generate_with_hf
+from .rag import load_chunks, TfIdfRetriever, generate_with_ollama, generate_with_hf, extract_constraints
 import numpy as np
+import re
+
+GLOBAL_PAT = re.compile(
+    r"(lucy).*(vampir|bite|stake|bloofer|coffin|kill|slay)|"
+    r"(van\s*helsing).*(kill|stake)|"
+    r"(did|does)\s+dracula", re.I)
+
+def is_global_fact(q: str) -> bool:
+    return bool(GLOBAL_PAT.search(q))
+
+def build_evidence_prompt(question, chat_context, passages):
+    head = ("Use ONLY the CONTEXT.\n"
+            "First list 2–5 EVIDENCE bullets with [#] cites (quote or paraphrase).\n"
+            "Then write a 1–3 sentence ANSWER strictly from those bullets.\n")
+    convo = f"\n(Recent conversation for tone only):\n{chat_context}\n" if chat_context else ""
+    ctx = []
+    for j, p in enumerate(passages, 1):
+        meta = f"(entry {p.get('entry_index')} | ch {p.get('chapter_number')} | {p.get('narrator')} | {p.get('date_iso')})"
+        ctx.append(f"[{j}] {meta}\n{p['text']}")
+    return f"{head}{convo}\nCONTEXT:\n" + "\n\n".join(ctx) + f"\n\nQUESTION: {question}\n\nFormat:\nEVIDENCE:\n- … [#]\n- … [#]\nANSWER:"
 
 @dataclass
 class ChatTurn:
@@ -63,29 +83,68 @@ def build_chat_prompt(question: str, chat_context: str, passages: List[Dict[str,
              "Cite passage numbers like [1], [2] when you quote or rely on them.\n")
     return f"{head}{convo}\nCONTEXT:\n{ctx}\n\nQUESTION: {question}\n{instr}ANSWER:"
 
-def ask_chat(question: str,
-             state: ChatState,
-             topk: int = 4,
-             backend: str = "ollama",
-             model: str = "llama3.2:3b",
-             data_dir: str | Path = "data"):
-    # Build minimal convo context (style only)
+def ask_chat(question, state, topk=4, backend="ollama", model="llama3.2:3b", data_dir="data"):
     recent = state.last_n_as_text(n_pairs=4, max_chars=1500)
 
-    # Retrieval
     corpus = load_chunks(data_dir)
     retr = TfIdfRetriever().fit(corpus)
-    passages = retr.search(question, topk=topk)
 
-    # Prompt
-    prompt = build_chat_prompt(question, recent, passages)
+    global_mode = is_global_fact(question)
+    hits = retr.search(question, topk=max(topk, 6) if global_mode else topk)
 
-    # Generate
-    if backend == "ollama":
-        text = generate_with_ollama(prompt, model=model)
-    elif backend == "hf":
-        text = generate_with_hf(prompt, model_id=model)
+    passages = []
+    if global_mode:
+        # Take several distinct entries across chapters (arc view)
+        used_entries, used_chapters = set(), set()
+        for h in hits:
+            ch = h["chapter_number"]
+            if h["entry_index"] in used_entries or ch in used_chapters:
+                continue
+            used_entries.add(h["entry_index"]); used_chapters.add(ch)
+            bundle = retr.entry_context(h["entry_index"], window=2, max_chars=1400)
+            passages.append({
+                "entry_index": h["entry_index"],
+                "chapter_number": ch,
+                "narrator": h["narrator"],
+                "date_iso": h["date_iso"],
+                "text": bundle,
+                "score": h.get("score", 0.0),
+            })
+            if len(passages) >= 3:  # 3 bundles is plenty for a 3B model
+                break
+        # Add 1–2 chapter snapshots
+        for tc in retr.top_chapter_contexts(question, topn=2, max_chars=1200):
+            passages.append({
+                "entry_index": None,
+                "chapter_number": tc["chapter_number"],
+                "narrator": None,
+                "date_iso": None,
+                "text": tc["text"],
+                "score": tc["score"],
+            })
     else:
-        raise ValueError("backend must be 'ollama' or 'hf'")
+        # Normal mode: single best entry bundle + top chapter
+        if hits:
+            h0 = hits[0]
+            bundle = retr.entry_context(h0["entry_index"], window=2, max_chars=2000)
+            passages.append({
+                "entry_index": h0["entry_index"],
+                "chapter_number": h0["chapter_number"],
+                "narrator": h0["narrator"],
+                "date_iso": h0["date_iso"],
+                "text": bundle,
+                "score": h0.get("score", 0.0),
+            })
+        for tc in retr.top_chapter_contexts(question, topn=1, max_chars=1600):
+            passages.append({
+                "entry_index": None,
+                "chapter_number": tc["chapter_number"],
+                "narrator": None,
+                "date_iso": None,
+                "text": tc["text"],
+                "score": tc["score"],
+            })
 
+    prompt = build_evidence_prompt(question, recent, passages)
+    text = generate_with_ollama(prompt, model=model) if backend == "ollama" else generate_with_hf(prompt, model_id=model)
     return text, passages
