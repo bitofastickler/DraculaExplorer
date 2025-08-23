@@ -149,19 +149,20 @@ class TfIdfRetriever:
     def __init__(self, min_df=2, max_df=0.9, ngram_range=(1,2)):
         self.vec = TfidfVectorizer(lowercase=True, stop_words="english",
                                    min_df=min_df, max_df=max_df, ngram_range=ngram_range)
+        # chunk-level
         self.X = None
         self.meta = None
         self._texts = None
+        self.df = None
+        # entry-level
         self.entry_X = None
         self.entry_meta = None
         self.entry_groups = None
-        self.df = None
-        # NEW: chapter-level index
-        # chapter index (reuse same vectorizer)
-        self.chapter_texts, self.chapter_groups = build_chapter_texts(self.df, self._texts)
-        self._chapter_ids = sorted(self.chapter_texts.keys())
-        chap_inputs = [self.chapter_texts[ch] for ch in self._chapter_ids]
-        self.chapter_X = self.vec.transform(chap_inputs)
+        # chapter-level (declare only)
+        self.chapter_texts = None
+        self.chapter_groups = None
+        self.chapter_X = None
+        self._chapter_ids = None
 
         def entry_context(self, entry_index, window=2, max_chars=2400):
             return collect_entry_text(self.df, self.entry_groups, self._texts, entry_index, window, max_chars)
