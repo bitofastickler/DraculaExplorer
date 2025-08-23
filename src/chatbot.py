@@ -82,7 +82,7 @@ def build_json_prompt(question, chat_context, passages):
         "- answer: 1–3 sentences, summary first, directly answering the question.\n"
         "- evidence: 2–4 items. Each item is ≤ 200 chars, either a short quote or precise paraphrase.\n"
         "- Every evidence item MUST include at least one valid source id.\n"
-        "- If the context is insufficient, set answer to 'Unknown based on the provided context.' and return evidence: [].\n"
+        "- If the context is insufficient, set answer to 'Hmmm, I'm not sure. Can you try asking the question in a different way?' and return evidence: [].\n"
         "- Prefer explicit, conclusive passages over hints. When multiple passages describe a sequence, summarize the outcome plainly.\n"
         "- Do NOT invent details, dates, or actions not present in the CONTEXT.\n"
         "- Output MUST be valid JSON. Do NOT wrap in ```json fences or add extra keys."
