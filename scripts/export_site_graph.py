@@ -17,7 +17,7 @@ ROOT = Path(__file__).resolve().parents[1]
 SRC = ROOT / "data" / "kg" / "graph.json"
 OUT = ROOT / "docs" / "data" / "graph.json"
 
-MIN_MENTIONS = 2   # entities with fewer proper-name mentions are left out
+MIN_MENTIONS = 2   # entities with fewer name or title mentions are left out
 MIN_SHARED = 2     # co-appearance links need at least this many shared entries
 GROUP = {"PER": "person", "GPE": "place", "LOC": "place", "FAC": "place"}
 
@@ -40,22 +40,28 @@ def main() -> None:
 
     entries_of: dict[str, set[int]] = defaultdict(set)
     narrated: dict[str, int] = defaultdict(int)
+    # Names plus titles such as "the Count". Pronoun links are a rough
+    # same-sentence heuristic, so they are left out of the count.
+    named: dict[str, int] = defaultdict(int)
     for e in edges:
-        if e["type"] == "APPEARS_IN":
+        if e["type"] == "REFERS_TO" and e.get("method") != "same_sentence_pronoun":
+            named[e["target"]] += 1
+        elif e["type"] == "APPEARS_IN":
             entries_of[e["source"]].add(int(e["target"].split(":")[1]))
         elif e["type"] == "NARRATED_BY":
             narrated[e["target"]] += 1
 
     entities = []
     for n in nodes:
-        if n["label"] != "Entity" or n.get("mention_count", 0) < MIN_MENTIONS:
+        mentions = named.get(n["id"], 0)
+        if n["label"] != "Entity" or mentions < MIN_MENTIONS:
             continue
         entities.append({
             "id": n["id"],
             "name": n["canonical_name"],
             "type": n["entity_type"],
             "group": GROUP.get(n["entity_type"], "other"),
-            "mentions": n["mention_count"],
+            "mentions": mentions,
             "aliases": n.get("aliases") or [],
             "entries": sorted(entries_of.get(n["id"], ())),
             "narrated": narrated.get(n["id"], 0),

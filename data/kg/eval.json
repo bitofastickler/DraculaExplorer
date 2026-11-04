@@ -1,32 +1,32 @@
 {
   "heldout_with_knowledge": {
-    "mentions": 968,
+    "mentions": 1100,
     "precision": 1.0,
-    "recall": 0.9826636554178108,
-    "f1": 0.9912560335007826,
-    "gold_pairs": 61547,
-    "pred_pairs": 60480
+    "recall": 1.0,
+    "f1": 1.0,
+    "gold_pairs": 65688,
+    "pred_pairs": 65688
   },
   "heldout_without_knowledge": {
-    "mentions": 968,
+    "mentions": 1100,
     "precision": 1.0,
-    "recall": 0.9270963653793036,
-    "f1": 0.9621691805711299,
-    "gold_pairs": 61547,
-    "pred_pairs": 57060
+    "recall": 0.9373401534526854,
+    "f1": 0.9676567656765676,
+    "gold_pairs": 65688,
+    "pred_pairs": 61572
   },
   "tune_with_knowledge": {
-    "mentions": 574,
+    "mentions": 633,
     "precision": 1.0,
-    "recall": 0.9926064454399165,
-    "f1": 0.996289505849485,
-    "gold_pairs": 22993,
-    "pred_pairs": 22823
+    "recall": 1.0,
+    "f1": 1.0,
+    "gold_pairs": 24225,
+    "pred_pairs": 24225
   },
   "nominals": {
-    "title_nominals": 219,
-    "title_nominals_attached": 115,
-    "unresolved_rate": 0.4748858447488584
+    "title_nominals": 226,
+    "title_nominals_attached": 184,
+    "unresolved_rate": 0.18584070796460173
   },
   "n_relations": 0,
   "queries": {
@@ -34,22 +34,7 @@
       {
         "id": "mina_harker",
         "canonical_name": "Mina Harker",
-        "alias_count": 13
-      },
-      {
-        "id": "abraham_van_helsing",
-        "canonical_name": "Abraham Van Helsing",
-        "alias_count": 9
-      },
-      {
-        "id": "arthur_holmwood",
-        "canonical_name": "Arthur Holmwood",
-        "alias_count": 9
-      },
-      {
-        "id": "lucy_westenra",
-        "canonical_name": "Lucy Westenra",
-        "alias_count": 9
+        "alias_count": 10
       },
       {
         "id": "quincey_morris",
@@ -57,39 +42,49 @@
         "alias_count": 9
       },
       {
-        "id": "jonathan_harker",
-        "canonical_name": "Jonathan Harker",
-        "alias_count": 7
+        "id": "arthur_holmwood",
+        "canonical_name": "Arthur Holmwood",
+        "alias_count": 8
       },
       {
-        "id": "john",
-        "canonical_name": "John",
+        "id": "john_seward",
+        "canonical_name": "John Seward",
+        "alias_count": 8
+      },
+      {
+        "id": "lucy_westenra",
+        "canonical_name": "Lucy Westenra",
+        "alias_count": 8
+      },
+      {
+        "id": "jonathan_harker",
+        "canonical_name": "Jonathan Harker",
         "alias_count": 6
+      },
+      {
+        "id": "abraham_van_helsing",
+        "canonical_name": "Abraham Van Helsing",
+        "alias_count": 5
+      },
+      {
+        "id": "count_dracula",
+        "canonical_name": "Count Dracula",
+        "alias_count": 5
       },
       {
         "id": "peter_hawkins",
         "canonical_name": "Peter Hawkins",
-        "alias_count": 6
+        "alias_count": 5
       },
       {
-        "id": "thomas",
-        "canonical_name": "Thomas",
-        "alias_count": 6
-      },
-      {
-        "id": "mein_gott",
-        "canonical_name": "Mein Gott",
+        "id": "samuel_billington",
+        "canonical_name": "Samuel F. Billington",
         "alias_count": 4
       },
       {
-        "id": "carter",
-        "canonical_name": "Carter",
-        "alias_count": 3
-      },
-      {
-        "id": "jack",
-        "canonical_name": "Jack",
-        "alias_count": 3
+        "id": "thomas_bilder",
+        "canonical_name": "Thomas Bilder",
+        "alias_count": 4
       },
       {
         "id": "rm_renfield",
@@ -97,13 +92,8 @@
         "alias_count": 3
       },
       {
-        "id": "billington",
-        "canonical_name": "Mr. Billington",
-        "alias_count": 2
-      },
-      {
-        "id": "count_dracula",
-        "canonical_name": "Count Dracula",
+        "id": "carter_paterson",
+        "canonical_name": "Carter Paterson",
         "alias_count": 2
       },
       {
@@ -112,28 +102,8 @@
         "alias_count": 2
       },
       {
-        "id": "dracula_2",
-        "canonical_name": "Dracula",
-        "alias_count": 2
-      },
-      {
-        "id": "h_b_m_vice_consul",
-        "canonical_name": "H. B. M. Vice-Consul",
-        "alias_count": 2
-      },
-      {
-        "id": "hampstead_heath",
-        "canonical_name": "Hampstead Heath",
-        "alias_count": 2
-      },
-      {
         "id": "harker",
         "canonical_name": "Harker",
-        "alias_count": 2
-      },
-      {
-        "id": "ho",
-        "canonical_name": "ho",
         "alias_count": 2
       },
       {
@@ -147,8 +117,8 @@
         "alias_count": 2
       },
       {
-        "id": "john_seward",
-        "canonical_name": "John Seward",
+        "id": "john_paxton",
+        "canonical_name": "Sir John Paxton",
         "alias_count": 2
       },
       {
@@ -160,16 +130,6 @@
         "id": "petrof_skinsky",
         "canonical_name": "Petrof Skinsky",
         "alias_count": 2
-      },
-      {
-        "id": "wafer",
-        "canonical_name": "Wafer",
-        "alias_count": 2
-      },
-      {
-        "id": "afraid",
-        "canonical_name": "Afraid",
-        "alias_count": 1
       },
       {
         "id": "al_fresco",
@@ -187,11 +147,6 @@
         "alias_count": 1
       },
       {
-        "id": "angel",
-        "canonical_name": "Angel",
-        "alias_count": 1
-      },
-      {
         "id": "archibald_winter_suffield",
         "canonical_name": "Archibald Winter-Suffield",
         "alias_count": 1
@@ -202,33 +157,13 @@
         "alias_count": 1
       },
       {
-        "id": "behold",
-        "canonical_name": "Behold",
-        "alias_count": 1
-      },
-      {
         "id": "bermondsey",
         "canonical_name": "Bermondsey",
         "alias_count": 1
       },
       {
-        "id": "bistritza",
-        "canonical_name": "Bistritza",
-        "alias_count": 1
-      },
-      {
         "id": "blyme",
         "canonical_name": "Blyme",
-        "alias_count": 1
-      },
-      {
-        "id": "bosphorus",
-        "canonical_name": "Bosphorus",
-        "alias_count": 1
-      },
-      {
-        "id": "breakfast",
-        "canonical_name": "Breakfast",
         "alias_count": 1
       },
       {
@@ -249,21 +184,6 @@
       {
         "id": "charcot",
         "canonical_name": "Charcot",
-        "alias_count": 1
-      },
-      {
-        "id": "czarina_catherine",
-        "canonical_name": "Czarina Catherine",
-        "alias_count": 1
-      },
-      {
-        "id": "d_lit",
-        "canonical_name": "D. Lit.",
-        "alias_count": 1
-      },
-      {
-        "id": "danube",
-        "canonical_name": "Danube",
         "alias_count": 1
       },
       {
@@ -297,11 +217,6 @@
         "alias_count": 1
       },
       {
-        "id": "each",
-        "canonical_name": "Count. Each",
-        "alias_count": 1
-      },
-      {
         "id": "edward_spencelagh",
         "canonical_name": "Edward Spencelagh",
         "alias_count": 1
@@ -314,11 +229,6 @@
       {
         "id": "enoch",
         "canonical_name": "Enoch",
-        "alias_count": 1
-      },
-      {
-        "id": "exeter",
-        "canonical_name": "Exeter",
         "alias_count": 1
       },
       {
@@ -337,11 +247,6 @@
         "alias_count": 1
       },
       {
-        "id": "galatz",
-        "canonical_name": "Galatz",
-        "alias_count": 1
-      },
-      {
         "id": "gaunt_grey_wolf",
         "canonical_name": "gaunt grey wolf",
         "alias_count": 1
@@ -357,11 +262,6 @@
         "alias_count": 1
       },
       {
-        "id": "god",
-        "canonical_name": "God",
-        "alias_count": 1
-      },
-      {
         "id": "guiliano",
         "canonical_name": "Guiliano",
         "alias_count": 1
@@ -372,8 +272,23 @@
         "alias_count": 1
       },
       {
+        "id": "h_b_m_vice",
+        "canonical_name": "H. B. M. Vice",
+        "alias_count": 1
+      },
+      {
+        "id": "h_b_m_vice_consul",
+        "canonical_name": "H. B. M. Vice-Consul",
+        "alias_count": 1
+      },
+      {
         "id": "hafflin",
         "canonical_name": "hafflin",
+        "alias_count": 1
+      },
+      {
+        "id": "hampstead_hill",
+        "canonical_name": "Hampstead Hill",
         "alias_count": 1
       },
       {
@@ -392,18 +307,13 @@
         "alias_count": 1
       },
       {
+        "id": "herr_leutner",
+        "canonical_name": "Herr Leutner",
+        "alias_count": 1
+      },
+      {
         "id": "hillingham",
         "canonical_name": "Hillingham",
-        "alias_count": 1
-      },
-      {
-        "id": "his_son",
-        "canonical_name": "His Son",
-        "alias_count": 1
-      },
-      {
-        "id": "hitherto",
-        "canonical_name": "Hitherto",
         "alias_count": 1
       },
       {
@@ -432,11 +342,6 @@
         "alias_count": 1
       },
       {
-        "id": "it",
-        "canonical_name": "Professor. It",
-        "alias_count": 1
-      },
-      {
         "id": "ittin",
         "canonical_name": "Ittin",
         "alias_count": 1
@@ -447,8 +352,13 @@
         "alias_count": 1
       },
       {
-        "id": "jonathan_2",
-        "canonical_name": "Mr. Jonathan",
+        "id": "jack_sheppard",
+        "canonical_name": "Jack Sheppard",
+        "alias_count": 1
+      },
+      {
+        "id": "john_rawlings",
+        "canonical_name": "John Rawlings",
         "alias_count": 1
       },
       {
@@ -467,11 +377,6 @@
         "alias_count": 1
       },
       {
-        "id": "king_laugh",
-        "canonical_name": "King Laugh",
-        "alias_count": 1
-      },
-      {
         "id": "kingdom_come",
         "canonical_name": "Kingdom Come",
         "alias_count": 1
@@ -482,23 +387,8 @@
         "alias_count": 1
       },
       {
-        "id": "left_munich",
-        "canonical_name": "Left Munich",
-        "alias_count": 1
-      },
-      {
         "id": "lethe",
         "canonical_name": "Lethe",
-        "alias_count": 1
-      },
-      {
-        "id": "letter",
-        "canonical_name": "Letter",
-        "alias_count": 1
-      },
-      {
-        "id": "lor",
-        "canonical_name": "Lor",
         "alias_count": 1
       },
       {
@@ -514,16 +404,6 @@
       {
         "id": "mary",
         "canonical_name": "Mary",
-        "alias_count": 1
-      },
-      {
-        "id": "mem",
-        "canonical_name": "Mem",
-        "alias_count": 1
-      },
-      {
-        "id": "memorandum",
-        "canonical_name": "Memorandum",
         "alias_count": 1
       },
       {
@@ -562,6 +442,11 @@
         "alias_count": 1
       },
       {
+        "id": "munich",
+        "canonical_name": "Munich",
+        "alias_count": 1
+      },
+      {
         "id": "nature",
         "canonical_name": "Nature",
         "alias_count": 1
@@ -569,11 +454,6 @@
       {
         "id": "nay",
         "canonical_name": "Nay",
-        "alias_count": 1
-      },
-      {
-        "id": "not",
-        "canonical_name": "Count. Not",
         "alias_count": 1
       },
       {
@@ -597,6 +477,11 @@
         "alias_count": 1
       },
       {
+        "id": "peter_farley",
+        "canonical_name": "Peter Farley",
+        "alias_count": 1
+      },
+      {
         "id": "petrofsky",
         "canonical_name": "Petrofsky",
         "alias_count": 1
@@ -612,13 +497,8 @@
         "alias_count": 1
       },
       {
-        "id": "ring",
-        "canonical_name": "Ring",
-        "alias_count": 1
-      },
-      {
         "id": "robin_hood",
-        "canonical_name": "Robin Hood's",
+        "canonical_name": "Robin Hood",
         "alias_count": 1
       },
       {
@@ -637,13 +517,8 @@
         "alias_count": 1
       },
       {
-        "id": "s_f_billington",
-        "canonical_name": "S. F. Billington",
-        "alias_count": 1
-      },
-      {
-        "id": "samuel_f_billington",
-        "canonical_name": "Samuel F. Billington",
+        "id": "sacred_wafer",
+        "canonical_name": "Sacred Wafer",
         "alias_count": 1
       },
       {
@@ -654,16 +529,6 @@
       {
         "id": "scholomance",
         "canonical_name": "Scholomance",
-        "alias_count": 1
-      },
-      {
-        "id": "sereth",
-        "canonical_name": "Sereth",
-        "alias_count": 1
-      },
-      {
-        "id": "seward_2",
-        "canonical_name": "Seward",
         "alias_count": 1
       },
       {
@@ -687,6 +552,11 @@
         "alias_count": 1
       },
       {
+        "id": "son",
+        "canonical_name": "Son",
+        "alias_count": 1
+      },
+      {
         "id": "square_chin",
         "canonical_name": "square chin",
         "alias_count": 1
@@ -697,38 +567,18 @@
         "alias_count": 1
       },
       {
-        "id": "taking",
-        "canonical_name": "Professor. Taking",
-        "alias_count": 1
-      },
-      {
-        "id": "tate_hill_pier",
-        "canonical_name": "Tate Hill Pier",
-        "alias_count": 1
-      },
-      {
-        "id": "telegram",
-        "canonical_name": "Telegram",
-        "alias_count": 1
-      },
-      {
         "id": "tellin",
         "canonical_name": "tellin",
         "alias_count": 1
       },
       {
-        "id": "that",
-        "canonical_name": "Count. That",
+        "id": "thomas",
+        "canonical_name": "Thomas",
         "alias_count": 1
       },
       {
-        "id": "then",
-        "canonical_name": "Count. Then",
-        "alias_count": 1
-      },
-      {
-        "id": "there",
-        "canonical_name": "Count. There",
+        "id": "thomas_snelling",
+        "canonical_name": "Thomas Snelling",
         "alias_count": 1
       },
       {
@@ -757,16 +607,6 @@
         "alias_count": 1
       },
       {
-        "id": "vampire_3",
-        "canonical_name": "Vampire",
-        "alias_count": 1
-      },
-      {
-        "id": "voivode_dracula",
-        "canonical_name": "Voivode Dracula",
-        "alias_count": 1
-      },
-      {
         "id": "wallachs",
         "canonical_name": "Wallachs",
         "alias_count": 1
@@ -774,11 +614,6 @@
       {
         "id": "waterloo",
         "canonical_name": "Waterloo",
-        "alias_count": 1
-      },
-      {
-        "id": "what",
-        "canonical_name": "Count. What",
         "alias_count": 1
       },
       {
@@ -799,11 +634,6 @@
       {
         "id": "ye_ll",
         "canonical_name": "Ye'll",
-        "alias_count": 1
-      },
-      {
-        "id": "yorkshire",
-        "canonical_name": "Yorkshire",
         "alias_count": 1
       }
     ],
@@ -872,7 +702,9 @@
       "vienna",
       "west",
       "east",
+      "danube",
       "klausenburgh",
+      "hotel_royale",
       "london",
       "transylvania",
       "moldavia",
@@ -887,13 +719,18 @@
       "france",
       "germany",
       "slovaks",
+      "golden_krone_hotel",
+      "borgo_pass",
       "st_george_day",
       "borgo_prund",
       "cszeks",
+      "borgo_pass_2",
       "tokay",
       "england",
+      "exeter",
       "carfax",
       "whitby",
+      "yorkshire",
       "newcastle",
       "dover",
       "varna",
@@ -911,12 +748,14 @@
       "greenland",
       "new_york",
       "leeds",
+      "grey_sea",
+      "tate_hill_pier",
+      "bosphorus",
       "dardanelles",
       "archipelago",
       "straits",
-      "biscay",
-      "tate_hill_pier_2",
       "bay",
+      "biscay",
       "st_mary_church",
       "great_northern_railway",
       "purfleet",
@@ -925,6 +764,7 @@
       "hillingham_2",
       "east_cliff",
       "amsterdam",
+      "great_eastern_hotel",
       "holmwood",
       "dame_nature",
       "floridas",
@@ -934,7 +774,9 @@
       "jamrach",
       "antwerp",
       "hyde_park_corner",
+      "green_park",
       "america",
+      "hampstead_heath",
       "shooter_hill",
       "holland",
       "paddington",
@@ -948,28 +790,32 @@
       "turkey",
       "lake_hermanstadt",
       "malvolio",
-      "vampire",
+      "eversfield_asylum",
+      "st_mary",
       "piccadilly",
       "switzerland",
+      "sacred_wafer_2",
       "fenchurch_street_lord_godalming",
       "arlington_street",
-      "vampire_2",
       "black_sea",
       "frenchmen",
       "consul",
+      "galatz",
       "bucharest",
       "castle",
+      "great_river",
       "kukri",
-      "galatz_3",
       "hapgood",
-      "skinsky",
       "st_peter",
       "hildesheim",
+      "sereth",
+      "bistritza",
       "veresti",
       "fundu_3",
       "veresti_2",
       "m_d",
-      "u_s"
+      "u_s",
+      "united_states"
     ],
     "narrators": [
       "abraham_van_helsing",
@@ -979,39 +825,52 @@
       "mina_harker"
     ],
     "count_dracula_surfaces": {
-      "I": 59,
-      "the Count": 43,
-      "his": 16,
-      "my": 15,
-      "me": 12,
+      "I": 117,
+      "the Count": 98,
+      "my": 34,
+      "me": 29,
+      "his": 28,
+      "we": 18,
+      "him": 13,
+      "he": 12,
       "Count Dracula": 10,
-      "we": 8,
-      "he": 6,
-      "him": 4,
-      "them": 4,
-      "they": 3,
-      "their": 2,
-      "us": 2,
-      "you": 2,
+      "Dracula": 8,
+      "they": 7,
+      "them": 6,
+      "their": 5,
+      "you": 4,
+      "us": 3,
+      "DRACULA": 2,
+      "myself": 2,
+      "our": 2,
       "Count Dracula's": 1,
+      "He": 1,
       "My": 1,
+      "Voivode Dracula": 1,
       "We": 1,
       "You": 1,
-      "myself": 1,
-      "our": 1,
-      "themselves": 1
+      "Your": 1,
+      "himself": 1,
+      "themselves": 1,
+      "your": 1
     },
     "facilities": [
+      "borgo_pass",
       "borgo_prund",
       "carfax",
       "castle_dracula",
       "chatham_street",
       "cszeks",
       "dame_nature",
+      "eversfield_asylum",
       "fenchurch_street_lord_godalming",
+      "golden_krone_hotel",
+      "great_eastern_hotel",
       "great_northern_railway",
+      "hotel_royale",
+      "sacred_wafer_2",
       "shooter_hill",
-      "tate_hill_pier_2",
+      "tate_hill_pier",
       "veresti_2"
     ],
     "gpes": [
@@ -1034,11 +893,12 @@
       "dr",
       "east_cliff",
       "england",
+      "exeter",
       "floridas",
       "france",
       "frenchmen",
       "fundu_3",
-      "galatz_3",
+      "galatz",
       "germany",
       "greece",
       "greenland",
@@ -1072,9 +932,9 @@
       "purfleet",
       "rome",
       "scotland",
-      "skinsky",
       "slovak",
       "st_george_day",
+      "st_mary",
       "st_mary_church",
       "st_peter",
       "ste",
@@ -1086,40 +946,32 @@
       "transylvania",
       "turkey",
       "u_s",
-      "vampire_2",
+      "united_states",
       "varna",
       "veresti",
       "vienna",
-      "whitby"
+      "whitby",
+      "yorkshire"
     ],
     "early_people_who_never_narrate": [
       "buda_pesth",
       "count_dracula",
-      "danube",
-      "dracula_2",
       "durham",
-      "each",
-      "exeter",
       "harker_jonathan",
-      "hitherto",
+      "herr_leutner",
       "inn",
       "judas",
-      "left_munich",
-      "mein_gott",
-      "mem",
+      "munich",
       "peter_hawkins",
       "quatre_face",
       "roman",
       "romany",
-      "samuel_f_billington",
+      "samuel_billington",
       "saxon",
       "shakespeare",
       "szekelys",
-      "then",
-      "there",
       "turk",
-      "wallachs",
-      "yorkshire"
+      "wallachs"
     ],
     "castle_id": "castle_dracula",
     "count_id": "count_dracula",

@@ -9,7 +9,7 @@ from src.kg.config import ROOT, load_config, load_yaml
 from src.kg.entries import load_entries
 from src.kg.evaluate import answer_queries, nominal_stats, pairwise_f1
 from src.kg.graph import build_graph
-from src.kg.mentions import apply_alias_types, extract_mentions
+from src.kg.mentions import apply_alias_types, drop_surfaces, extract_mentions, load_mentions
 from src.kg.relations import find_relations
 from src.kg.resolve import apply_gold_labels, resolve_mentions
 
@@ -33,6 +33,7 @@ def prepare(root: Path | None = None, use_knowledge: bool = True, mentions=None)
         mentions = extract_mentions(entries)
     config = load_config(root / "configs" / "kg.yml")
     gold = load_yaml(root / "data" / "gold" / "entities.yml")["entities"]
+    mentions = drop_surfaces(mentions, config.get("not_entities") or [])
     apply_alias_types(mentions, gold)
     knowledge = load_yaml(root / "data" / "gold" / "must_links.yml") or {}
     must = _pairs(knowledge, "pairs") if use_knowledge else []
@@ -63,12 +64,15 @@ def score_split(prepared: dict, chapters: set[int]) -> dict:
     return pairwise_f1(prepared["mentions"], prepared["gold"], chapters)
 
 
-def report(root: Path | None = None) -> dict:
-    """Score the held-out chapters with the knowledge file on and off."""
+def report(root: Path | None = None, mentions_path: Path | None = None) -> dict:
+    """Score the held-out chapters with the knowledge file on and off.
+
+    ``mentions_path`` reuses a saved ``mentions.jsonl`` instead of running spaCy.
+    """
     root = Path(root) if root else ROOT
     entries = load_entries(root / "data" / "dracula_ascii_rag.json")
     # spaCy runs once. Each pass resolves its own copy of the mentions.
-    raw = extract_mentions(entries)
+    raw = load_mentions(mentions_path) if mentions_path else extract_mentions(entries)
     on = prepare(root, use_knowledge=True, mentions=copy.deepcopy(raw))
     off = prepare(root, use_knowledge=False, mentions=copy.deepcopy(raw))
     heldout = set(range(14, 28))

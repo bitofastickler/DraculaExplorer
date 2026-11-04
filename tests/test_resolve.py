@@ -125,3 +125,47 @@ def test_surname_change_links_mina():
     ]
     result = resolve_mentions(mentions, [_entry(text)], CFG)
     assert result.mentions[0].entity_id == result.mentions[1].entity_id
+
+
+def _place(surfaces: list[str]) -> tuple[list[Mention], str]:
+    """Lay surfaces out in one text, one sentence each, and return mentions."""
+    text, mentions = "", []
+    for k, surface in enumerate(surfaces):
+        start = len(text)
+        mentions.append(_mention(surface, start, start + len(surface), sent=k))
+        text += surface + ". "
+    return mentions, text
+
+
+def test_two_men_sharing_a_given_name_stay_apart():
+    mentions, text = _place(["Thomas Bilder", "Thomas Snelling"])
+    result = resolve_mentions(mentions, [_entry(text)], CFG)
+    assert result.mentions[0].entity_id != result.mentions[1].entity_id
+
+
+def test_married_surname_change_still_merges():
+    mentions, text = _place(["Mina Murray", "Mina Harker"])
+    result = resolve_mentions(mentions, [_entry(text)], CFG)
+    assert result.mentions[0].entity_id == result.mentions[1].entity_id
+
+
+def test_bare_given_joins_only_the_dominant_full_name():
+    mentions, text = _place(["John Seward", "John Seward", "Dr. John Seward", "John Paxton", "John"])
+    result = resolve_mentions(mentions, [_entry(text)], CFG)
+    ids = [m.entity_id for m in result.mentions]
+    assert ids[4] == ids[0]
+    assert ids[3] != ids[0]
+
+
+def test_castle_does_not_make_dracula_ambiguous():
+    mentions, text = _place(["Count Dracula", "Dracula", "Castle Dracula"])
+    mentions[2].entity_type = "FAC"
+    result = resolve_mentions(mentions, [_entry(text)], CFG)
+    ids = [m.entity_id for m in result.mentions]
+    assert ids[0] == ids[1] != ids[2]
+
+
+def test_initial_matches_full_given_name():
+    mentions, text = _place(["Samuel F. Billington", "S. F. Billington"])
+    result = resolve_mentions(mentions, [_entry(text)], CFG)
+    assert result.mentions[0].entity_id == result.mentions[1].entity_id

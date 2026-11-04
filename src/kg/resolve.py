@@ -22,9 +22,9 @@ HONORIFICS = {
     "mr": "mr", "mister": "mr", "mrs": "mrs", "miss": "miss", "ms": "ms",
     "lord": "lord", "sir": "sir", "count": "count", "countess": "countess",
     "dr": "dr", "doctor": "doctor", "professor": "professor", "prof": "professor",
-    "captain": "captain", "madam": "madam",
+    "captain": "captain", "madam": "madam", "voivode": "voivode",
 }
-MALE_HONOR = {"mr", "lord", "sir", "count"}
+MALE_HONOR = {"mr", "lord", "sir", "count", "voivode"}
 FEMALE_HONOR = {"mrs", "miss", "ms", "countess", "madam"}
 PARTICLES = {"van", "von", "de", "di", "da", "du"}
 TITLE_NOMINALS = {
@@ -153,7 +153,7 @@ def _pair_score(a: NameParts, b: NameParts, weights: dict) -> float:
         surname = 0.5
     if a.given and b.given and (a.surname or b.surname or len(a.tokens) > 1 or len(b.tokens) > 1):
         # Single-token names store the token as given. Compare those via tokens.
-        given = 1.0 if a.given == b.given else 0.0
+        given = 1.0 if a.given == b.given or _initial_of(a.given, b.given) else 0.0
     elif a.tokens and b.tokens and a.tokens[0] == b.tokens[0] and (len(a.tokens) > 1 or len(b.tokens) > 1):
         given = 1.0
     else:
@@ -168,6 +168,14 @@ def _pair_score(a: NameParts, b: NameParts, weights: dict) -> float:
         + weights.get("given", 0.2) * given
         + weights.get("honorific", 0.1) * honor
     )
+
+
+def _initial_of(a: str | None, b: str | None) -> bool:
+    """True when one given name is the other's initial ("s" and "samuel")."""
+    if not a or not b or a == b:
+        return False
+    short, full = (a, b) if len(a) < len(b) else (b, a)
+    return len(short) == 1 and full.startswith(short)
 
 
 def _tokens_subset(a: NameParts, b: NameParts) -> bool:
@@ -202,18 +210,45 @@ def resolve_mentions(
     n = len(props)
     index = {m.mention_id: i for i, m in enumerate(props)}
 
-    # Surname -> given names attested on full (given + surname) mentions.
+    given_dominance = float(config.get("given_dominance", 0.6))
+
+    # Surname -> given names attested on full (given + surname) person
+    # mentions. Places are left out so "Castle Dracula" does not make
+    # "Dracula" look like a surname shared by two people. Initials are left
+    # out so "S. F. Billington" does not compete with "Samuel F. Billington".
     givens_for: dict[str, set[str]] = defaultdict(set)
-    honor_for_surname: dict[str, set[str]] = defaultdict(set)
-    for part in parts:
-        if part.surname and part.given and part.given != part.surname and len(part.tokens) >= 2:
+    full_count: dict[str, dict[str, int]] = defaultdict(lambda: defaultdict(int))
+    for i, part in enumerate(parts):
+        if props[i].entity_type != "PER":
+            continue
+        if part.surname and part.given and part.given != part.surname and len(part.tokens) >= 2 and len(part.given) > 1:
             givens_for[part.surname].add(part.given)
-        if part.surname and part.honorific:
-            honor_for_surname[part.surname].add(part.honorific)
+            full_count[part.given][part.surname] += 1
     surnames_for: dict[str, set[str]] = defaultdict(set)
     for surname, givens in givens_for.items():
         for given in givens:
             surnames_for[given].add(surname)
+
+    def married_change(given: str | None, s1: str | None, s2: str | None) -> bool:
+        """Mina Murray -> Mina Harker: a female given name with exactly two surnames."""
+        return bool(
+            given in female and s1 and s2 and s1 != s2
+            and len(surnames_for.get(given, ())) == 2
+            and {s1, s2} <= surnames_for[given]
+        )
+
+    def dominant_surname(given: str) -> str | None:
+        """The surname a bare given name refers to, when one clearly dominates.
+
+        "John" is used for Seward far more than for Paxton or Rawlings, so a
+        bare "John" joins Seward. With no clear winner it stays on its own.
+        """
+        counts = full_count.get(given) or {}
+        total = sum(counts.values())
+        if not total:
+            return None
+        best = max(counts, key=counts.get)
+        return best if counts[best] / total >= given_dominance else None
 
     surface_forms: dict[str, set[str]] = defaultdict(set)
     for part in parts:
@@ -232,10 +267,21 @@ def resolve_mentions(
             return True
         # Two full names with different given names are different people,
         # including a shared married surname (Jonathan Harker / Mina Harker).
+        # An initial is not a different given name (S. F. / Samuel F. Billington).
         if (
             a.given and b.given and a.surname and b.surname
             and len(a.tokens) >= 2 and len(b.tokens) >= 2
             and a.given != b.given
+            and not (a.surname == b.surname and _initial_of(a.given, b.given))
+        ):
+            return True
+        # Same given name, different surnames: different people (John Seward /
+        # John Paxton), except a woman's married-name change.
+        if (
+            a.given and a.given == b.given and a.surname and b.surname
+            and len(a.tokens) >= 2 and len(b.tokens) >= 2
+            and a.surname != b.surname
+            and not married_change(a.given, a.surname, b.surname)
         ):
             return True
         # Miss Westenra is not Mrs Westenra. A married-name honorific may
@@ -332,6 +378,14 @@ def resolve_mentions(
                     continue
             if _gender_clash(short, full, male, female):
                 continue
+            # A bare given name shared by several people joins only the
+            # dominant one ("John" -> John Seward, not John Paxton).
+            if (
+                len(short.tokens) == 1 and short.given and not short.surname
+                and len(surnames_for.get(short.given, ())) >= 2
+                and full.surname != dominant_surname(short.given)
+            ):
+                continue
             link(i, j, "subset")
 
     # Comma apposition: "Arthur Holmwood, Lord Godalming".
@@ -355,8 +409,9 @@ def resolve_mentions(
                 link(left_i, right_i, "apposition")
 
     # Same given name, two attested surnames: Mina Murray / Mina Harker.
+    # Only for female given names; Thomas Bilder and Thomas Snelling are two men.
     for given, surnames in surnames_for.items():
-        if len(surnames) != 2:
+        if len(surnames) != 2 or given not in female:
             continue
         members = [
             i for i, part in enumerate(parts)

@@ -173,12 +173,13 @@ a { color: var(--accent); }
   </div>
   <p class="lede">Who shows up with whom in Bram Stoker's novel. Each journal entry, letter, diary page and newspaper cutting is one document. Names are detected with spaCy and grouped into people and places. Two entities are linked when they appear in the same document; thicker lines mean more shared documents.</p>
   <details class="note">
-    <summary>Built automatically: read before trusting it</summary>
+    <summary>Built automatically: what to keep in mind</summary>
     <ul>
-      <li>Some different people are merged. The "John" node mixes Dr. John Seward with John Paxton and John Rawlings, and "Art" (Arthur's nickname) landed on Van Helsing.</li>
-      <li>Some people are split. Seward also appears as "Seward", and Dracula as "Count Dracula" and "Dracula".</li>
-      <li>Some types are wrong: Galatz and Exeter are tagged as people, and the ship <i>Czarina Catherine</i> as a person.</li>
-      <li>The <span id="f1">reported held-out score</span> only covers names in a hand-made alias list, so it can't see these errors.</li>
+      <li>Mentions count names and titles ("the Count", "the Professor"). Pronouns are not counted.</li>
+      <li>A bare "Harker" is its own node, because it can mean Jonathan or Mina.</li>
+      <li>Rarely mentioned names may still have the wrong type or be split; raise "Min mentions" to hide the long tail.</li>
+      <li>The <span id="f1">score</span> is measured against a hand-made answer key that was extended while fixing these errors, so it is not an independent test.</li>
+      <li>Links mean "appear in the same document", not a stated relationship.</li>
     </ul>
   </details>
   <div class="controls">
@@ -255,7 +256,7 @@ a { color: var(--accent); }
     const ents = data.entities;
     const byId = new Map(ents.map(e => [e.id, e]));
     if (data.heldout) {
-      document.getElementById("f1").textContent = `reported held-out F1 of ${data.heldout.f1.toFixed(2)}`;
+      document.getElementById("f1").textContent = `score (pairwise F1 ${data.heldout.f1.toFixed(2)} on chapters 14-27)`;
     }
     d3.select("#names").selectAll("option").data(ents).join("option").attr("value", d => d.name);
 
@@ -391,7 +392,7 @@ a { color: var(--accent); }
       p.html(`<h2>${esc(e.name)}</h2>
         <div class="meta">${labelOf[e.group]} · spaCy type ${esc(e.type)} · id <code>${esc(e.id)}</code></div>
         <div class="stats">
-          <div class="stat"><b>${e.mentions}</b><span>name mentions</span></div>
+          <div class="stat"><b>${e.mentions}</b><span>name &amp; title mentions</span></div>
           <div class="stat"><b>${e.entries.length}</b><span>documents</span></div>
           <div class="stat"><b>${e.narrated}</b><span>narrated</span></div>
         </div>

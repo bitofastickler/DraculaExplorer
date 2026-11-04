@@ -31,26 +31,35 @@ PRONOUNS = {
     "you", "your", "yours", "yourself",
 }
 
+# Only abbreviations take a period. "the Count. Then he" is a sentence
+# break, not a man called Count Then.
 _HONOR = (
-    r"(?:Count|Countess|Dr|Doctor|Professor|Lord|Mr|Mrs|Miss|Captain|Madam|Sir)"
+    r"(?:(?:Dr|Mr|Mrs)\.?|Count|Countess|Doctor|Professor|Lord|Miss|Captain|Madam|Sir)"
 )
 _NAME = r"(?:(?:Van|Von|De|Di)\s+)?[A-Z][A-Za-z']+(?:\s+[A-Z][A-Za-z']+){0,3}"
-HONOR_NAME = re.compile(rf"\b{_HONOR}\.?\s+{_NAME}\b")
+HONOR_NAME = re.compile(rf"\b{_HONOR}\s+{_NAME}\b")
 VAN_HELSING = re.compile(r"\b(?:Abraham\s+)?Van\s+Helsing\b")
 CASTLE = re.compile(r"\bCastle\s+Dracula\b")
 DEMETER = re.compile(r"\bthe\s+Demeter\b|\bDemeter\b")
 TITLE_NOM = re.compile(r"\bthe\s+(Count|Countess|Professor|Doctor|Captain)\b")
-_DIRTY = re.compile(r"[:\"“”]|--|---|&")
+_DIRTY = re.compile(r"[:,\"“”]|--|---|&")
+# A period after a word that is not an abbreviation ends a sentence.
+_SENT_BREAK = re.compile(r"\b(?!(?:Dr|Mr|Mrs|St)\.)[A-Za-z]{2,}\.\s")
 _STOP = {"on", "of", "the", "and", "to", "in", "for", "with", "from", "by", "at", "a", "an"}
+# spaCy entity edges with these tags are not part of the name
+# ("Happily Van Helsing", "Jonathan knelt", "Tell Arthur").
+_EDGE_POS = {"ADV", "VERB", "AUX", "ADP", "CCONJ", "SCONJ", "PRON", "DET", "PART", "INTJ", "PUNCT", "NUM"}
 
 
 def _usable_prop(surface: str) -> bool:
     """Drop spans that swallowed a verb, a quote, or a line-break artifact.
 
     The small NER model sometimes returns ``gravely:-- "Madam Mina``.
-    Those spans invent surnames and block real merges.
+    Those spans invent surnames and block real merges. A comma inside a
+    span ("Van Helsing, Art") joins two names; the apposition rule in
+    ``resolve`` handles that pattern between separate spans.
     """
-    if _DIRTY.search(surface):
+    if _DIRTY.search(surface) or _SENT_BREAK.search(surface + " "):
         return False
     tokens = [t.lower() for t in re.findall(r"[A-Za-z']+", surface)]
     if not tokens or len(tokens) > 5:
@@ -138,6 +147,19 @@ def _sent_id(sents, start: int) -> int:
     return 0
 
 
+def _trim_edges(ent):
+    """Drop leading and trailing tokens that are not part of a name."""
+    start, end = ent.start, ent.end
+    doc = ent.doc
+    while start < end and doc[start].pos_ in _EDGE_POS:
+        start += 1
+    while end > start and doc[end - 1].pos_ in _EDGE_POS:
+        end -= 1
+    if start == end:
+        return None
+    return doc[start:end]
+
+
 def _class_from_doc(doc, start: int, end: int, fallback: str) -> str:
     fragment = doc.char_span(start, end, alignment_mode="expand")
     if fragment is None:
@@ -161,6 +183,9 @@ def extract_mentions(entries: Iterable[Entry], nlp=None) -> list[Mention]:
         for ent in doc.ents:
             etype = SPACY_MAP.get(ent.label_)
             if etype is None:
+                continue
+            ent = _trim_edges(ent)
+            if ent is None:
                 continue
             mention_class = "PROP" if any(t.pos_ == "PROPN" for t in ent) else "NOM"
             spans.append(_Span(ent.start_char, ent.end_char, ent.text, etype, mention_class, "spacy", _sent_id(sents, ent.start_char)))
@@ -206,6 +231,43 @@ def extract_mentions(entries: Iterable[Entry], nlp=None) -> list[Mention]:
                 )
             )
     return mentions
+
+
+def load_mentions(path) -> list[Mention]:
+    """Read detected mentions back from ``mentions.jsonl`` with links cleared.
+
+    Lets the resolver be rerun without spaCy. Types already carry
+    ``apply_alias_types``, which is safe to apply again.
+    """
+    import json
+    from pathlib import Path
+
+    rows = []
+    for line in Path(path).read_text(encoding="utf-8").splitlines():
+        if not line.strip():
+            continue
+        row = json.loads(line)
+        row.update(entity_id=None, link_method=None, link_score=None)
+        rows.append(Mention(**row))
+    return rows
+
+
+def drop_surfaces(mentions: list[Mention], surfaces: Iterable[str]) -> list[Mention]:
+    """Remove proper mentions whose surface is a known non-entity.
+
+    The small NER model tags words such as "Telegram" or "Vampire" as
+    names. The list lives in ``configs/kg.yml`` under ``not_entities``.
+    Matching ignores case and a trailing possessive.
+    """
+    stop = {s.lower().strip() for s in surfaces}
+    if not stop:
+        return mentions
+
+    def key(surface: str) -> str:
+        text = " ".join(surface.lower().replace("’", "'").split())
+        return text[:-2] if text.endswith("'s") else text
+
+    return [m for m in mentions if m.mention_class != "PROP" or key(m.surface) not in stop]
 
 
 def mentions_in(entry: Entry, mentions: Sequence[Mention]) -> list[Mention]:

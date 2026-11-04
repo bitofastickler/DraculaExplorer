@@ -6,7 +6,7 @@ entities:
   - id: count_dracula
     canonical_name: Count Dracula
     entity_type: PER
-    aliases: [count dracula, dracula, the count]
+    aliases: [count dracula, dracula, the count, voivode dracula]
   - id: jonathan_harker
     canonical_name: Jonathan Harker
     entity_type: PER
@@ -22,7 +22,7 @@ entities:
   - id: arthur_holmwood
     canonical_name: Arthur Holmwood
     entity_type: PER
-    aliases: [arthur holmwood, arthur, lord godalming, godalming, mr holmwood]
+    aliases: [arthur holmwood, arthur, art, lord godalming, godalming, mr holmwood]
   - id: quincey_morris
     canonical_name: Quincey Morris
     entity_type: PER
@@ -30,7 +30,7 @@ entities:
   - id: john_seward
     canonical_name: John Seward
     entity_type: PER
-    aliases: [john seward, seward, dr seward, doctor seward, dr john seward]
+    aliases: [john seward, seward, dr seward, doctor seward, dr john seward, john, jack, jack seward]
   - id: abraham_van_helsing
     canonical_name: Abraham Van Helsing
     entity_type: PER
@@ -51,6 +51,77 @@ entities:
     canonical_name: Mr. Swales
     entity_type: PER
     aliases: [mr swales, swales]
+  # Minor characters who share a given name, surname or initial with the
+  # cast. Without them the score cannot see a wrong merge into a main cluster.
+  - id: john_paxton
+    canonical_name: Sir John Paxton
+    entity_type: PER
+    aliases: [john paxton, sir john paxton]
+  - id: john_rawlings
+    canonical_name: John Rawlings
+    entity_type: PER
+    aliases: [john rawlings]
+  - id: thomas_bilder
+    canonical_name: Thomas Bilder
+    entity_type: PER
+    aliases: [thomas bilder, bilder, mr bilder]
+  - id: thomas_snelling
+    canonical_name: Thomas Snelling
+    entity_type: PER
+    aliases: [thomas snelling, snelling]
+  - id: samuel_billington
+    canonical_name: Samuel F. Billington
+    entity_type: PER
+    aliases: [samuel f billington, s f billington, billington, mr billington]
+  # Places and a ship that the small spaCy model tags as people.
+  - id: galatz
+    canonical_name: Galatz
+    entity_type: GPE
+    aliases: [galatz]
+  - id: exeter
+    canonical_name: Exeter
+    entity_type: GPE
+    aliases: [exeter]
+  - id: varna
+    canonical_name: Varna
+    entity_type: GPE
+    aliases: [varna]
+  - id: czarina_catherine
+    canonical_name: Czarina Catherine
+    entity_type: VEH
+    aliases: [czarina catherine]
+  - id: petrof_skinsky
+    canonical_name: Petrof Skinsky
+    entity_type: PER
+    aliases: [petrof skinsky, skinsky]
+  - id: danube
+    canonical_name: Danube
+    entity_type: LOC
+    aliases: [danube]
+  - id: sereth
+    canonical_name: Sereth
+    entity_type: LOC
+    aliases: [sereth]
+  - id: bistritza
+    canonical_name: Bistritza
+    entity_type: LOC
+    aliases: [bistritza]
+  - id: bosphorus
+    canonical_name: Bosphorus
+    entity_type: LOC
+    aliases: [bosphorus]
+  - id: hampstead_heath
+    canonical_name: Hampstead Heath
+    entity_type: LOC
+    aliases: [hampstead heath]
+  - id: yorkshire
+    canonical_name: Yorkshire
+    entity_type: GPE
+    aliases: [yorkshire]
+  - id: tate_hill_pier
+    canonical_name: Tate Hill Pier
+    entity_type: FAC
+    aliases: [tate hill pier]
   - id: castle_dracula
     canonical_name: Castle Dracula
     entity_type: FAC

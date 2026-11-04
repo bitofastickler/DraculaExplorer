@@ -176,7 +176,19 @@ python scripts/export_site_graph.py
 ```
 Preview locally with `python -m http.server 8765 --directory docs` and open http://localhost:8765.
 
-**Known errors:** the resolver over-merges some first names (the `john` node mixes John Seward, John Paxton and John Rawlings), splits some people (`seward_2`, `dracula_2`), and mistypes a few places as people. The held-out F1 only scores names on the gold alias list, so it does not see these.
+Without spaCy (for example on a machine where Windows Smart App Control blocks its DLLs), `src.kg.build.report(mentions_path="data/kg/mentions.jsonl")` reruns resolution from the saved mentions.
+
+**What the score can and cannot see.** Pairwise F1 only scores mentions that match exactly one entity in `data/gold/entities.yml`. A name missing from that list is invisible, so the first version reported precision 1.0 while one cluster mixed John Seward, John Paxton and John Rawlings. Adding the confusable minor characters (Paxton, Rawlings, Bilder, Snelling, Billington) to the list exposed the errors: held-out F1 fell from 0.991 to 0.975. The resolver fixes below brought it to 1.000 (0.968 without `must_links.yml`). The list and rules were changed after reading errors in every chapter, so chapters 14–27 are no longer a clean held-out set. Treat 1.000 as "no errors the key can see", not as proof.
+
+Resolver rules added in that pass:
+- The surname change rule (Mina Murray → Mina Harker) applies only to `female_givens`. It had merged Thomas Bilder with Thomas Snelling.
+- Two full names with the same given name and different surnames are different people, unless that surname change applies.
+- A bare given name shared by several people ("John") joins a full name only when that surname has at least `given_dominance` of the full-name mentions.
+- Surname ambiguity counts person mentions only, so "Castle Dracula" no longer splits the Count. `Voivode` is an honorific and `jack` a diminutive of `john`.
+- An initial matches its given name (S. F. / Samuel F. Billington).
+- `not_entities` in `configs/kg.yml` drops words the small NER model tags as names ("Telegram", "Vampire").
+
+**Still open:** a bare `Harker` stays its own node because it can mean Jonathan or Mina. Long-tail names can still have the wrong type. The relation patterns in `src/kg/relations.py` emit nothing on this text, so the graph has co-appearance only.
 
 ---
 ## Notes

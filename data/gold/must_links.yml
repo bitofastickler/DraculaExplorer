@@ -4,6 +4,10 @@ pairs:
   - [mina murray, mina harker]
   - [arthur holmwood, lord godalming]
   - [arthur holmwood, godalming]
+  # Forms of address the automatic rules miss.
+  - [mr jonathan, jonathan harker]
+  - [art, arthur holmwood]
+  - [s f billington, samuel f billington]
 cannot:
   - [mrs westenra, lucy westenra]
   - [mrs westenra, lucy]

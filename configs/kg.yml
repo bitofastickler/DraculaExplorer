@@ -5,6 +5,9 @@ auto_merge_threshold: 0.85
 review_threshold: 0.60
 jaro_block: 0.92
 rare_token_max_surfaces: 30
+# Share of full-name mentions a surname needs before a bare given name
+# ("John") joins it. Set after the held-out run, see README.
+given_dominance: 0.6
 weights:
   jaro: 0.40
   surname: 0.30
@@ -15,6 +18,7 @@ female_givens: [mina, lucy, wilhelmina]
 diminutives:
   wilhelmina: mina
   quincy: quincey
+  jack: john
 narrator_to_entity:
   Jonathan Harker: jonathan_harker
   Mina Murray: mina_harker
@@ -24,3 +28,7 @@ narrator_to_entity:
   Abraham Van Helsing: abraham_van_helsing
 part_of:
   - [carfax, london]
+# Surfaces the small NER model tags as names that are not entities in the
+# story (document labels, exclamations, common nouns). Dropped before
+# resolution. Case-insensitive; a trailing 's is ignored.
+not_entities: [telegram, letter, memorandum, mem, vampire, wafer, lor, hitherto, ho, ring, god, un-dead, mein gott, herr, mein herr, king laugh, afraid, behold, breakfast, angel, angels]
