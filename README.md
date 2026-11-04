@@ -178,7 +178,7 @@ Preview locally with `python -m http.server 8765 --directory docs` and open http
 
 Without spaCy (for example on a machine where Windows Smart App Control blocks its DLLs), `src.kg.build.report(mentions_path="data/kg/mentions.jsonl")` reruns resolution from the saved mentions.
 
-**What the score can and cannot see.** Pairwise F1 only scores mentions that match exactly one entity in `data/gold/entities.yml`. A name missing from that list is invisible, so the first version reported precision 1.0 while one cluster mixed John Seward, John Paxton and John Rawlings. Adding the confusable minor characters (Paxton, Rawlings, Bilder, Snelling, Billington) to the list exposed the errors: held-out F1 fell from 0.991 to 0.975. The resolver fixes below brought it to 1.000 (0.968 without `must_links.yml`). The list and rules were changed after reading errors in every chapter, so chapters 14–27 are no longer a clean held-out set. Treat 1.000 as "no errors the key can see", not as proof.
+**What the score can and cannot see.** Pairwise F1 only scores mentions that match exactly one entity in `data/gold/entities.yml`. A name missing from that list is invisible, so the first version reported precision 1.0 while one cluster mixed John Seward, John Paxton and John Rawlings. Adding the confusable minor characters (Paxton, Rawlings, Bilder, Snelling, Billington) to the list exposed the errors: held-out F1 fell from 0.991 to 0.975. The resolver fixes below brought it to 1.000 (0.967 without `must_links.yml`). The list and rules were changed after reading errors in every chapter, so chapters 14–27 are no longer a clean held-out set. Treat 1.000 as "no errors the key can see", not as proof.
 
 Resolver rules added in that pass:
 - The surname change rule (Mina Murray → Mina Harker) applies only to `female_givens`. It had merged Thomas Bilder with Thomas Snelling.
@@ -188,7 +188,13 @@ Resolver rules added in that pass:
 - An initial matches its given name (S. F. / Samuel F. Billington).
 - `not_entities` in `configs/kg.yml` drops words the small NER model tags as names ("Telegram", "Vampire").
 
-**Still open:** a bare `Harker` stays its own node because it can mean Jonathan or Mina. Long-tail names can still have the wrong type. The relation patterns in `src/kg/relations.py` emit nothing on this text, so the graph has co-appearance only.
+Second pass, from reading the text:
+- **Bare "Harker" means Jonathan.** All 36 bare uses in the novel are Jonathan ("Harker and his wife"); Mina is always "Mrs. Harker", "Madam Mina" or "Mina". The rule is general: when every other holder of a surname married into it (Mina is also attested as Mina Murray), the bare surname belongs to the one who did not. With two men sharing a surname it still stays on its own. `harker` is now a gold alias of Jonathan, so the score checks this.
+- A token used more often as a given name is not treated as a shared surname. Without this, spaCy's "Husband Jonathan" and "Harker Jonathan" made `Jonathan` look like a surname with two owners and split him in two.
+- **Long-tail types** were checked by hand down to two mentions and fixed in `data/gold/entities.yml`: peoples are `NORP` (Szgany, Slovaks, Saxons, Turks, Huns), Bersicker is an `ANIMAL`, Hillingham, King's Cross and the Whitby piers are facilities, and Kettleness, Fundu and Haarlem are towns. "The Pass" is the Borgo Pass and "the Castle" is Castle Dracula. More stop-list entries drop bare compass points ("the East"), "Ste.", "Devil", "Lordship", the Gutenberg "New York" line, and similar.
+- **Stated relationships.** The pattern layer still emits nothing (the novel rarely puts a kinship word between two names). `data/gold/relations.yml` now lists relationships known from the book, each with cue words. A row becomes an edge only when one sentence names both entities with a cue word within 40 characters of each, and the edge stores that sentence. "I" and "my" stand for the narrator outside dialogue, except in a section whose narration calls the narrator by title: the source data files Mina's journal for 30 September under "Dr. Seward's Diary", and without this guard her "I" was read as Seward. 4 of 19 rows are confirmed: Jonathan married to Mina, Jonathan partner of Hawkins, Lucy friend of Mina, the Count owns Carfax. The site shows them, with the sentence, in a node's details.
+
+**Still open:** most true relationships (Arthur engaged to Lucy, Renfield as Seward's patient) are never stated in one sentence, so they are not in the graph. The entry data mixes some writers' sections under one narrator label, which also affects `NARRATED_BY`. Names mentioned once are not reviewed.
 
 ---
 ## Notes

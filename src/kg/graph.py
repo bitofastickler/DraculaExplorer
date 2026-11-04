@@ -123,6 +123,7 @@ def build_graph(
                 "source": rel["source"],
                 "target": rel["target"],
                 "evidence": rel.get("evidence") or [],
+                **{k: rel[k] for k in ("method", "support", "entry_index", "quote") if k in rel},
             })
 
     for pair in config.get("part_of") or []:

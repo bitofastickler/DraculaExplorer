@@ -169,3 +169,18 @@ def test_initial_matches_full_given_name():
     mentions, text = _place(["Samuel F. Billington", "S. F. Billington"])
     result = resolve_mentions(mentions, [_entry(text)], CFG)
     assert result.mentions[0].entity_id == result.mentions[1].entity_id
+
+
+def test_bare_married_surname_means_the_husband():
+    mentions, text = _place(["Jonathan Harker", "Mina Murray", "Mina Harker", "Mrs. Harker", "Harker"])
+    result = resolve_mentions(mentions, [_entry(text)], CFG)
+    ids = [m.entity_id for m in result.mentions]
+    assert ids[4] == ids[0]
+    assert ids[3] == ids[2] != ids[0]
+
+
+def test_bare_surname_of_two_brothers_stays_alone():
+    mentions, text = _place(["Jonathan Harker", "Arthur Harker", "Harker"])
+    result = resolve_mentions(mentions, [_entry(text)], CFG)
+    ids = [m.entity_id for m in result.mentions]
+    assert ids[2] not in (ids[0], ids[1])

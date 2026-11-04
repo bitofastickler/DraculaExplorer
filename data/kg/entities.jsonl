@@ -14,19 +14,17 @@
 {"id": "arminius", "label": "Entity", "canonical_name": "Arminius", "entity_type": "PER", "aliases": ["Arminius"], "mention_count": 2}
 {"id": "arthur_holmwood", "label": "Entity", "canonical_name": "Arthur Holmwood", "entity_type": "PER", "aliases": ["Art", "Arthur", "Arthur Holmwood", "Godalming", "Lord Arthur", "Lord Godalming", "Lord Godalming's", "Mr. Holmwood"], "mention_count": 194}
 {"id": "attila", "label": "Entity", "canonical_name": "Attila", "entity_type": "GPE", "aliases": ["Attila"], "mention_count": 1}
-{"id": "bay", "label": "Entity", "canonical_name": "Bay", "entity_type": "LOC", "aliases": ["Bay"], "mention_count": 2}
-{"id": "berkeley_hotel", "label": "Entity", "canonical_name": "Berkeley Hotel", "entity_type": "ORG", "aliases": ["Berkeley", "Berkeley Hotel"], "mention_count": 3}
+{"id": "berkeley_hotel", "label": "Entity", "canonical_name": "Berkeley Hotel", "entity_type": "FAC", "aliases": ["Berkeley", "Berkeley Hotel"], "mention_count": 3}
 {"id": "bermondsey", "label": "Entity", "canonical_name": "Bermondsey", "entity_type": "PER", "aliases": ["Bermondsey"], "mention_count": 1}
 {"id": "bermondsey_2", "label": "Entity", "canonical_name": "Bermondsey", "entity_type": "ORG", "aliases": ["Bermondsey"], "mention_count": 1}
-{"id": "bersicker", "label": "Entity", "canonical_name": "Bersicker", "entity_type": "ORG", "aliases": ["Bersicker"], "mention_count": 7}
+{"id": "bersicker", "label": "Entity", "canonical_name": "Bersicker", "entity_type": "ANIMAL", "aliases": ["Bersicker"], "mention_count": 7}
 {"id": "bethnal_green", "label": "Entity", "canonical_name": "Bethnal Green", "entity_type": "ORG", "aliases": ["Bethnal Green"], "mention_count": 1}
 {"id": "biscay", "label": "Entity", "canonical_name": "Biscay", "entity_type": "GPE", "aliases": ["Biscay"], "mention_count": 1}
 {"id": "bistritz", "label": "Entity", "canonical_name": "Bistritz", "entity_type": "GPE", "aliases": ["Bistritz"], "mention_count": 10}
 {"id": "bistritza", "label": "Entity", "canonical_name": "Bistritza", "entity_type": "LOC", "aliases": ["Bistritza"], "mention_count": 6}
 {"id": "black_sea", "label": "Entity", "canonical_name": "Black Sea", "entity_type": "LOC", "aliases": ["Black Sea", "Black-Sea"], "mention_count": 7}
 {"id": "blyme", "label": "Entity", "canonical_name": "Blyme", "entity_type": "PER", "aliases": ["Blyme"], "mention_count": 1}
-{"id": "borgo_pass", "label": "Entity", "canonical_name": "Borgo Pass", "entity_type": "FAC", "aliases": ["Borgo Pass"], "mention_count": 4}
-{"id": "borgo_pass_2", "label": "Entity", "canonical_name": "Borgo Pass", "entity_type": "LOC", "aliases": ["Borgo Pass"], "mention_count": 4}
+{"id": "borgo_pass", "label": "Entity", "canonical_name": "Borgo Pass", "entity_type": "LOC", "aliases": ["Borgo Pass", "Pass"], "mention_count": 15}
 {"id": "borgo_prund", "label": "Entity", "canonical_name": "Borgo Prund", "entity_type": "FAC", "aliases": ["Borgo Prund"], "mention_count": 1}
 {"id": "bosphorus", "label": "Entity", "canonical_name": "Bosphorus", "entity_type": "LOC", "aliases": ["Bosphorus"], "mention_count": 2}
 {"id": "braithwaite_lowrey", "label": "Entity", "canonical_name": "Braithwaite Lowrey", "entity_type": "ORG", "aliases": ["Braithwaite Lowrey"], "mention_count": 1}
@@ -43,17 +41,14 @@
 {"id": "bush", "label": "Entity", "canonical_name": "bush", "entity_type": "PER", "aliases": ["bush"], "mention_count": 1}
 {"id": "cape_farewell", "label": "Entity", "canonical_name": "Cape Farewell", "entity_type": "PER", "aliases": ["Cape Farewell"], "mention_count": 1}
 {"id": "carfax", "label": "Entity", "canonical_name": "Carfax", "entity_type": "FAC", "aliases": ["Carfax"], "mention_count": 19}
-{"id": "carter_paterson", "label": "Entity", "canonical_name": "Carter Paterson", "entity_type": "PER", "aliases": ["Carter", "Carter Paterson"], "mention_count": 4}
-{"id": "castle", "label": "Entity", "canonical_name": "Castle", "entity_type": "GPE", "aliases": ["Castle"], "mention_count": 2}
-{"id": "castle_dracula", "label": "Entity", "canonical_name": "Castle Dracula", "entity_type": "FAC", "aliases": ["Castle Dracula"], "mention_count": 5}
+{"id": "carter_paterson", "label": "Entity", "canonical_name": "Carter, Paterson & Co.", "entity_type": "ORG", "aliases": ["Carter", "Carter Paterson"], "mention_count": 4}
+{"id": "castle_dracula", "label": "Entity", "canonical_name": "Castle Dracula", "entity_type": "FAC", "aliases": ["Castle", "Castle Dracula"], "mention_count": 7}
 {"id": "charcot", "label": "Entity", "canonical_name": "Charcot", "entity_type": "PER", "aliases": ["Charcot"], "mention_count": 1}
 {"id": "chatham_street", "label": "Entity", "canonical_name": "Chatham Street", "entity_type": "FAC", "aliases": ["Chatham Street"], "mention_count": 1}
 {"id": "china", "label": "Entity", "canonical_name": "China", "entity_type": "GPE", "aliases": ["China", "china"], "mention_count": 3}
 {"id": "church", "label": "Entity", "canonical_name": "Church", "entity_type": "ORG", "aliases": ["Church"], "mention_count": 1}
 {"id": "conquistadores", "label": "Entity", "canonical_name": "Conquistadores", "entity_type": "ORG", "aliases": ["Conquistadores"], "mention_count": 1}
-{"id": "consul", "label": "Entity", "canonical_name": "Consul", "entity_type": "GPE", "aliases": ["Consul"], "mention_count": 2}
 {"id": "count_dracula", "label": "Entity", "canonical_name": "Count Dracula", "entity_type": "PER", "aliases": ["Count Dracula", "Count Dracula's", "DRACULA", "Dracula", "Voivode Dracula"], "mention_count": 22}
-{"id": "crescent", "label": "Entity", "canonical_name": "Crescent", "entity_type": "ORG", "aliases": ["Crescent"], "mention_count": 2}
 {"id": "cszeks", "label": "Entity", "canonical_name": "Cszeks", "entity_type": "FAC", "aliases": ["Cszeks"], "mention_count": 1}
 {"id": "customs", "label": "Entity", "canonical_name": "Customs", "entity_type": "ORG", "aliases": ["Customs", "Turkish Customs"], "mention_count": 3}
 {"id": "czarina_catherine", "label": "Entity", "canonical_name": "Czarina Catherine", "entity_type": "VEH", "aliases": ["Czarina Catherine"], "mention_count": 14}
@@ -70,18 +65,16 @@
 {"id": "demeter", "label": "Entity", "canonical_name": "Demeter", "entity_type": "VEH", "aliases": ["Demeter"], "mention_count": 3}
 {"id": "derby", "label": "Entity", "canonical_name": "Derby", "entity_type": "ORG", "aliases": ["Derby"], "mention_count": 1}
 {"id": "desdemona", "label": "Entity", "canonical_name": "Desdemona", "entity_type": "GPE", "aliases": ["Desdemona"], "mention_count": 1}
-{"id": "devil", "label": "Entity", "canonical_name": "Devil", "entity_type": "ORG", "aliases": ["Devil"], "mention_count": 3}
 {"id": "disraeli", "label": "Entity", "canonical_name": "Disraeli", "entity_type": "PER", "aliases": ["Disraeli"], "mention_count": 1}
 {"id": "donelson", "label": "Entity", "canonical_name": "Captain Donelson's", "entity_type": "PER", "aliases": ["Captain Donelson's", "Donelson"], "mention_count": 2}
-{"id": "doolittle_wharf", "label": "Entity", "canonical_name": "Doolittle's Wharf", "entity_type": "ORG", "aliases": ["Doolittle", "Doolittle's Wharf"], "mention_count": 2}
+{"id": "doolittles_wharf", "label": "Entity", "canonical_name": "Doolittle's Wharf", "entity_type": "FAC", "aliases": ["Doolittle", "Doolittle's Wharf"], "mention_count": 2}
 {"id": "dover", "label": "Entity", "canonical_name": "Dover", "entity_type": "GPE", "aliases": ["Dover"], "mention_count": 1}
 {"id": "dr", "label": "Entity", "canonical_name": "DR", "entity_type": "GPE", "aliases": ["DR"], "mention_count": 1}
 {"id": "draculas", "label": "Entity", "canonical_name": "Draculas", "entity_type": "PER", "aliases": ["Draculas"], "mention_count": 1}
 {"id": "dudding", "label": "Entity", "canonical_name": "Dudding", "entity_type": "ORG", "aliases": ["Dudding"], "mention_count": 1}
 {"id": "dun", "label": "Entity", "canonical_name": "Dun", "entity_type": "ORG", "aliases": ["Dun"], "mention_count": 1}
 {"id": "durham", "label": "Entity", "canonical_name": "Durham", "entity_type": "PER", "aliases": ["Durham"], "mention_count": 1}
-{"id": "east", "label": "Entity", "canonical_name": "East", "entity_type": "LOC", "aliases": ["East", "East Cliff"], "mention_count": 5}
-{"id": "east_cliff", "label": "Entity", "canonical_name": "East Cliff", "entity_type": "GPE", "aliases": ["East Cliff"], "mention_count": 1}
+{"id": "east_cliff", "label": "Entity", "canonical_name": "East Cliff", "entity_type": "LOC", "aliases": ["East Cliff"], "mention_count": 3}
 {"id": "eastern_europe", "label": "Entity", "canonical_name": "Eastern Europe", "entity_type": "LOC", "aliases": ["Eastern Europe", "Europe"], "mention_count": 2}
 {"id": "eatin", "label": "Entity", "canonical_name": "eatin", "entity_type": "ORG", "aliases": ["eatin"], "mention_count": 1}
 {"id": "edward_spencelagh", "label": "Entity", "canonical_name": "Edward Spencelagh", "entity_type": "PER", "aliases": ["Edward Spencelagh"], "mention_count": 1}
@@ -99,9 +92,7 @@
 {"id": "foundation", "label": "Entity", "canonical_name": "Foundation", "entity_type": "ORG", "aliases": ["Foundation"], "mention_count": 1}
 {"id": "france", "label": "Entity", "canonical_name": "France", "entity_type": "GPE", "aliases": ["France"], "mention_count": 2}
 {"id": "frenchmen", "label": "Entity", "canonical_name": "Frenchmen", "entity_type": "GPE", "aliases": ["Frenchmen"], "mention_count": 1}
-{"id": "fundu", "label": "Entity", "canonical_name": "Fundu", "entity_type": "ORG", "aliases": ["Fundu"], "mention_count": 3}
-{"id": "fundu_2", "label": "Entity", "canonical_name": "Fundu", "entity_type": "PER", "aliases": ["Fundu"], "mention_count": 1}
-{"id": "fundu_3", "label": "Entity", "canonical_name": "Fundu", "entity_type": "GPE", "aliases": ["Fundu"], "mention_count": 1}
+{"id": "fundu", "label": "Entity", "canonical_name": "Fundu", "entity_type": "GPE", "aliases": ["Fundu"], "mention_count": 5}
 {"id": "gabriel", "label": "Entity", "canonical_name": "Gabriel", "entity_type": "PER", "aliases": ["Gabriel"], "mention_count": 1}
 {"id": "galatz", "label": "Entity", "canonical_name": "Galatz", "entity_type": "GPE", "aliases": ["Galatz"], "mention_count": 18}
 {"id": "gaunt_grey_wolf", "label": "Entity", "canonical_name": "gaunt grey wolf", "entity_type": "PER", "aliases": ["gaunt grey wolf"], "mention_count": 1}
@@ -125,7 +116,7 @@
 {"id": "gutenberg", "label": "Entity", "canonical_name": "Gutenberg", "entity_type": "PER", "aliases": ["Gutenberg"], "mention_count": 1}
 {"id": "h_b_m_vice", "label": "Entity", "canonical_name": "H. B. M. Vice", "entity_type": "PER", "aliases": ["H. B. M. Vice"], "mention_count": 1}
 {"id": "h_b_m_vice_consul", "label": "Entity", "canonical_name": "H. B. M. Vice-Consul", "entity_type": "PER", "aliases": ["H. B. M. Vice-Consul"], "mention_count": 1}
-{"id": "haarlem", "label": "Entity", "canonical_name": "Haarlem", "entity_type": "ORG", "aliases": ["Haarlem"], "mention_count": 2}
+{"id": "haarlem", "label": "Entity", "canonical_name": "Haarlem", "entity_type": "GPE", "aliases": ["Haarlem"], "mention_count": 2}
 {"id": "hafflin", "label": "Entity", "canonical_name": "hafflin", "entity_type": "PER", "aliases": ["hafflin"], "mention_count": 1}
 {"id": "hampstead", "label": "Entity", "canonical_name": "Hampstead", "entity_type": "ORG", "aliases": ["Hampstead"], "mention_count": 1}
 {"id": "hampstead_heath", "label": "Entity", "canonical_name": "Hampstead Heath", "entity_type": "LOC", "aliases": ["Hampstead Heath"], "mention_count": 2}
@@ -134,27 +125,18 @@
 {"id": "hans_andersen", "label": "Entity", "canonical_name": "Hans Andersen", "entity_type": "PER", "aliases": ["Hans Andersen"], "mention_count": 1}
 {"id": "hapgood", "label": "Entity", "canonical_name": "Hapgood", "entity_type": "GPE", "aliases": ["Hapgood"], "mention_count": 1}
 {"id": "hardy", "label": "Entity", "canonical_name": "Hardy", "entity_type": "ORG", "aliases": ["Hardy"], "mention_count": 1}
-{"id": "harker", "label": "Entity", "canonical_name": "Harker", "entity_type": "PER", "aliases": ["HARKER", "Harker"], "mention_count": 35}
-{"id": "harker_2", "label": "Entity", "canonical_name": "Harker", "entity_type": "ORG", "aliases": ["Harker"], "mention_count": 2}
-{"id": "harker_jonathan", "label": "Entity", "canonical_name": "Harker Jonathan", "entity_type": "PER", "aliases": ["Harker Jonathan"], "mention_count": 1}
-{"id": "harkers", "label": "Entity", "canonical_name": "Harkers", "entity_type": "ORG", "aliases": ["Harkers"], "mention_count": 2}
 {"id": "herewith", "label": "Entity", "canonical_name": "Herewith", "entity_type": "PER", "aliases": ["Herewith"], "mention_count": 1}
 {"id": "herr_leutner", "label": "Entity", "canonical_name": "Herr Leutner", "entity_type": "PER", "aliases": ["Herr Leutner"], "mention_count": 1}
 {"id": "hildesheim", "label": "Entity", "canonical_name": "Hildesheim", "entity_type": "GPE", "aliases": ["Hildesheim"], "mention_count": 1}
-{"id": "hillingham", "label": "Entity", "canonical_name": "Hillingham", "entity_type": "PER", "aliases": ["Hillingham"], "mention_count": 1}
-{"id": "hillingham_2", "label": "Entity", "canonical_name": "Hillingham", "entity_type": "GPE", "aliases": ["Hillingham"], "mention_count": 7}
-{"id": "hillingham_3", "label": "Entity", "canonical_name": "Hillingham", "entity_type": "ORG", "aliases": ["Hillingham"], "mention_count": 1}
+{"id": "hillingham", "label": "Entity", "canonical_name": "Hillingham", "entity_type": "FAC", "aliases": ["Hillingham"], "mention_count": 9}
 {"id": "holland", "label": "Entity", "canonical_name": "Holland", "entity_type": "GPE", "aliases": ["Holland"], "mention_count": 1}
 {"id": "holmwood", "label": "Entity", "canonical_name": "Holmwood", "entity_type": "GPE", "aliases": ["Holmwood"], "mention_count": 1}
 {"id": "hotel_royale", "label": "Entity", "canonical_name": "Hotel Royale", "entity_type": "FAC", "aliases": ["Hotel Royale"], "mention_count": 1}
-{"id": "hun", "label": "Entity", "canonical_name": "Hun", "entity_type": "PER", "aliases": ["Hun"], "mention_count": 1}
+{"id": "hun", "label": "Entity", "canonical_name": "Hun", "entity_type": "NORP", "aliases": ["Hun"], "mention_count": 1}
 {"id": "hungary", "label": "Entity", "canonical_name": "Hungary", "entity_type": "GPE", "aliases": ["Hungary"], "mention_count": 1}
-{"id": "huns", "label": "Entity", "canonical_name": "Huns", "entity_type": "ORG", "aliases": ["Huns"], "mention_count": 2}
-{"id": "husband_jonathan", "label": "Entity", "canonical_name": "Husband Jonathan", "entity_type": "PER", "aliases": ["Husband Jonathan"], "mention_count": 1}
+{"id": "huns", "label": "Entity", "canonical_name": "Huns", "entity_type": "NORP", "aliases": ["Huns"], "mention_count": 2}
 {"id": "hush", "label": "Entity", "canonical_name": "Hush", "entity_type": "PER", "aliases": ["Hush"], "mention_count": 1}
 {"id": "hyde_park_corner", "label": "Entity", "canonical_name": "Hyde Park Corner", "entity_type": "LOC", "aliases": ["Hyde Park Corner"], "mention_count": 1}
-{"id": "i", "label": "Entity", "canonical_name": "I.", "entity_type": "ORG", "aliases": ["I."], "mention_count": 1}
-{"id": "i_bersicker", "label": "Entity", "canonical_name": "I. 'Bersicker", "entity_type": "PER", "aliases": ["I.", "I. 'Bersicker"], "mention_count": 2}
 {"id": "icelander", "label": "Entity", "canonical_name": "Icelander", "entity_type": "PER", "aliases": ["Icelander"], "mention_count": 1}
 {"id": "immanuel_hildesheim", "label": "Entity", "canonical_name": "Immanuel Hildesheim", "entity_type": "PER", "aliases": ["Hildesheim", "Immanuel Hildesheim"], "mention_count": 4}
 {"id": "incorporated_law_society", "label": "Entity", "canonical_name": "Incorporated Law Society", "entity_type": "ORG", "aliases": ["Incorporated Law Society"], "mention_count": 2}
@@ -169,14 +151,14 @@
 {"id": "john_paxton", "label": "Entity", "canonical_name": "Sir John Paxton", "entity_type": "PER", "aliases": ["John Paxton", "Sir John Paxton"], "mention_count": 2}
 {"id": "john_rawlings", "label": "Entity", "canonical_name": "John Rawlings", "entity_type": "PER", "aliases": ["John Rawlings"], "mention_count": 1}
 {"id": "john_seward", "label": "Entity", "canonical_name": "John Seward", "entity_type": "PER", "aliases": ["Dr. John Seward", "Dr. Seward", "Dr. Seward's", "Jack", "Jack Seward", "John", "John Seward", "Seward"], "mention_count": 147}
-{"id": "jonathan_harker", "label": "Entity", "canonical_name": "Jonathan Harker", "entity_type": "PER", "aliases": ["JONATHAN HARKER", "Jonathan", "Jonathan Harker", "Mr. Harker", "Mr. Jonathan", "Mr. Jonathan Harker"], "mention_count": 171}
+{"id": "jonathan_harker", "label": "Entity", "canonical_name": "Jonathan Harker", "entity_type": "PER", "aliases": ["HARKER", "Harker", "Harker Jonathan", "Husband Jonathan", "JONATHAN HARKER", "Jonathan", "Jonathan Harker", "Mr. Harker", "Mr. Jonathan", "Mr. Jonathan Harker"], "mention_count": 210}
 {"id": "joseph", "label": "Entity", "canonical_name": "Joseph", "entity_type": "PER", "aliases": ["Joseph"], "mention_count": 3}
 {"id": "judas", "label": "Entity", "canonical_name": "Judas", "entity_type": "PER", "aliases": ["Judas"], "mention_count": 1}
 {"id": "keeper", "label": "Entity", "canonical_name": "Keeper", "entity_type": "PER", "aliases": ["Keeper"], "mention_count": 1}
-{"id": "kettleness", "label": "Entity", "canonical_name": "Kettleness", "entity_type": "ORG", "aliases": ["Kettleness"], "mention_count": 4}
-{"id": "king_cross", "label": "Entity", "canonical_name": "King's Cross", "entity_type": "ORG", "aliases": ["Cross", "King's Cross"], "mention_count": 7}
+{"id": "kettleness", "label": "Entity", "canonical_name": "Kettleness", "entity_type": "GPE", "aliases": ["Kettleness"], "mention_count": 4}
 {"id": "king_vampire", "label": "Entity", "canonical_name": "King-Vampire", "entity_type": "ORG", "aliases": ["King-Vampire"], "mention_count": 1}
 {"id": "kingdom_come", "label": "Entity", "canonical_name": "Kingdom Come", "entity_type": "PER", "aliases": ["Kingdom Come"], "mention_count": 1}
+{"id": "kings_cross", "label": "Entity", "canonical_name": "King's Cross", "entity_type": "FAC", "aliases": ["King's Cross"], "mention_count": 5}
 {"id": "kingstead", "label": "Entity", "canonical_name": "Kingstead", "entity_type": "ORG", "aliases": ["Kingstead"], "mention_count": 1}
 {"id": "klausenburg", "label": "Entity", "canonical_name": "Klausenburg", "entity_type": "GPE", "aliases": ["Klausenburg"], "mention_count": 1}
 {"id": "klausenburgh", "label": "Entity", "canonical_name": "Klausenburgh", "entity_type": "GPE", "aliases": ["Klausenburgh"], "mention_count": 1}
@@ -189,11 +171,10 @@
 {"id": "lethe", "label": "Entity", "canonical_name": "Lethe", "entity_type": "PER", "aliases": ["Lethe"], "mention_count": 1}
 {"id": "lincoln", "label": "Entity", "canonical_name": "Lincoln", "entity_type": "ORG", "aliases": ["Lincoln"], "mention_count": 1}
 {"id": "liverpool_street", "label": "Entity", "canonical_name": "Liverpool Street", "entity_type": "ORG", "aliases": ["Liverpool Street"], "mention_count": 1}
-{"id": "lloyd", "label": "Entity", "canonical_name": "Lloyd", "entity_type": "ORG", "aliases": ["Lloyd"], "mention_count": 3}
+{"id": "lloyds", "label": "Entity", "canonical_name": "Lloyd's", "entity_type": "ORG", "aliases": ["Lloyd"], "mention_count": 3}
 {"id": "lombroso", "label": "Entity", "canonical_name": "Lombroso", "entity_type": "ORG", "aliases": ["Lombroso"], "mention_count": 1}
 {"id": "london", "label": "Entity", "canonical_name": "London", "entity_type": "GPE", "aliases": ["London"], "mention_count": 56}
 {"id": "london_directory", "label": "Entity", "canonical_name": "London Directory", "entity_type": "ORG", "aliases": ["London Directory"], "mention_count": 1}
-{"id": "lordship", "label": "Entity", "canonical_name": "Lordship", "entity_type": "ORG", "aliases": ["Lordship"], "mention_count": 2}
 {"id": "lotus", "label": "Entity", "canonical_name": "lotus", "entity_type": "ORG", "aliases": ["lotus"], "mention_count": 1}
 {"id": "lucy_westenra", "label": "Entity", "canonical_name": "Lucy Westenra", "entity_type": "PER", "aliases": ["LUCY", "Lucy", "Lucy Westenra", "Miss Lucy", "Miss Lucy Westenra's", "Miss Lucy's", "Miss Westenra", "Miss Westenra's"], "mention_count": 248}
 {"id": "m_d", "label": "Entity", "canonical_name": "M.D.", "entity_type": "GPE", "aliases": ["M.D."], "mention_count": 1}
@@ -221,10 +202,10 @@
 {"id": "nature", "label": "Entity", "canonical_name": "Nature", "entity_type": "PER", "aliases": ["Nature"], "mention_count": 1}
 {"id": "navy_lists", "label": "Entity", "canonical_name": "Navy Lists", "entity_type": "ORG", "aliases": ["Navy Lists"], "mention_count": 1}
 {"id": "nay", "label": "Entity", "canonical_name": "Nay", "entity_type": "PER", "aliases": ["Nay"], "mention_count": 1}
-{"id": "new_york", "label": "Entity", "canonical_name": "NEW YORK", "entity_type": "GPE", "aliases": ["NEW YORK", "York"], "mention_count": 2}
 {"id": "newcastle", "label": "Entity", "canonical_name": "Newcastle", "entity_type": "GPE", "aliases": ["Newcastle"], "mention_count": 1}
 {"id": "nordau", "label": "Entity", "canonical_name": "Nordau", "entity_type": "ORG", "aliases": ["Nordau"], "mention_count": 1}
-{"id": "north_foreland", "label": "Entity", "canonical_name": "North Foreland", "entity_type": "LOC", "aliases": ["North", "North Foreland", "North Sea"], "mention_count": 3}
+{"id": "north_foreland", "label": "Entity", "canonical_name": "North Foreland", "entity_type": "LOC", "aliases": ["North Foreland"], "mention_count": 1}
+{"id": "north_sea", "label": "Entity", "canonical_name": "North Sea", "entity_type": "LOC", "aliases": ["North Sea"], "mention_count": 1}
 {"id": "norway", "label": "Entity", "canonical_name": "Norway", "entity_type": "GPE", "aliases": ["Norway"], "mention_count": 1}
 {"id": "nota", "label": "Entity", "canonical_name": "Nota", "entity_type": "ORG", "aliases": ["Nota"], "mention_count": 1}
 {"id": "nuremberg", "label": "Entity", "canonical_name": "Nuremberg", "entity_type": "GPE", "aliases": ["Nuremberg"], "mention_count": 1}
@@ -237,8 +218,7 @@
 {"id": "ordnance_survey", "label": "Entity", "canonical_name": "Ordnance Survey", "entity_type": "ORG", "aliases": ["Ordnance Survey"], "mention_count": 1}
 {"id": "paddington", "label": "Entity", "canonical_name": "Paddington", "entity_type": "GPE", "aliases": ["Paddington"], "mention_count": 1}
 {"id": "paddington_2", "label": "Entity", "canonical_name": "Paddington", "entity_type": "ORG", "aliases": ["Paddington"], "mention_count": 1}
-{"id": "pampas", "label": "Entity", "canonical_name": "Pampas", "entity_type": "PER", "aliases": ["Pampas"], "mention_count": 2}
-{"id": "pass", "label": "Entity", "canonical_name": "Pass", "entity_type": "ORG", "aliases": ["Pass"], "mention_count": 7}
+{"id": "pampas", "label": "Entity", "canonical_name": "Pampas", "entity_type": "LOC", "aliases": ["Pampas"], "mention_count": 2}
 {"id": "patrick_hennessey", "label": "Entity", "canonical_name": "Patrick Hennessey", "entity_type": "PER", "aliases": ["Dr. Hennessey", "Patrick Hennessey"], "mention_count": 2}
 {"id": "peter_farley", "label": "Entity", "canonical_name": "Peter Farley", "entity_type": "PER", "aliases": ["Peter Farley"], "mention_count": 1}
 {"id": "peter_hawkins", "label": "Entity", "canonical_name": "Peter Hawkins", "entity_type": "PER", "aliases": ["Hawkins", "Mr. Hawkins", "Mr. Hawkins's", "Mr. Peter Hawkins", "Peter Hawkins"], "mention_count": 24}
@@ -247,7 +227,7 @@
 {"id": "piccadilly", "label": "Entity", "canonical_name": "Piccadilly", "entity_type": "GPE", "aliases": ["Piccadilly"], "mention_count": 3}
 {"id": "piccadilly_2", "label": "Entity", "canonical_name": "Piccadilly", "entity_type": "PER", "aliases": ["Piccadilly"], "mention_count": 1}
 {"id": "project", "label": "Entity", "canonical_name": "Project", "entity_type": "ORG", "aliases": ["Project"], "mention_count": 1}
-{"id": "pruth", "label": "Entity", "canonical_name": "Pruth", "entity_type": "ORG", "aliases": ["Pruth"], "mention_count": 2}
+{"id": "pruth", "label": "Entity", "canonical_name": "Pruth", "entity_type": "LOC", "aliases": ["Pruth"], "mention_count": 2}
 {"id": "purfleet", "label": "Entity", "canonical_name": "Purfleet", "entity_type": "GPE", "aliases": ["Purfleet"], "mention_count": 2}
 {"id": "quatre_face", "label": "Entity", "canonical_name": "Quatre Face", "entity_type": "PER", "aliases": ["Quatre Face"], "mention_count": 1}
 {"id": "quincey_morris", "label": "Entity", "canonical_name": "Quincey Morris", "entity_type": "PER", "aliases": ["Morris", "Morris Quincey", "Mr. Morris", "Mr. Morris's", "Mr. Quincey Morris", "QUINCEY P. MORRIS", "Quincey", "Quincey Morris", "Quincey P. Morris"], "mention_count": 121}
@@ -261,7 +241,7 @@
 {"id": "sacred_wafer_2", "label": "Entity", "canonical_name": "Sacred Wafer", "entity_type": "FAC", "aliases": ["Sacred Wafer"], "mention_count": 1}
 {"id": "salvation_army", "label": "Entity", "canonical_name": "Salvation Army", "entity_type": "ORG", "aliases": ["Army", "Salvation Army"], "mention_count": 2}
 {"id": "samuel_billington", "label": "Entity", "canonical_name": "Samuel F. Billington", "entity_type": "PER", "aliases": ["Mr. Billington", "Mr. Billington's", "S. F. Billington", "Samuel F. Billington"], "mention_count": 5}
-{"id": "saxon", "label": "Entity", "canonical_name": "Saxon", "entity_type": "PER", "aliases": ["Saxon"], "mention_count": 2}
+{"id": "saxons", "label": "Entity", "canonical_name": "Saxons", "entity_type": "NORP", "aliases": ["Saxon"], "mention_count": 2}
 {"id": "scholomance", "label": "Entity", "canonical_name": "Scholomance", "entity_type": "PER", "aliases": ["Scholomance"], "mention_count": 1}
 {"id": "scotland", "label": "Entity", "canonical_name": "Scotland", "entity_type": "GPE", "aliases": ["Scotland"], "mention_count": 1}
 {"id": "sereth", "label": "Entity", "canonical_name": "Sereth", "entity_type": "LOC", "aliases": ["Sereth"], "mention_count": 6}
@@ -269,31 +249,25 @@
 {"id": "shipment_company", "label": "Entity", "canonical_name": "Shipment Company", "entity_type": "ORG", "aliases": ["Shipment Company"], "mention_count": 1}
 {"id": "shooter_hill", "label": "Entity", "canonical_name": "Shooter's Hill", "entity_type": "FAC", "aliases": ["Shooter's Hill"], "mention_count": 1}
 {"id": "simmons", "label": "Entity", "canonical_name": "Simmons", "entity_type": "PER", "aliases": ["Simmons"], "mention_count": 1}
-{"id": "sirs", "label": "Entity", "canonical_name": "Sirs", "entity_type": "ORG", "aliases": ["Sirs"], "mention_count": 2}
 {"id": "sister", "label": "Entity", "canonical_name": "Sister", "entity_type": "PER", "aliases": ["Sister"], "mention_count": 1}
 {"id": "slav", "label": "Entity", "canonical_name": "Slav", "entity_type": "ORG", "aliases": ["Slav"], "mention_count": 1}
-{"id": "slovak", "label": "Entity", "canonical_name": "Slovak", "entity_type": "GPE", "aliases": ["Slovak"], "mention_count": 3}
-{"id": "slovak_2", "label": "Entity", "canonical_name": "Slovak", "entity_type": "PER", "aliases": ["Slovak"], "mention_count": 1}
-{"id": "slovaks", "label": "Entity", "canonical_name": "Slovaks", "entity_type": "LOC", "aliases": ["Slovaks"], "mention_count": 12}
-{"id": "slovaks_2", "label": "Entity", "canonical_name": "Slovaks", "entity_type": "ORG", "aliases": ["Slovaks"], "mention_count": 2}
+{"id": "slovaks", "label": "Entity", "canonical_name": "Slovaks", "entity_type": "NORP", "aliases": ["Slovak", "Slovaks"], "mention_count": 18}
 {"id": "solicitor", "label": "Entity", "canonical_name": "Solicitor", "entity_type": "ORG", "aliases": ["Solicitor"], "mention_count": 1}
 {"id": "son", "label": "Entity", "canonical_name": "Son", "entity_type": "PER", "aliases": ["Son"], "mention_count": 1}
-{"id": "south", "label": "Entity", "canonical_name": "South", "entity_type": "LOC", "aliases": ["South"], "mention_count": 5}
 {"id": "square_chin", "label": "Entity", "canonical_name": "square chin", "entity_type": "PER", "aliases": ["square chin"], "mention_count": 1}
 {"id": "st_george_day", "label": "Entity", "canonical_name": "St. George's Day", "entity_type": "GPE", "aliases": ["St. George's Day"], "mention_count": 1}
 {"id": "st_mary", "label": "Entity", "canonical_name": "St. Mary", "entity_type": "GPE", "aliases": ["St. Mary"], "mention_count": 1}
-{"id": "st_mary_church", "label": "Entity", "canonical_name": "St. Mary's Church", "entity_type": "GPE", "aliases": ["St. Mary's Church"], "mention_count": 2}
+{"id": "st_marys_church", "label": "Entity", "canonical_name": "St. Mary's Church", "entity_type": "FAC", "aliases": ["St. Mary's Church"], "mention_count": 2}
 {"id": "st_peter", "label": "Entity", "canonical_name": "St. Peter", "entity_type": "GPE", "aliases": ["St. Peter"], "mention_count": 1}
-{"id": "ste", "label": "Entity", "canonical_name": "Ste", "entity_type": "GPE", "aliases": ["Ste"], "mention_count": 3}
 {"id": "straits", "label": "Entity", "canonical_name": "Straits", "entity_type": "LOC", "aliases": ["Straits"], "mention_count": 1}
-{"id": "superintendent", "label": "Entity", "canonical_name": "Superintendent", "entity_type": "LOC", "aliases": ["Superintendent"], "mention_count": 2}
 {"id": "switzerland", "label": "Entity", "canonical_name": "Switzerland", "entity_type": "GPE", "aliases": ["Switzerland"], "mention_count": 2}
 {"id": "szekelys", "label": "Entity", "canonical_name": "Szekelys", "entity_type": "PER", "aliases": ["Szekelys"], "mention_count": 1}
-{"id": "szgany", "label": "Entity", "canonical_name": "Szgany", "entity_type": "GPE", "aliases": ["Szgany"], "mention_count": 13}
+{"id": "szgany", "label": "Entity", "canonical_name": "Szgany", "entity_type": "NORP", "aliases": ["Szgany"], "mention_count": 13}
 {"id": "tate_hill_pier", "label": "Entity", "canonical_name": "Tate Hill Pier", "entity_type": "FAC", "aliases": ["Tate Hill Pier"], "mention_count": 3}
 {"id": "tellin", "label": "Entity", "canonical_name": "tellin", "entity_type": "PER", "aliases": ["tellin"], "mention_count": 1}
 {"id": "texas", "label": "Entity", "canonical_name": "Texas", "entity_type": "GPE", "aliases": ["Texas"], "mention_count": 2}
 {"id": "thames", "label": "Entity", "canonical_name": "Thames", "entity_type": "ORG", "aliases": ["Thames"], "mention_count": 1}
+{"id": "the_crescent", "label": "Entity", "canonical_name": "The Crescent", "entity_type": "FAC", "aliases": ["Crescent"], "mention_count": 2}
 {"id": "thomas", "label": "Entity", "canonical_name": "Thomas", "entity_type": "PER", "aliases": ["Thomas"], "mention_count": 3}
 {"id": "thomas_bilder", "label": "Entity", "canonical_name": "Thomas Bilder", "entity_type": "PER", "aliases": ["Bilder", "Mr. Bilder", "Mr. Bilder's", "Thomas Bilder"], "mention_count": 6}
 {"id": "thomas_snelling", "label": "Entity", "canonical_name": "Thomas Snelling", "entity_type": "PER", "aliases": ["Thomas Snelling"], "mention_count": 1}
@@ -307,8 +281,8 @@
 {"id": "traveller", "label": "Entity", "canonical_name": "Traveller", "entity_type": "PER", "aliases": ["Traveller"], "mention_count": 1}
 {"id": "treaty", "label": "Entity", "canonical_name": "Treaty", "entity_type": "ORG", "aliases": ["Treaty"], "mention_count": 1}
 {"id": "tropics", "label": "Entity", "canonical_name": "Tropics", "entity_type": "ORG", "aliases": ["Tropics"], "mention_count": 1}
-{"id": "turk", "label": "Entity", "canonical_name": "Turk", "entity_type": "PER", "aliases": ["Turk"], "mention_count": 2}
 {"id": "turkey", "label": "Entity", "canonical_name": "Turkey", "entity_type": "GPE", "aliases": ["Turkey"], "mention_count": 4}
+{"id": "turks", "label": "Entity", "canonical_name": "Turks", "entity_type": "NORP", "aliases": ["Turk"], "mention_count": 2}
 {"id": "u_s", "label": "Entity", "canonical_name": "U.S.", "entity_type": "GPE", "aliases": ["U.S."], "mention_count": 1}
 {"id": "union", "label": "Entity", "canonical_name": "Union", "entity_type": "ORG", "aliases": ["Union"], "mention_count": 1}
 {"id": "united_states", "label": "Entity", "canonical_name": "United States", "entity_type": "GPE", "aliases": ["United States"], "mention_count": 2}
@@ -319,15 +293,16 @@
 {"id": "vienna", "label": "Entity", "canonical_name": "Vienna", "entity_type": "GPE", "aliases": ["Vienna"], "mention_count": 1}
 {"id": "wallachs", "label": "Entity", "canonical_name": "Wallachs", "entity_type": "PER", "aliases": ["Wallachs"], "mention_count": 1}
 {"id": "waterloo", "label": "Entity", "canonical_name": "Waterloo", "entity_type": "PER", "aliases": ["Waterloo"], "mention_count": 1}
-{"id": "west", "label": "Entity", "canonical_name": "West", "entity_type": "LOC", "aliases": ["West", "West Lighthouse", "West Pier"], "mention_count": 4}
+{"id": "west_lighthouse", "label": "Entity", "canonical_name": "West Lighthouse", "entity_type": "FAC", "aliases": ["West Lighthouse"], "mention_count": 1}
+{"id": "west_pier", "label": "Entity", "canonical_name": "West Pier", "entity_type": "FAC", "aliases": ["West Pier"], "mention_count": 1}
 {"id": "whitaker_almanac", "label": "Entity", "canonical_name": "Whitaker's Almanac", "entity_type": "ORG", "aliases": ["Whitaker's Almanac"], "mention_count": 1}
 {"id": "whitby", "label": "Entity", "canonical_name": "Whitby", "entity_type": "GPE", "aliases": ["Whitby"], "mention_count": 28}
 {"id": "whitby_abbey", "label": "Entity", "canonical_name": "Whitby Abbey", "entity_type": "PER", "aliases": ["Whitby Abbey"], "mention_count": 1}
-{"id": "winchesters", "label": "Entity", "canonical_name": "Winchesters", "entity_type": "ORG", "aliases": ["Winchesters"], "mention_count": 2}
 {"id": "windham", "label": "Entity", "canonical_name": "Windham", "entity_type": "PER", "aliases": ["Windham"], "mention_count": 1}
 {"id": "woe", "label": "Entity", "canonical_name": "Woe", "entity_type": "PER", "aliases": ["Woe"], "mention_count": 1}
 {"id": "wolf_department", "label": "Entity", "canonical_name": "wolf department", "entity_type": "ORG", "aliases": ["wolf department"], "mention_count": 1}
 {"id": "ye_ll", "label": "Entity", "canonical_name": "Ye'll", "entity_type": "PER", "aliases": ["Ye'll"], "mention_count": 1}
+{"id": "york", "label": "Entity", "canonical_name": "York", "entity_type": "GPE", "aliases": ["York"], "mention_count": 1}
 {"id": "yorkshire", "label": "Entity", "canonical_name": "Yorkshire", "entity_type": "GPE", "aliases": ["Yorkshire"], "mention_count": 2}
 {"id": "zoo", "label": "Entity", "canonical_name": "Zoo", "entity_type": "ORG", "aliases": ["Zoo"], "mention_count": 1}
 {"id": "zoological_gardens", "label": "Entity", "canonical_name": "Zoological Gardens", "entity_type": "ORG", "aliases": ["Zoological Gardens"], "mention_count": 1}

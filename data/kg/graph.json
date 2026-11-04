@@ -1556,20 +1556,10 @@
       "mention_count": 1
     },
     {
-      "id": "bay",
-      "label": "Entity",
-      "canonical_name": "Bay",
-      "entity_type": "LOC",
-      "aliases": [
-        "Bay"
-      ],
-      "mention_count": 2
-    },
-    {
       "id": "berkeley_hotel",
       "label": "Entity",
       "canonical_name": "Berkeley Hotel",
-      "entity_type": "ORG",
+      "entity_type": "FAC",
       "aliases": [
         "Berkeley",
         "Berkeley Hotel"
@@ -1600,7 +1590,7 @@
       "id": "bersicker",
       "label": "Entity",
       "canonical_name": "Bersicker",
-      "entity_type": "ORG",
+      "entity_type": "ANIMAL",
       "aliases": [
         "Bersicker"
       ],
@@ -1671,21 +1661,12 @@
       "id": "borgo_pass",
       "label": "Entity",
       "canonical_name": "Borgo Pass",
-      "entity_type": "FAC",
-      "aliases": [
-        "Borgo Pass"
-      ],
-      "mention_count": 4
-    },
-    {
-      "id": "borgo_pass_2",
-      "label": "Entity",
-      "canonical_name": "Borgo Pass",
       "entity_type": "LOC",
       "aliases": [
-        "Borgo Pass"
+        "Borgo Pass",
+        "Pass"
       ],
-      "mention_count": 4
+      "mention_count": 15
     },
     {
       "id": "borgo_prund",
@@ -1850,8 +1831,8 @@
     {
       "id": "carter_paterson",
       "label": "Entity",
-      "canonical_name": "Carter Paterson",
-      "entity_type": "PER",
+      "canonical_name": "Carter, Paterson & Co.",
+      "entity_type": "ORG",
       "aliases": [
         "Carter",
         "Carter Paterson"
@@ -1859,24 +1840,15 @@
       "mention_count": 4
     },
     {
-      "id": "castle",
-      "label": "Entity",
-      "canonical_name": "Castle",
-      "entity_type": "GPE",
-      "aliases": [
-        "Castle"
-      ],
-      "mention_count": 2
-    },
-    {
       "id": "castle_dracula",
       "label": "Entity",
       "canonical_name": "Castle Dracula",
       "entity_type": "FAC",
       "aliases": [
+        "Castle",
         "Castle Dracula"
       ],
-      "mention_count": 5
+      "mention_count": 7
     },
     {
       "id": "charcot",
@@ -1930,16 +1902,6 @@
       "mention_count": 1
     },
     {
-      "id": "consul",
-      "label": "Entity",
-      "canonical_name": "Consul",
-      "entity_type": "GPE",
-      "aliases": [
-        "Consul"
-      ],
-      "mention_count": 2
-    },
-    {
       "id": "count_dracula",
       "label": "Entity",
       "canonical_name": "Count Dracula",
@@ -1952,16 +1914,6 @@
         "Voivode Dracula"
       ],
       "mention_count": 22
-    },
-    {
-      "id": "crescent",
-      "label": "Entity",
-      "canonical_name": "Crescent",
-      "entity_type": "ORG",
-      "aliases": [
-        "Crescent"
-      ],
-      "mention_count": 2
     },
     {
       "id": "cszeks",
@@ -2125,16 +2077,6 @@
       "mention_count": 1
     },
     {
-      "id": "devil",
-      "label": "Entity",
-      "canonical_name": "Devil",
-      "entity_type": "ORG",
-      "aliases": [
-        "Devil"
-      ],
-      "mention_count": 3
-    },
-    {
       "id": "disraeli",
       "label": "Entity",
       "canonical_name": "Disraeli",
@@ -2156,10 +2098,10 @@
       "mention_count": 2
     },
     {
-      "id": "doolittle_wharf",
+      "id": "doolittles_wharf",
       "label": "Entity",
       "canonical_name": "Doolittle's Wharf",
-      "entity_type": "ORG",
+      "entity_type": "FAC",
       "aliases": [
         "Doolittle",
         "Doolittle's Wharf"
@@ -2227,25 +2169,14 @@
       "mention_count": 1
     },
     {
-      "id": "east",
-      "label": "Entity",
-      "canonical_name": "East",
-      "entity_type": "LOC",
-      "aliases": [
-        "East",
-        "East Cliff"
-      ],
-      "mention_count": 5
-    },
-    {
       "id": "east_cliff",
       "label": "Entity",
       "canonical_name": "East Cliff",
-      "entity_type": "GPE",
+      "entity_type": "LOC",
       "aliases": [
         "East Cliff"
       ],
-      "mention_count": 1
+      "mention_count": 3
     },
     {
       "id": "eastern_europe",
@@ -2422,31 +2353,11 @@
       "id": "fundu",
       "label": "Entity",
       "canonical_name": "Fundu",
-      "entity_type": "ORG",
-      "aliases": [
-        "Fundu"
-      ],
-      "mention_count": 3
-    },
-    {
-      "id": "fundu_2",
-      "label": "Entity",
-      "canonical_name": "Fundu",
-      "entity_type": "PER",
-      "aliases": [
-        "Fundu"
-      ],
-      "mention_count": 1
-    },
-    {
-      "id": "fundu_3",
-      "label": "Entity",
-      "canonical_name": "Fundu",
       "entity_type": "GPE",
       "aliases": [
         "Fundu"
       ],
-      "mention_count": 1
+      "mention_count": 5
     },
     {
       "id": "gabriel",
@@ -2682,7 +2593,7 @@
       "id": "haarlem",
       "label": "Entity",
       "canonical_name": "Haarlem",
-      "entity_type": "ORG",
+      "entity_type": "GPE",
       "aliases": [
         "Haarlem"
       ],
@@ -2769,47 +2680,6 @@
       "mention_count": 1
     },
     {
-      "id": "harker",
-      "label": "Entity",
-      "canonical_name": "Harker",
-      "entity_type": "PER",
-      "aliases": [
-        "HARKER",
-        "Harker"
-      ],
-      "mention_count": 35
-    },
-    {
-      "id": "harker_2",
-      "label": "Entity",
-      "canonical_name": "Harker",
-      "entity_type": "ORG",
-      "aliases": [
-        "Harker"
-      ],
-      "mention_count": 2
-    },
-    {
-      "id": "harker_jonathan",
-      "label": "Entity",
-      "canonical_name": "Harker Jonathan",
-      "entity_type": "PER",
-      "aliases": [
-        "Harker Jonathan"
-      ],
-      "mention_count": 1
-    },
-    {
-      "id": "harkers",
-      "label": "Entity",
-      "canonical_name": "Harkers",
-      "entity_type": "ORG",
-      "aliases": [
-        "Harkers"
-      ],
-      "mention_count": 2
-    },
-    {
       "id": "herewith",
       "label": "Entity",
       "canonical_name": "Herewith",
@@ -2843,31 +2713,11 @@
       "id": "hillingham",
       "label": "Entity",
       "canonical_name": "Hillingham",
-      "entity_type": "PER",
+      "entity_type": "FAC",
       "aliases": [
         "Hillingham"
       ],
-      "mention_count": 1
-    },
-    {
-      "id": "hillingham_2",
-      "label": "Entity",
-      "canonical_name": "Hillingham",
-      "entity_type": "GPE",
-      "aliases": [
-        "Hillingham"
-      ],
-      "mention_count": 7
-    },
-    {
-      "id": "hillingham_3",
-      "label": "Entity",
-      "canonical_name": "Hillingham",
-      "entity_type": "ORG",
-      "aliases": [
-        "Hillingham"
-      ],
-      "mention_count": 1
+      "mention_count": 9
     },
     {
       "id": "holland",
@@ -2903,7 +2753,7 @@
       "id": "hun",
       "label": "Entity",
       "canonical_name": "Hun",
-      "entity_type": "PER",
+      "entity_type": "NORP",
       "aliases": [
         "Hun"
       ],
@@ -2923,21 +2773,11 @@
       "id": "huns",
       "label": "Entity",
       "canonical_name": "Huns",
-      "entity_type": "ORG",
+      "entity_type": "NORP",
       "aliases": [
         "Huns"
       ],
       "mention_count": 2
-    },
-    {
-      "id": "husband_jonathan",
-      "label": "Entity",
-      "canonical_name": "Husband Jonathan",
-      "entity_type": "PER",
-      "aliases": [
-        "Husband Jonathan"
-      ],
-      "mention_count": 1
     },
     {
       "id": "hush",
@@ -2958,27 +2798,6 @@
         "Hyde Park Corner"
       ],
       "mention_count": 1
-    },
-    {
-      "id": "i",
-      "label": "Entity",
-      "canonical_name": "I.",
-      "entity_type": "ORG",
-      "aliases": [
-        "I."
-      ],
-      "mention_count": 1
-    },
-    {
-      "id": "i_bersicker",
-      "label": "Entity",
-      "canonical_name": "I. 'Bersicker",
-      "entity_type": "PER",
-      "aliases": [
-        "I.",
-        "I. 'Bersicker"
-      ],
-      "mention_count": 2
     },
     {
       "id": "icelander",
@@ -3135,6 +2954,10 @@
       "canonical_name": "Jonathan Harker",
       "entity_type": "PER",
       "aliases": [
+        "HARKER",
+        "Harker",
+        "Harker Jonathan",
+        "Husband Jonathan",
         "JONATHAN HARKER",
         "Jonathan",
         "Jonathan Harker",
@@ -3142,7 +2965,7 @@
         "Mr. Jonathan",
         "Mr. Jonathan Harker"
       ],
-      "mention_count": 171
+      "mention_count": 210
     },
     {
       "id": "joseph",
@@ -3178,22 +3001,11 @@
       "id": "kettleness",
       "label": "Entity",
       "canonical_name": "Kettleness",
-      "entity_type": "ORG",
+      "entity_type": "GPE",
       "aliases": [
         "Kettleness"
       ],
       "mention_count": 4
-    },
-    {
-      "id": "king_cross",
-      "label": "Entity",
-      "canonical_name": "King's Cross",
-      "entity_type": "ORG",
-      "aliases": [
-        "Cross",
-        "King's Cross"
-      ],
-      "mention_count": 7
     },
     {
       "id": "king_vampire",
@@ -3214,6 +3026,16 @@
         "Kingdom Come"
       ],
       "mention_count": 1
+    },
+    {
+      "id": "kings_cross",
+      "label": "Entity",
+      "canonical_name": "King's Cross",
+      "entity_type": "FAC",
+      "aliases": [
+        "King's Cross"
+      ],
+      "mention_count": 5
     },
     {
       "id": "kingstead",
@@ -3336,9 +3158,9 @@
       "mention_count": 1
     },
     {
-      "id": "lloyd",
+      "id": "lloyds",
       "label": "Entity",
-      "canonical_name": "Lloyd",
+      "canonical_name": "Lloyd's",
       "entity_type": "ORG",
       "aliases": [
         "Lloyd"
@@ -3374,16 +3196,6 @@
         "London Directory"
       ],
       "mention_count": 1
-    },
-    {
-      "id": "lordship",
-      "label": "Entity",
-      "canonical_name": "Lordship",
-      "entity_type": "ORG",
-      "aliases": [
-        "Lordship"
-      ],
-      "mention_count": 2
     },
     {
       "id": "lotus",
@@ -3672,17 +3484,6 @@
       "mention_count": 1
     },
     {
-      "id": "new_york",
-      "label": "Entity",
-      "canonical_name": "NEW YORK",
-      "entity_type": "GPE",
-      "aliases": [
-        "NEW YORK",
-        "York"
-      ],
-      "mention_count": 2
-    },
-    {
       "id": "newcastle",
       "label": "Entity",
       "canonical_name": "Newcastle",
@@ -3708,11 +3509,19 @@
       "canonical_name": "North Foreland",
       "entity_type": "LOC",
       "aliases": [
-        "North",
-        "North Foreland",
+        "North Foreland"
+      ],
+      "mention_count": 1
+    },
+    {
+      "id": "north_sea",
+      "label": "Entity",
+      "canonical_name": "North Sea",
+      "entity_type": "LOC",
+      "aliases": [
         "North Sea"
       ],
-      "mention_count": 3
+      "mention_count": 1
     },
     {
       "id": "norway",
@@ -3838,21 +3647,11 @@
       "id": "pampas",
       "label": "Entity",
       "canonical_name": "Pampas",
-      "entity_type": "PER",
+      "entity_type": "LOC",
       "aliases": [
         "Pampas"
       ],
       "mention_count": 2
-    },
-    {
-      "id": "pass",
-      "label": "Entity",
-      "canonical_name": "Pass",
-      "entity_type": "ORG",
-      "aliases": [
-        "Pass"
-      ],
-      "mention_count": 7
     },
     {
       "id": "patrick_hennessey",
@@ -3944,7 +3743,7 @@
       "id": "pruth",
       "label": "Entity",
       "canonical_name": "Pruth",
-      "entity_type": "ORG",
+      "entity_type": "LOC",
       "aliases": [
         "Pruth"
       ],
@@ -4095,10 +3894,10 @@
       "mention_count": 5
     },
     {
-      "id": "saxon",
+      "id": "saxons",
       "label": "Entity",
-      "canonical_name": "Saxon",
-      "entity_type": "PER",
+      "canonical_name": "Saxons",
+      "entity_type": "NORP",
       "aliases": [
         "Saxon"
       ],
@@ -4175,16 +3974,6 @@
       "mention_count": 1
     },
     {
-      "id": "sirs",
-      "label": "Entity",
-      "canonical_name": "Sirs",
-      "entity_type": "ORG",
-      "aliases": [
-        "Sirs"
-      ],
-      "mention_count": 2
-    },
-    {
       "id": "sister",
       "label": "Entity",
       "canonical_name": "Sister",
@@ -4205,44 +3994,15 @@
       "mention_count": 1
     },
     {
-      "id": "slovak",
-      "label": "Entity",
-      "canonical_name": "Slovak",
-      "entity_type": "GPE",
-      "aliases": [
-        "Slovak"
-      ],
-      "mention_count": 3
-    },
-    {
-      "id": "slovak_2",
-      "label": "Entity",
-      "canonical_name": "Slovak",
-      "entity_type": "PER",
-      "aliases": [
-        "Slovak"
-      ],
-      "mention_count": 1
-    },
-    {
       "id": "slovaks",
       "label": "Entity",
       "canonical_name": "Slovaks",
-      "entity_type": "LOC",
+      "entity_type": "NORP",
       "aliases": [
+        "Slovak",
         "Slovaks"
       ],
-      "mention_count": 12
-    },
-    {
-      "id": "slovaks_2",
-      "label": "Entity",
-      "canonical_name": "Slovaks",
-      "entity_type": "ORG",
-      "aliases": [
-        "Slovaks"
-      ],
-      "mention_count": 2
+      "mention_count": 18
     },
     {
       "id": "solicitor",
@@ -4263,16 +4023,6 @@
         "Son"
       ],
       "mention_count": 1
-    },
-    {
-      "id": "south",
-      "label": "Entity",
-      "canonical_name": "South",
-      "entity_type": "LOC",
-      "aliases": [
-        "South"
-      ],
-      "mention_count": 5
     },
     {
       "id": "square_chin",
@@ -4305,10 +4055,10 @@
       "mention_count": 1
     },
     {
-      "id": "st_mary_church",
+      "id": "st_marys_church",
       "label": "Entity",
       "canonical_name": "St. Mary's Church",
-      "entity_type": "GPE",
+      "entity_type": "FAC",
       "aliases": [
         "St. Mary's Church"
       ],
@@ -4325,16 +4075,6 @@
       "mention_count": 1
     },
     {
-      "id": "ste",
-      "label": "Entity",
-      "canonical_name": "Ste",
-      "entity_type": "GPE",
-      "aliases": [
-        "Ste"
-      ],
-      "mention_count": 3
-    },
-    {
       "id": "straits",
       "label": "Entity",
       "canonical_name": "Straits",
@@ -4343,16 +4083,6 @@
         "Straits"
       ],
       "mention_count": 1
-    },
-    {
-      "id": "superintendent",
-      "label": "Entity",
-      "canonical_name": "Superintendent",
-      "entity_type": "LOC",
-      "aliases": [
-        "Superintendent"
-      ],
-      "mention_count": 2
     },
     {
       "id": "switzerland",
@@ -4378,7 +4108,7 @@
       "id": "szgany",
       "label": "Entity",
       "canonical_name": "Szgany",
-      "entity_type": "GPE",
+      "entity_type": "NORP",
       "aliases": [
         "Szgany"
       ],
@@ -4423,6 +4153,16 @@
         "Thames"
       ],
       "mention_count": 1
+    },
+    {
+      "id": "the_crescent",
+      "label": "Entity",
+      "canonical_name": "The Crescent",
+      "entity_type": "FAC",
+      "aliases": [
+        "Crescent"
+      ],
+      "mention_count": 2
     },
     {
       "id": "thomas",
@@ -4558,16 +4298,6 @@
       "mention_count": 1
     },
     {
-      "id": "turk",
-      "label": "Entity",
-      "canonical_name": "Turk",
-      "entity_type": "PER",
-      "aliases": [
-        "Turk"
-      ],
-      "mention_count": 2
-    },
-    {
       "id": "turkey",
       "label": "Entity",
       "canonical_name": "Turkey",
@@ -4576,6 +4306,16 @@
         "Turkey"
       ],
       "mention_count": 4
+    },
+    {
+      "id": "turks",
+      "label": "Entity",
+      "canonical_name": "Turks",
+      "entity_type": "NORP",
+      "aliases": [
+        "Turk"
+      ],
+      "mention_count": 2
     },
     {
       "id": "u_s",
@@ -4678,16 +4418,24 @@
       "mention_count": 1
     },
     {
-      "id": "west",
+      "id": "west_lighthouse",
       "label": "Entity",
-      "canonical_name": "West",
-      "entity_type": "LOC",
+      "canonical_name": "West Lighthouse",
+      "entity_type": "FAC",
       "aliases": [
-        "West",
-        "West Lighthouse",
+        "West Lighthouse"
+      ],
+      "mention_count": 1
+    },
+    {
+      "id": "west_pier",
+      "label": "Entity",
+      "canonical_name": "West Pier",
+      "entity_type": "FAC",
+      "aliases": [
         "West Pier"
       ],
-      "mention_count": 4
+      "mention_count": 1
     },
     {
       "id": "whitaker_almanac",
@@ -4718,16 +4466,6 @@
         "Whitby Abbey"
       ],
       "mention_count": 1
-    },
-    {
-      "id": "winchesters",
-      "label": "Entity",
-      "canonical_name": "Winchesters",
-      "entity_type": "ORG",
-      "aliases": [
-        "Winchesters"
-      ],
-      "mention_count": 2
     },
     {
       "id": "windham",
@@ -4766,6 +4504,16 @@
       "entity_type": "PER",
       "aliases": [
         "Ye'll"
+      ],
+      "mention_count": 1
+    },
+    {
+      "id": "york",
+      "label": "Entity",
+      "canonical_name": "York",
+      "entity_type": "GPE",
+      "aliases": [
+        "York"
       ],
       "mention_count": 1
     },
@@ -6061,24 +5809,6 @@
     },
     {
       "type": "REFERS_TO",
-      "source": "m0001-439-443",
-      "target": "west",
-      "method": "exact",
-      "score": 1.0,
-      "surface": "West",
-      "entry_index": 1
-    },
-    {
-      "type": "REFERS_TO",
-      "source": "m0001-461-465",
-      "target": "east",
-      "method": "exact",
-      "score": 1.0,
-      "surface": "East",
-      "entry_index": 1
-    },
-    {
-      "type": "REFERS_TO",
       "source": "m0001-513-519",
       "target": "danube",
       "method": "exact",
@@ -6313,15 +6043,6 @@
     },
     {
       "type": "REFERS_TO",
-      "source": "m0001-2167-2172",
-      "target": "south",
-      "method": "exact",
-      "score": 1.0,
-      "surface": "South",
-      "entry_index": 1
-    },
-    {
-      "type": "REFERS_TO",
       "source": "m0001-2198-2206",
       "target": "wallachs",
       "method": "singleton",
@@ -6331,38 +6052,11 @@
     },
     {
       "type": "REFERS_TO",
-      "source": "m0001-2263-2267",
-      "target": "west",
-      "method": "exact",
-      "score": 1.0,
-      "surface": "West",
-      "entry_index": 1
-    },
-    {
-      "type": "REFERS_TO",
       "source": "m0001-2273-2281",
       "target": "szekelys",
       "method": "singleton",
       "score": 1.0,
       "surface": "Szekelys",
-      "entry_index": 1
-    },
-    {
-      "type": "REFERS_TO",
-      "source": "m0001-2289-2293",
-      "target": "east",
-      "method": "exact",
-      "score": 1.0,
-      "surface": "East",
-      "entry_index": 1
-    },
-    {
-      "type": "REFERS_TO",
-      "source": "m0001-2298-2303",
-      "target": "north_foreland",
-      "method": "subset",
-      "score": 1.0,
-      "surface": "North",
       "entry_index": 1
     },
     {
@@ -6853,29 +6547,11 @@
     },
     {
       "type": "REFERS_TO",
-      "source": "m0003-4138-4142",
-      "target": "turk",
-      "method": "same_sentence_pronoun",
-      "score": 1.0,
-      "surface": "them",
-      "entry_index": 3
-    },
-    {
-      "type": "REFERS_TO",
       "source": "m0003-4153-4157",
-      "target": "turk",
+      "target": "turks",
       "method": "exact",
       "score": 1.0,
       "surface": "Turk",
-      "entry_index": 3
-    },
-    {
-      "type": "REFERS_TO",
-      "source": "m0003-4176-4180",
-      "target": "turk",
-      "method": "same_sentence_pronoun",
-      "score": 1.0,
-      "surface": "they",
       "entry_index": 3
     },
     {
@@ -6890,7 +6566,7 @@
     {
       "type": "REFERS_TO",
       "source": "m0003-5534-5541",
-      "target": "slovaks_2",
+      "target": "slovaks",
       "method": "exact",
       "score": 1.0,
       "surface": "Slovaks",
@@ -6917,7 +6593,7 @@
     {
       "type": "REFERS_TO",
       "source": "m0003-6761-6765",
-      "target": "pass",
+      "target": "borgo_pass",
       "method": "exact",
       "score": 1.0,
       "surface": "Pass",
@@ -6926,7 +6602,7 @@
     {
       "type": "REFERS_TO",
       "source": "m0003-8586-8596",
-      "target": "borgo_pass_2",
+      "target": "borgo_pass",
       "method": "exact",
       "score": 1.0,
       "surface": "Borgo Pass",
@@ -6944,7 +6620,7 @@
     {
       "type": "REFERS_TO",
       "source": "m0003-9413-9417",
-      "target": "pass",
+      "target": "borgo_pass",
       "method": "exact",
       "score": 1.0,
       "surface": "Pass",
@@ -7016,7 +6692,7 @@
     {
       "type": "REFERS_TO",
       "source": "m0003-12434-12438",
-      "target": "pass",
+      "target": "borgo_pass",
       "method": "exact",
       "score": 1.0,
       "surface": "Pass",
@@ -7115,7 +6791,7 @@
     {
       "type": "REFERS_TO",
       "source": "m0003-14408-14412",
-      "target": "pass",
+      "target": "borgo_pass",
       "method": "exact",
       "score": 1.0,
       "surface": "Pass",
@@ -7124,7 +6800,7 @@
     {
       "type": "REFERS_TO",
       "source": "m0003-15623-15627",
-      "target": "pass",
+      "target": "borgo_pass",
       "method": "exact",
       "score": 1.0,
       "surface": "Pass",
@@ -7690,26 +7366,8 @@
     },
     {
       "type": "REFERS_TO",
-      "source": "m0005-6317-6319",
-      "target": "saxon",
-      "method": "same_sentence_pronoun",
-      "score": 1.0,
-      "surface": "he",
-      "entry_index": 5
-    },
-    {
-      "type": "REFERS_TO",
-      "source": "m0005-6358-6361",
-      "target": "saxon",
-      "method": "same_sentence_pronoun",
-      "score": 1.0,
-      "surface": "you",
-      "entry_index": 5
-    },
-    {
-      "type": "REFERS_TO",
       "source": "m0005-6481-6486",
-      "target": "saxon",
+      "target": "saxons",
       "method": "exact",
       "score": 1.0,
       "surface": "Saxon",
@@ -7753,11 +7411,83 @@
     },
     {
       "type": "REFERS_TO",
+      "source": "m0005-8940-8941",
+      "target": "jonathan_harker",
+      "method": "same_sentence_pronoun",
+      "score": 1.0,
+      "surface": "I",
+      "entry_index": 5
+    },
+    {
+      "type": "REFERS_TO",
+      "source": "m0005-8951-8952",
+      "target": "jonathan_harker",
+      "method": "same_sentence_pronoun",
+      "score": 1.0,
+      "surface": "I",
+      "entry_index": 5
+    },
+    {
+      "type": "REFERS_TO",
+      "source": "m0005-8977-8979",
+      "target": "jonathan_harker",
+      "method": "same_sentence_pronoun",
+      "score": 1.0,
+      "surface": "my",
+      "entry_index": 5
+    },
+    {
+      "type": "REFERS_TO",
       "source": "m0005-8987-9002",
-      "target": "harker_jonathan",
-      "method": "singleton",
+      "target": "jonathan_harker",
+      "method": "subset",
       "score": 1.0,
       "surface": "Harker Jonathan",
+      "entry_index": 5
+    },
+    {
+      "type": "REFERS_TO",
+      "source": "m0005-9016-9018",
+      "target": "jonathan_harker",
+      "method": "same_sentence_pronoun",
+      "score": 1.0,
+      "surface": "me",
+      "entry_index": 5
+    },
+    {
+      "type": "REFERS_TO",
+      "source": "m0005-9020-9021",
+      "target": "jonathan_harker",
+      "method": "same_sentence_pronoun",
+      "score": 1.0,
+      "surface": "I",
+      "entry_index": 5
+    },
+    {
+      "type": "REFERS_TO",
+      "source": "m0005-9032-9034",
+      "target": "jonathan_harker",
+      "method": "same_sentence_pronoun",
+      "score": 1.0,
+      "surface": "my",
+      "entry_index": 5
+    },
+    {
+      "type": "REFERS_TO",
+      "source": "m0005-9062-9066",
+      "target": "jonathan_harker",
+      "method": "same_sentence_pronoun",
+      "score": 1.0,
+      "surface": "your",
+      "entry_index": 5
+    },
+    {
+      "type": "REFERS_TO",
+      "source": "m0005-9085-9087",
+      "target": "jonathan_harker",
+      "method": "same_sentence_pronoun",
+      "score": 1.0,
+      "surface": "my",
       "entry_index": 5
     },
     {
@@ -7767,6 +7497,24 @@
       "method": "exact",
       "score": 1.0,
       "surface": "Jonathan Harker",
+      "entry_index": 5
+    },
+    {
+      "type": "REFERS_TO",
+      "source": "m0005-9126-9128",
+      "target": "jonathan_harker",
+      "method": "same_sentence_pronoun",
+      "score": 1.0,
+      "surface": "my",
+      "entry_index": 5
+    },
+    {
+      "type": "REFERS_TO",
+      "source": "m0005-9153-9155",
+      "target": "jonathan_harker",
+      "method": "same_sentence_pronoun",
+      "score": 1.0,
+      "surface": "me",
       "entry_index": 5
     },
     {
@@ -8244,15 +7992,6 @@
       "method": "nominal",
       "score": 1.0,
       "surface": "the Count",
-      "entry_index": 6
-    },
-    {
-      "type": "REFERS_TO",
-      "source": "m0006-3174-3179",
-      "target": "south",
-      "method": "exact",
-      "score": 1.0,
-      "surface": "South",
       "entry_index": 6
     },
     {
@@ -8820,15 +8559,6 @@
       "method": "same_sentence_pronoun",
       "score": 1.0,
       "surface": "his",
-      "entry_index": 7
-    },
-    {
-      "type": "REFERS_TO",
-      "source": "m0007-7937-7942",
-      "target": "south",
-      "method": "exact",
-      "score": 1.0,
-      "surface": "South",
       "entry_index": 7
     },
     {
@@ -9617,7 +9347,7 @@
     {
       "type": "REFERS_TO",
       "source": "m0013-346-352",
-      "target": "slovak",
+      "target": "slovaks",
       "method": "exact",
       "score": 1.0,
       "surface": "Slovak",
@@ -9635,7 +9365,7 @@
     {
       "type": "REFERS_TO",
       "source": "m0013-1133-1140",
-      "target": "slovaks_2",
+      "target": "slovaks",
       "method": "exact",
       "score": 1.0,
       "surface": "Slovaks",
@@ -10202,7 +9932,7 @@
     {
       "type": "REFERS_TO",
       "source": "m0014-1029-1039",
-      "target": "borgo_pass_2",
+      "target": "borgo_pass",
       "method": "exact",
       "score": 1.0,
       "surface": "Borgo Pass",
@@ -12200,7 +11930,7 @@
     {
       "type": "REFERS_TO",
       "source": "m0019-104-112",
-      "target": "crescent",
+      "target": "the_crescent",
       "method": "exact",
       "score": 1.0,
       "surface": "Crescent",
@@ -12317,8 +12047,8 @@
     {
       "type": "REFERS_TO",
       "source": "m0019-3616-3620",
-      "target": "new_york",
-      "method": "subset",
+      "target": "york",
+      "method": "singleton",
       "score": 1.0,
       "surface": "York",
       "entry_index": 19
@@ -13972,15 +13702,6 @@
     },
     {
       "type": "REFERS_TO",
-      "source": "m0034-6069-6072",
-      "target": "bay",
-      "method": "exact",
-      "score": 1.0,
-      "surface": "Bay",
-      "entry_index": 34
-    },
-    {
-      "type": "REFERS_TO",
       "source": "m0034-6076-6082",
       "target": "biscay",
       "method": "singleton",
@@ -14001,7 +13722,7 @@
       "type": "REFERS_TO",
       "source": "m0034-8260-8274",
       "target": "north_foreland",
-      "method": "subset",
+      "method": "singleton",
       "score": 1.0,
       "surface": "North Foreland",
       "entry_index": 34
@@ -14009,8 +13730,8 @@
     {
       "type": "REFERS_TO",
       "source": "m0034-8338-8347",
-      "target": "north_foreland",
-      "method": "subset",
+      "target": "north_sea",
+      "method": "singleton",
       "score": 1.0,
       "surface": "North Sea",
       "entry_index": 34
@@ -14269,15 +13990,6 @@
     },
     {
       "type": "REFERS_TO",
-      "source": "m0037-3038-3041",
-      "target": "bay",
-      "method": "exact",
-      "score": 1.0,
-      "surface": "Bay",
-      "entry_index": 37
-    },
-    {
-      "type": "REFERS_TO",
       "source": "m0038-0-2",
       "target": "lucy_westenra",
       "method": "same_sentence_pronoun",
@@ -14423,7 +14135,7 @@
     {
       "type": "REFERS_TO",
       "source": "m0040-7-17",
-      "target": "east",
+      "target": "east_cliff",
       "method": "exact",
       "score": 1.0,
       "surface": "East Cliff",
@@ -14459,8 +14171,8 @@
     {
       "type": "REFERS_TO",
       "source": "m0040-330-339",
-      "target": "west",
-      "method": "subset",
+      "target": "west_pier",
+      "method": "singleton",
       "score": 1.0,
       "surface": "West Pier",
       "entry_index": 40
@@ -14477,7 +14189,7 @@
     {
       "type": "REFERS_TO",
       "source": "m0040-505-515",
-      "target": "east",
+      "target": "east_cliff",
       "method": "exact",
       "score": 1.0,
       "surface": "East Cliff",
@@ -14576,7 +14288,7 @@
     {
       "type": "REFERS_TO",
       "source": "m0040-1324-1341",
-      "target": "st_mary_church",
+      "target": "st_marys_church",
       "method": "exact",
       "score": 1.0,
       "surface": "St. Mary's Church",
@@ -14702,7 +14414,7 @@
     {
       "type": "REFERS_TO",
       "source": "m0040-2057-2065",
-      "target": "crescent",
+      "target": "the_crescent",
       "method": "exact",
       "score": 1.0,
       "surface": "Crescent",
@@ -15062,7 +14774,7 @@
     {
       "type": "REFERS_TO",
       "source": "m0043-179-191",
-      "target": "king_cross",
+      "target": "kings_cross",
       "method": "exact",
       "score": 1.0,
       "surface": "King's Cross",
@@ -15071,7 +14783,7 @@
     {
       "type": "REFERS_TO",
       "source": "m0043-621-633",
-      "target": "king_cross",
+      "target": "kings_cross",
       "method": "exact",
       "score": 1.0,
       "surface": "King's Cross",
@@ -15080,19 +14792,10 @@
     {
       "type": "REFERS_TO",
       "source": "m0043-773-785",
-      "target": "king_cross",
+      "target": "kings_cross",
       "method": "exact",
       "score": 1.0,
       "surface": "King's Cross",
-      "entry_index": 43
-    },
-    {
-      "type": "REFERS_TO",
-      "source": "m0043-1494-1498",
-      "target": "sirs",
-      "method": "exact",
-      "score": 1.0,
-      "surface": "Sirs",
       "entry_index": 43
     },
     {
@@ -15121,15 +14824,6 @@
       "score": 1.0,
       "surface": "Whitby",
       "entry_index": 43
-    },
-    {
-      "type": "REFERS_TO",
-      "source": "m0044-265-269",
-      "target": "sirs",
-      "method": "exact",
-      "score": 1.0,
-      "surface": "Sirs",
-      "entry_index": 44
     },
     {
       "type": "REFERS_TO",
@@ -15233,8 +14927,8 @@
     {
       "type": "REFERS_TO",
       "source": "m0045-2063-2078",
-      "target": "west",
-      "method": "subset",
+      "target": "west_lighthouse",
+      "method": "singleton",
       "score": 1.0,
       "surface": "West Lighthouse",
       "entry_index": 45
@@ -15538,15 +15232,6 @@
     },
     {
       "type": "REFERS_TO",
-      "source": "m0046-986-989",
-      "target": "ste",
-      "method": "exact",
-      "score": 1.0,
-      "surface": "Ste",
-      "entry_index": 46
-    },
-    {
-      "type": "REFERS_TO",
       "source": "m0046-991-995",
       "target": "mary",
       "method": "exact",
@@ -15579,15 +15264,6 @@
       "method": "exact",
       "score": 1.0,
       "surface": "Joseph",
-      "entry_index": 47
-    },
-    {
-      "type": "REFERS_TO",
-      "source": "m0047-159-162",
-      "target": "ste",
-      "method": "exact",
-      "score": 1.0,
-      "surface": "Ste",
       "entry_index": 47
     },
     {
@@ -15723,15 +15399,6 @@
       "method": "exact",
       "score": 1.0,
       "surface": "Joseph",
-      "entry_index": 47
-    },
-    {
-      "type": "REFERS_TO",
-      "source": "m0047-2018-2021",
-      "target": "ste",
-      "method": "exact",
-      "score": 1.0,
-      "surface": "Ste",
       "entry_index": 47
     },
     {
@@ -15981,7 +15648,7 @@
       "type": "REFERS_TO",
       "source": "m0050-1831-1841",
       "target": "hillingham",
-      "method": "singleton",
+      "method": "exact",
       "score": 1.0,
       "surface": "Hillingham",
       "entry_index": 50
@@ -16160,7 +15827,7 @@
     {
       "type": "REFERS_TO",
       "source": "m0051-1667-1677",
-      "target": "hillingham_2",
+      "target": "hillingham",
       "method": "exact",
       "score": 1.0,
       "surface": "Hillingham",
@@ -16350,7 +16017,7 @@
       "type": "REFERS_TO",
       "source": "m0053-2953-2963",
       "target": "east_cliff",
-      "method": "singleton",
+      "method": "exact",
       "score": 1.0,
       "surface": "East Cliff",
       "entry_index": 53
@@ -16682,7 +16349,7 @@
     {
       "type": "REFERS_TO",
       "source": "m0055-70-80",
-      "target": "hillingham_2",
+      "target": "hillingham",
       "method": "exact",
       "score": 1.0,
       "surface": "Hillingham",
@@ -18508,33 +18175,6 @@
     },
     {
       "type": "REFERS_TO",
-      "source": "m0061-13142-13144",
-      "target": "i_bersicker",
-      "method": "same_sentence_pronoun",
-      "score": 1.0,
-      "surface": "we",
-      "entry_index": 61
-    },
-    {
-      "type": "REFERS_TO",
-      "source": "m0061-13156-13159",
-      "target": "i_bersicker",
-      "method": "same_sentence_pronoun",
-      "score": 1.0,
-      "surface": "you",
-      "entry_index": 61
-    },
-    {
-      "type": "REFERS_TO",
-      "source": "m0061-13164-13166",
-      "target": "i_bersicker",
-      "method": "subset",
-      "score": 1.0,
-      "surface": "I.",
-      "entry_index": 61
-    },
-    {
-      "type": "REFERS_TO",
       "source": "m0061-13535-13541",
       "target": "john_seward",
       "method": "exact",
@@ -18635,7 +18275,7 @@
     {
       "type": "REFERS_TO",
       "source": "m0062-2753-2763",
-      "target": "hillingham_2",
+      "target": "hillingham",
       "method": "exact",
       "score": 1.0,
       "surface": "Hillingham",
@@ -18662,7 +18302,7 @@
     {
       "type": "REFERS_TO",
       "source": "m0062-2971-2981",
-      "target": "hillingham_2",
+      "target": "hillingham",
       "method": "exact",
       "score": 1.0,
       "surface": "Hillingham",
@@ -19436,7 +19076,7 @@
     {
       "type": "REFERS_TO",
       "source": "m0065-30-40",
-      "target": "hillingham_2",
+      "target": "hillingham",
       "method": "exact",
       "score": 1.0,
       "surface": "Hillingham",
@@ -19985,8 +19625,8 @@
     {
       "type": "REFERS_TO",
       "source": "m0067-240-250",
-      "target": "hillingham_3",
-      "method": "singleton",
+      "target": "hillingham",
+      "method": "exact",
       "score": 1.0,
       "surface": "Hillingham",
       "entry_index": 67
@@ -20551,15 +20191,6 @@
     },
     {
       "type": "REFERS_TO",
-      "source": "m0068-3484-3498",
-      "target": "superintendent",
-      "method": "exact",
-      "score": 1.0,
-      "surface": "Superintendent",
-      "entry_index": 68
-    },
-    {
-      "type": "REFERS_TO",
       "source": "m0068-4469-4478",
       "target": "bersicker",
       "method": "exact",
@@ -20646,15 +20277,6 @@
       "method": "exact",
       "score": 1.0,
       "surface": "Bersicker",
-      "entry_index": 68
-    },
-    {
-      "type": "REFERS_TO",
-      "source": "m0068-6412-6425",
-      "target": "i_bersicker",
-      "method": "subset",
-      "score": 1.0,
-      "surface": "I. 'Bersicker",
       "entry_index": 68
     },
     {
@@ -20974,15 +20596,6 @@
     },
     {
       "type": "REFERS_TO",
-      "source": "m0069-338-352",
-      "target": "superintendent",
-      "method": "exact",
-      "score": 1.0,
-      "surface": "Superintendent",
-      "entry_index": 69
-    },
-    {
-      "type": "REFERS_TO",
       "source": "m0069-1398-1399",
       "target": "lucy_westenra",
       "method": "same_sentence_pronoun",
@@ -21119,7 +20732,7 @@
     {
       "type": "REFERS_TO",
       "source": "m0070-21-31",
-      "target": "hillingham_2",
+      "target": "hillingham",
       "method": "exact",
       "score": 1.0,
       "surface": "Hillingham",
@@ -21434,7 +21047,7 @@
     {
       "type": "REFERS_TO",
       "source": "m0073-19-29",
-      "target": "hillingham_2",
+      "target": "hillingham",
       "method": "exact",
       "score": 1.0,
       "surface": "Hillingham",
@@ -22828,38 +22441,11 @@
     },
     {
       "type": "REFERS_TO",
-      "source": "m0073-13684-13685",
-      "target": "pampas",
-      "method": "same_sentence_pronoun",
-      "score": 1.0,
-      "surface": "I",
-      "entry_index": 73
-    },
-    {
-      "type": "REFERS_TO",
-      "source": "m0073-13736-13737",
-      "target": "pampas",
-      "method": "same_sentence_pronoun",
-      "score": 1.0,
-      "surface": "I",
-      "entry_index": 73
-    },
-    {
-      "type": "REFERS_TO",
       "source": "m0073-13749-13755",
       "target": "pampas",
       "method": "exact",
       "score": 1.0,
       "surface": "Pampas",
-      "entry_index": 73
-    },
-    {
-      "type": "REFERS_TO",
-      "source": "m0073-13776-13777",
-      "target": "pampas",
-      "method": "same_sentence_pronoun",
-      "score": 1.0,
-      "surface": "I",
       "entry_index": 73
     },
     {
@@ -26384,7 +25970,7 @@
     {
       "type": "REFERS_TO",
       "source": "m0082-102-108",
-      "target": "harker",
+      "target": "jonathan_harker",
       "method": "exact",
       "score": 1.0,
       "surface": "HARKER",
@@ -27698,8 +27284,8 @@
     {
       "type": "REFERS_TO",
       "source": "m0083-11161-11177",
-      "target": "husband_jonathan",
-      "method": "singleton",
+      "target": "jonathan_harker",
+      "method": "subset",
       "score": 1.0,
       "surface": "Husband Jonathan",
       "entry_index": 83
@@ -27707,7 +27293,7 @@
     {
       "type": "REFERS_TO",
       "source": "m0083-11200-11203",
-      "target": "husband_jonathan",
+      "target": "jonathan_harker",
       "method": "same_sentence_pronoun",
       "score": 1.0,
       "surface": "you",
@@ -27716,7 +27302,7 @@
     {
       "type": "REFERS_TO",
       "source": "m0083-11222-11224",
-      "target": "husband_jonathan",
+      "target": "jonathan_harker",
       "method": "same_sentence_pronoun",
       "score": 1.0,
       "surface": "he",
@@ -27725,7 +27311,7 @@
     {
       "type": "REFERS_TO",
       "source": "m0083-11240-11242",
-      "target": "husband_jonathan",
+      "target": "jonathan_harker",
       "method": "same_sentence_pronoun",
       "score": 1.0,
       "surface": "he",
@@ -27734,7 +27320,7 @@
     {
       "type": "REFERS_TO",
       "source": "m0083-11259-11262",
-      "target": "husband_jonathan",
+      "target": "jonathan_harker",
       "method": "same_sentence_pronoun",
       "score": 1.0,
       "surface": "his",
@@ -28957,11 +28543,47 @@
     },
     {
       "type": "REFERS_TO",
+      "source": "m0085-5281-5284",
+      "target": "lucy_westenra",
+      "method": "same_sentence_pronoun",
+      "score": 1.0,
+      "surface": "you",
+      "entry_index": 85
+    },
+    {
+      "type": "REFERS_TO",
+      "source": "m0085-5290-5292",
+      "target": "lucy_westenra",
+      "method": "same_sentence_pronoun",
+      "score": 1.0,
+      "surface": "me",
+      "entry_index": 85
+    },
+    {
+      "type": "REFERS_TO",
       "source": "m0085-5304-5310",
       "target": "pampas",
       "method": "exact",
       "score": 1.0,
       "surface": "Pampas",
+      "entry_index": 85
+    },
+    {
+      "type": "REFERS_TO",
+      "source": "m0085-5417-5422",
+      "target": "lucy_westenra",
+      "method": "same_sentence_pronoun",
+      "score": 1.0,
+      "surface": "their",
+      "entry_index": 85
+    },
+    {
+      "type": "REFERS_TO",
+      "source": "m0085-5661-5665",
+      "target": "lucy_westenra",
+      "method": "same_sentence_pronoun",
+      "score": 1.0,
+      "surface": "them",
       "entry_index": 85
     },
     {
@@ -29687,7 +29309,7 @@
     {
       "type": "REFERS_TO",
       "source": "m0087-1545-1546",
-      "target": "harker",
+      "target": "jonathan_harker",
       "method": "same_sentence_pronoun",
       "score": 1.0,
       "surface": "I",
@@ -29696,7 +29318,7 @@
     {
       "type": "REFERS_TO",
       "source": "m0087-1621-1627",
-      "target": "harker",
+      "target": "jonathan_harker",
       "method": "exact",
       "score": 1.0,
       "surface": "Harker",
@@ -29705,7 +29327,7 @@
     {
       "type": "REFERS_TO",
       "source": "m0087-1651-1655",
-      "target": "harker",
+      "target": "jonathan_harker",
       "method": "same_sentence_pronoun",
       "score": 1.0,
       "surface": "them",
@@ -29714,7 +29336,7 @@
     {
       "type": "REFERS_TO",
       "source": "m0087-1703-1706",
-      "target": "harker",
+      "target": "jonathan_harker",
       "method": "same_sentence_pronoun",
       "score": 1.0,
       "surface": "his",
@@ -29723,7 +29345,7 @@
     {
       "type": "REFERS_TO",
       "source": "m0087-1721-1724",
-      "target": "harker",
+      "target": "jonathan_harker",
       "method": "same_sentence_pronoun",
       "score": 1.0,
       "surface": "his",
@@ -29732,7 +29354,7 @@
     {
       "type": "REFERS_TO",
       "source": "m0087-1792-1795",
-      "target": "harker",
+      "target": "jonathan_harker",
       "method": "same_sentence_pronoun",
       "score": 1.0,
       "surface": "him",
@@ -30357,15 +29979,6 @@
       "method": "exact",
       "score": 1.0,
       "surface": "Lord Godalming",
-      "entry_index": 88
-    },
-    {
-      "type": "REFERS_TO",
-      "source": "m0088-6563-6571",
-      "target": "lordship",
-      "method": "exact",
-      "score": 1.0,
-      "surface": "Lordship",
       "entry_index": 88
     },
     {
@@ -33620,7 +33233,7 @@
     {
       "type": "REFERS_TO",
       "source": "m0093-540-546",
-      "target": "harker",
+      "target": "jonathan_harker",
       "method": "exact",
       "score": 1.0,
       "surface": "Harker",
@@ -33629,7 +33242,7 @@
     {
       "type": "REFERS_TO",
       "source": "m0093-551-554",
-      "target": "harker",
+      "target": "jonathan_harker",
       "method": "same_sentence_pronoun",
       "score": 1.0,
       "surface": "his",
@@ -33638,7 +33251,7 @@
     {
       "type": "REFERS_TO",
       "source": "m0093-573-578",
-      "target": "harker",
+      "target": "jonathan_harker",
       "method": "same_sentence_pronoun",
       "score": 1.0,
       "surface": "their",
@@ -33647,7 +33260,7 @@
     {
       "type": "REFERS_TO",
       "source": "m0093-596-597",
-      "target": "harker",
+      "target": "jonathan_harker",
       "method": "same_sentence_pronoun",
       "score": 1.0,
       "surface": "I",
@@ -33656,7 +33269,7 @@
     {
       "type": "REFERS_TO",
       "source": "m0093-617-618",
-      "target": "harker",
+      "target": "jonathan_harker",
       "method": "same_sentence_pronoun",
       "score": 1.0,
       "surface": "I",
@@ -33692,7 +33305,7 @@
     {
       "type": "REFERS_TO",
       "source": "m0093-782-788",
-      "target": "harker",
+      "target": "jonathan_harker",
       "method": "exact",
       "score": 1.0,
       "surface": "Harker",
@@ -33719,7 +33332,7 @@
     {
       "type": "REFERS_TO",
       "source": "m0093-900-904",
-      "target": "harker",
+      "target": "jonathan_harker",
       "method": "same_sentence_pronoun",
       "score": 1.0,
       "surface": "them",
@@ -33800,7 +33413,7 @@
     {
       "type": "REFERS_TO",
       "source": "m0093-1365-1371",
-      "target": "harker",
+      "target": "jonathan_harker",
       "method": "exact",
       "score": 1.0,
       "surface": "Harker",
@@ -33809,7 +33422,7 @@
     {
       "type": "REFERS_TO",
       "source": "m0093-1410-1413",
-      "target": "harker",
+      "target": "jonathan_harker",
       "method": "same_sentence_pronoun",
       "score": 1.0,
       "surface": "his",
@@ -33890,7 +33503,7 @@
     {
       "type": "REFERS_TO",
       "source": "m0093-2245-2246",
-      "target": "harker",
+      "target": "jonathan_harker",
       "method": "same_sentence_pronoun",
       "score": 1.0,
       "surface": "I",
@@ -33899,7 +33512,7 @@
     {
       "type": "REFERS_TO",
       "source": "m0093-2265-2266",
-      "target": "harker",
+      "target": "jonathan_harker",
       "method": "same_sentence_pronoun",
       "score": 1.0,
       "surface": "I",
@@ -33908,7 +33521,7 @@
     {
       "type": "REFERS_TO",
       "source": "m0093-2289-2295",
-      "target": "harker",
+      "target": "jonathan_harker",
       "method": "exact",
       "score": 1.0,
       "surface": "Harker",
@@ -33917,7 +33530,7 @@
     {
       "type": "REFERS_TO",
       "source": "m0093-2334-2337",
-      "target": "harker",
+      "target": "jonathan_harker",
       "method": "same_sentence_pronoun",
       "score": 1.0,
       "surface": "his",
@@ -33926,7 +33539,7 @@
     {
       "type": "REFERS_TO",
       "source": "m0093-2349-2350",
-      "target": "harker",
+      "target": "jonathan_harker",
       "method": "same_sentence_pronoun",
       "score": 1.0,
       "surface": "I",
@@ -33935,7 +33548,7 @@
     {
       "type": "REFERS_TO",
       "source": "m0093-2389-2392",
-      "target": "harker",
+      "target": "jonathan_harker",
       "method": "same_sentence_pronoun",
       "score": 1.0,
       "surface": "him",
@@ -34168,24 +33781,6 @@
     },
     {
       "type": "REFERS_TO",
-      "source": "m0093-4650-4655",
-      "target": "carter_paterson",
-      "method": "same_sentence_pronoun",
-      "score": 1.0,
-      "surface": "their",
-      "entry_index": 93
-    },
-    {
-      "type": "REFERS_TO",
-      "source": "m0093-4680-4681",
-      "target": "carter_paterson",
-      "method": "same_sentence_pronoun",
-      "score": 1.0,
-      "surface": "I",
-      "entry_index": 93
-    },
-    {
-      "type": "REFERS_TO",
       "source": "m0093-4723-4737",
       "target": "samuel_billington",
       "method": "exact",
@@ -34223,19 +33818,10 @@
     {
       "type": "REFERS_TO",
       "source": "m0094-96-108",
-      "target": "king_cross",
+      "target": "kings_cross",
       "method": "exact",
       "score": 1.0,
       "surface": "King's Cross",
-      "entry_index": 94
-    },
-    {
-      "type": "REFERS_TO",
-      "source": "m0094-552-553",
-      "target": "carter_paterson",
-      "method": "same_sentence_pronoun",
-      "score": 1.0,
-      "surface": "I",
       "entry_index": 94
     },
     {
@@ -34249,17 +33835,8 @@
     },
     {
       "type": "REFERS_TO",
-      "source": "m0094-605-606",
-      "target": "carter_paterson",
-      "method": "same_sentence_pronoun",
-      "score": 1.0,
-      "surface": "I",
-      "entry_index": 94
-    },
-    {
-      "type": "REFERS_TO",
       "source": "m0094-735-747",
-      "target": "king_cross",
+      "target": "kings_cross",
       "method": "exact",
       "score": 1.0,
       "surface": "King's Cross",
@@ -34943,7 +34520,7 @@
     {
       "type": "REFERS_TO",
       "source": "m0096-0-1",
-      "target": "harker",
+      "target": "jonathan_harker",
       "method": "same_sentence_pronoun",
       "score": 1.0,
       "surface": "I",
@@ -34952,7 +34529,7 @@
     {
       "type": "REFERS_TO",
       "source": "m0096-166-172",
-      "target": "harker",
+      "target": "jonathan_harker",
       "method": "exact",
       "score": 1.0,
       "surface": "Harker",
@@ -34961,7 +34538,7 @@
     {
       "type": "REFERS_TO",
       "source": "m0096-177-180",
-      "target": "harker",
+      "target": "jonathan_harker",
       "method": "same_sentence_pronoun",
       "score": 1.0,
       "surface": "his",
@@ -34970,7 +34547,7 @@
     {
       "type": "REFERS_TO",
       "source": "m0096-219-225",
-      "target": "harker",
+      "target": "jonathan_harker",
       "method": "exact",
       "score": 1.0,
       "surface": "Harker",
@@ -36301,6 +35878,15 @@
     },
     {
       "type": "REFERS_TO",
+      "source": "m0097-6614-6616",
+      "target": "icelander",
+      "method": "same_sentence_pronoun",
+      "score": 1.0,
+      "surface": "He",
+      "entry_index": 97
+    },
+    {
+      "type": "REFERS_TO",
       "source": "m0097-6655-6664",
       "target": "icelander",
       "method": "singleton",
@@ -36329,7 +35915,7 @@
     {
       "type": "REFERS_TO",
       "source": "m0097-6704-6709",
-      "target": "saxon",
+      "target": "saxons",
       "method": "exact",
       "score": 1.0,
       "surface": "Saxon",
@@ -36625,6 +36211,15 @@
     },
     {
       "type": "REFERS_TO",
+      "source": "m0097-10583-10585",
+      "target": "count_dracula",
+      "method": "same_sentence_pronoun",
+      "score": 1.0,
+      "surface": "He",
+      "entry_index": 97
+    },
+    {
+      "type": "REFERS_TO",
       "source": "m0097-10615-10630",
       "target": "count_dracula",
       "method": "exact",
@@ -36634,8 +36229,17 @@
     },
     {
       "type": "REFERS_TO",
+      "source": "m0097-10639-10642",
+      "target": "count_dracula",
+      "method": "same_sentence_pronoun",
+      "score": 1.0,
+      "surface": "his",
+      "entry_index": 97
+    },
+    {
+      "type": "REFERS_TO",
       "source": "m0097-10660-10664",
-      "target": "turk",
+      "target": "turks",
       "method": "exact",
       "score": 1.0,
       "surface": "Turk",
@@ -37346,7 +36950,7 @@
     {
       "type": "REFERS_TO",
       "source": "m0097-16512-16513",
-      "target": "harker",
+      "target": "jonathan_harker",
       "method": "same_sentence_pronoun",
       "score": 1.0,
       "surface": "I",
@@ -37355,7 +36959,7 @@
     {
       "type": "REFERS_TO",
       "source": "m0097-16526-16532",
-      "target": "harker",
+      "target": "jonathan_harker",
       "method": "exact",
       "score": 1.0,
       "surface": "Harker",
@@ -38444,7 +38048,7 @@
     {
       "type": "REFERS_TO",
       "source": "m0098-3592-3598",
-      "target": "harker",
+      "target": "jonathan_harker",
       "method": "exact",
       "score": 1.0,
       "surface": "Harker",
@@ -38957,7 +38561,7 @@
     {
       "type": "REFERS_TO",
       "source": "m0099-6493-6510",
-      "target": "st_mary_church",
+      "target": "st_marys_church",
       "method": "exact",
       "score": 1.0,
       "surface": "St. Mary's Church",
@@ -39452,7 +39056,7 @@
     {
       "type": "REFERS_TO",
       "source": "m0100-3616-3622",
-      "target": "harker",
+      "target": "jonathan_harker",
       "method": "exact",
       "score": 1.0,
       "surface": "Harker",
@@ -39492,15 +39096,6 @@
       "method": "same_sentence_pronoun",
       "score": 1.0,
       "surface": "my",
-      "entry_index": 100
-    },
-    {
-      "type": "REFERS_TO",
-      "source": "m0100-3758-3765",
-      "target": "harkers",
-      "method": "exact",
-      "score": 1.0,
-      "surface": "Harkers",
       "entry_index": 100
     },
     {
@@ -39775,15 +39370,6 @@
     },
     {
       "type": "REFERS_TO",
-      "source": "m0100-11001-11009",
-      "target": "lordship",
-      "method": "exact",
-      "score": 1.0,
-      "surface": "Lordship",
-      "entry_index": 100
-    },
-    {
-      "type": "REFERS_TO",
       "source": "m0100-11184-11190",
       "target": "john_seward",
       "method": "exact",
@@ -39884,7 +39470,7 @@
     {
       "type": "REFERS_TO",
       "source": "m0101-370-376",
-      "target": "harker",
+      "target": "jonathan_harker",
       "method": "exact",
       "score": 1.0,
       "surface": "Harker",
@@ -39893,7 +39479,7 @@
     {
       "type": "REFERS_TO",
       "source": "m0101-418-420",
-      "target": "harker",
+      "target": "jonathan_harker",
       "method": "same_sentence_pronoun",
       "score": 1.0,
       "surface": "we",
@@ -39902,7 +39488,7 @@
     {
       "type": "REFERS_TO",
       "source": "m0101-445-448",
-      "target": "harker",
+      "target": "jonathan_harker",
       "method": "same_sentence_pronoun",
       "score": 1.0,
       "surface": "his",
@@ -39911,7 +39497,7 @@
     {
       "type": "REFERS_TO",
       "source": "m0101-1094-1100",
-      "target": "harker",
+      "target": "jonathan_harker",
       "method": "exact",
       "score": 1.0,
       "surface": "Harker",
@@ -40783,15 +40369,6 @@
     },
     {
       "type": "REFERS_TO",
-      "source": "m0102-14769-14776",
-      "target": "harkers",
-      "method": "exact",
-      "score": 1.0,
-      "surface": "Harkers",
-      "entry_index": 102
-    },
-    {
-      "type": "REFERS_TO",
       "source": "m0102-14802-14809",
       "target": "quincey_morris",
       "method": "exact",
@@ -41144,7 +40721,7 @@
     {
       "type": "REFERS_TO",
       "source": "m0102-19257-19259",
-      "target": "harker",
+      "target": "jonathan_harker",
       "method": "same_sentence_pronoun",
       "score": 1.0,
       "surface": "me",
@@ -41153,7 +40730,7 @@
     {
       "type": "REFERS_TO",
       "source": "m0102-19273-19275",
-      "target": "harker",
+      "target": "jonathan_harker",
       "method": "same_sentence_pronoun",
       "score": 1.0,
       "surface": "he",
@@ -41162,7 +40739,7 @@
     {
       "type": "REFERS_TO",
       "source": "m0102-19311-19312",
-      "target": "harker",
+      "target": "jonathan_harker",
       "method": "same_sentence_pronoun",
       "score": 1.0,
       "surface": "I",
@@ -41171,7 +40748,7 @@
     {
       "type": "REFERS_TO",
       "source": "m0102-19319-19325",
-      "target": "harker",
+      "target": "jonathan_harker",
       "method": "exact",
       "score": 1.0,
       "surface": "Harker",
@@ -41180,7 +40757,7 @@
     {
       "type": "REFERS_TO",
       "source": "m0102-19349-19351",
-      "target": "harker",
+      "target": "jonathan_harker",
       "method": "same_sentence_pronoun",
       "score": 1.0,
       "surface": "he",
@@ -41189,7 +40766,7 @@
     {
       "type": "REFERS_TO",
       "source": "m0102-19902-19908",
-      "target": "harker",
+      "target": "jonathan_harker",
       "method": "exact",
       "score": 1.0,
       "surface": "Harker",
@@ -41423,7 +41000,7 @@
     {
       "type": "REFERS_TO",
       "source": "m0102-24490-24496",
-      "target": "harker",
+      "target": "jonathan_harker",
       "method": "exact",
       "score": 1.0,
       "surface": "Harker",
@@ -41432,7 +41009,7 @@
     {
       "type": "REFERS_TO",
       "source": "m0102-24510-24512",
-      "target": "harker",
+      "target": "jonathan_harker",
       "method": "same_sentence_pronoun",
       "score": 1.0,
       "surface": "he",
@@ -41441,7 +41018,7 @@
     {
       "type": "REFERS_TO",
       "source": "m0102-24519-24522",
-      "target": "harker",
+      "target": "jonathan_harker",
       "method": "same_sentence_pronoun",
       "score": 1.0,
       "surface": "his",
@@ -41450,7 +41027,7 @@
     {
       "type": "REFERS_TO",
       "source": "m0102-24543-24546",
-      "target": "harker",
+      "target": "jonathan_harker",
       "method": "same_sentence_pronoun",
       "score": 1.0,
       "surface": "his",
@@ -41459,7 +41036,7 @@
     {
       "type": "REFERS_TO",
       "source": "m0102-24557-24560",
-      "target": "harker",
+      "target": "jonathan_harker",
       "method": "same_sentence_pronoun",
       "score": 1.0,
       "surface": "his",
@@ -41710,15 +41287,6 @@
     },
     {
       "type": "REFERS_TO",
-      "source": "m0102-27779-27781",
-      "target": "i",
-      "method": "singleton",
-      "score": 1.0,
-      "surface": "I.",
-      "entry_index": 102
-    },
-    {
-      "type": "REFERS_TO",
       "source": "m0102-27782-27783",
       "target": "jonathan_harker",
       "method": "same_sentence_pronoun",
@@ -41792,7 +41360,7 @@
     {
       "type": "REFERS_TO",
       "source": "m0102-31696-31702",
-      "target": "harker",
+      "target": "jonathan_harker",
       "method": "exact",
       "score": 1.0,
       "surface": "Harker",
@@ -41801,7 +41369,7 @@
     {
       "type": "REFERS_TO",
       "source": "m0102-31733-31736",
-      "target": "harker",
+      "target": "jonathan_harker",
       "method": "same_sentence_pronoun",
       "score": 1.0,
       "surface": "his",
@@ -43132,15 +42700,6 @@
     },
     {
       "type": "REFERS_TO",
-      "source": "m0103-18906-18911",
-      "target": "king_cross",
-      "method": "exact",
-      "score": 1.0,
-      "surface": "Cross",
-      "entry_index": 103
-    },
-    {
-      "type": "REFERS_TO",
       "source": "m0103-18916-18919",
       "target": "son",
       "method": "same_sentence_pronoun",
@@ -43735,24 +43294,6 @@
     },
     {
       "type": "REFERS_TO",
-      "source": "m0103-27886-27890",
-      "target": "east",
-      "method": "exact",
-      "score": 1.0,
-      "surface": "East",
-      "entry_index": 103
-    },
-    {
-      "type": "REFERS_TO",
-      "source": "m0103-27899-27904",
-      "target": "south",
-      "method": "exact",
-      "score": 1.0,
-      "surface": "South",
-      "entry_index": 103
-    },
-    {
-      "type": "REFERS_TO",
       "source": "m0104-71-80",
       "target": "arthur_holmwood",
       "method": "exact",
@@ -43771,8 +43312,35 @@
     },
     {
       "type": "REFERS_TO",
+      "source": "m0104-174-175",
+      "target": "jonathan_harker",
+      "method": "same_sentence_pronoun",
+      "score": 1.0,
+      "surface": "I",
+      "entry_index": 104
+    },
+    {
+      "type": "REFERS_TO",
+      "source": "m0104-186-189",
+      "target": "jonathan_harker",
+      "method": "same_sentence_pronoun",
+      "score": 1.0,
+      "surface": "his",
+      "entry_index": 104
+    },
+    {
+      "type": "REFERS_TO",
+      "source": "m0104-236-238",
+      "target": "jonathan_harker",
+      "method": "same_sentence_pronoun",
+      "score": 1.0,
+      "surface": "he",
+      "entry_index": 104
+    },
+    {
+      "type": "REFERS_TO",
       "source": "m0104-266-272",
-      "target": "harker_2",
+      "target": "jonathan_harker",
       "method": "exact",
       "score": 1.0,
       "surface": "Harker",
@@ -43817,7 +43385,7 @@
     {
       "type": "REFERS_TO",
       "source": "m0104-2315-2321",
-      "target": "harker",
+      "target": "jonathan_harker",
       "method": "exact",
       "score": 1.0,
       "surface": "Harker",
@@ -43826,7 +43394,7 @@
     {
       "type": "REFERS_TO",
       "source": "m0104-2373-2375",
-      "target": "harker",
+      "target": "jonathan_harker",
       "method": "same_sentence_pronoun",
       "score": 1.0,
       "surface": "my",
@@ -43853,7 +43421,7 @@
     {
       "type": "REFERS_TO",
       "source": "m0104-2867-2868",
-      "target": "harker",
+      "target": "jonathan_harker",
       "method": "same_sentence_pronoun",
       "score": 1.0,
       "surface": "I",
@@ -43862,7 +43430,7 @@
     {
       "type": "REFERS_TO",
       "source": "m0104-2895-2901",
-      "target": "harker",
+      "target": "jonathan_harker",
       "method": "exact",
       "score": 1.0,
       "surface": "Harker",
@@ -43987,15 +43555,6 @@
     },
     {
       "type": "REFERS_TO",
-      "source": "m0104-5204-5209",
-      "target": "south",
-      "method": "exact",
-      "score": 1.0,
-      "surface": "South",
-      "entry_index": 104
-    },
-    {
-      "type": "REFERS_TO",
       "source": "m0104-5303-5318",
       "target": "jonathan_harker",
       "method": "exact",
@@ -44055,15 +43614,6 @@
       "method": "exact",
       "score": 1.0,
       "surface": "Van Helsing",
-      "entry_index": 104
-    },
-    {
-      "type": "REFERS_TO",
-      "source": "m0104-5787-5792",
-      "target": "devil",
-      "method": "exact",
-      "score": 1.0,
-      "surface": "Devil",
       "entry_index": 104
     },
     {
@@ -44339,7 +43889,7 @@
     {
       "type": "REFERS_TO",
       "source": "m0104-9063-9069",
-      "target": "harker",
+      "target": "jonathan_harker",
       "method": "exact",
       "score": 1.0,
       "surface": "Harker",
@@ -44366,7 +43916,7 @@
     {
       "type": "REFERS_TO",
       "source": "m0104-9794-9800",
-      "target": "harker",
+      "target": "jonathan_harker",
       "method": "exact",
       "score": 1.0,
       "surface": "Harker",
@@ -44375,7 +43925,7 @@
     {
       "type": "REFERS_TO",
       "source": "m0104-9836-9843",
-      "target": "harker",
+      "target": "jonathan_harker",
       "method": "same_sentence_pronoun",
       "score": 1.0,
       "surface": "himself",
@@ -44384,7 +43934,7 @@
     {
       "type": "REFERS_TO",
       "source": "m0104-10372-10378",
-      "target": "harker",
+      "target": "jonathan_harker",
       "method": "exact",
       "score": 1.0,
       "surface": "Harker",
@@ -44393,7 +43943,7 @@
     {
       "type": "REFERS_TO",
       "source": "m0104-10418-10420",
-      "target": "harker",
+      "target": "jonathan_harker",
       "method": "same_sentence_pronoun",
       "score": 1.0,
       "surface": "he",
@@ -44402,7 +43952,7 @@
     {
       "type": "REFERS_TO",
       "source": "m0104-10431-10434",
-      "target": "harker",
+      "target": "jonathan_harker",
       "method": "same_sentence_pronoun",
       "score": 1.0,
       "surface": "his",
@@ -44411,7 +43961,7 @@
     {
       "type": "REFERS_TO",
       "source": "m0104-10489-10492",
-      "target": "harker",
+      "target": "jonathan_harker",
       "method": "same_sentence_pronoun",
       "score": 1.0,
       "surface": "him",
@@ -44420,7 +43970,7 @@
     {
       "type": "REFERS_TO",
       "source": "m0104-10858-10859",
-      "target": "harker",
+      "target": "jonathan_harker",
       "method": "same_sentence_pronoun",
       "score": 1.0,
       "surface": "I",
@@ -44429,7 +43979,7 @@
     {
       "type": "REFERS_TO",
       "source": "m0104-10871-10877",
-      "target": "harker",
+      "target": "jonathan_harker",
       "method": "exact",
       "score": 1.0,
       "surface": "Harker",
@@ -44438,7 +43988,7 @@
     {
       "type": "REFERS_TO",
       "source": "m0104-10886-10887",
-      "target": "harker",
+      "target": "jonathan_harker",
       "method": "same_sentence_pronoun",
       "score": 1.0,
       "surface": "I",
@@ -44447,7 +43997,7 @@
     {
       "type": "REFERS_TO",
       "source": "m0104-10892-10895",
-      "target": "harker",
+      "target": "jonathan_harker",
       "method": "same_sentence_pronoun",
       "score": 1.0,
       "surface": "him",
@@ -44456,7 +44006,7 @@
     {
       "type": "REFERS_TO",
       "source": "m0104-11563-11565",
-      "target": "harker",
+      "target": "jonathan_harker",
       "method": "same_sentence_pronoun",
       "score": 1.0,
       "surface": "he",
@@ -44465,7 +44015,7 @@
     {
       "type": "REFERS_TO",
       "source": "m0104-11578-11584",
-      "target": "harker",
+      "target": "jonathan_harker",
       "method": "exact",
       "score": 1.0,
       "surface": "Harker",
@@ -44474,7 +44024,7 @@
     {
       "type": "REFERS_TO",
       "source": "m0104-11596-11599",
-      "target": "harker",
+      "target": "jonathan_harker",
       "method": "same_sentence_pronoun",
       "score": 1.0,
       "surface": "his",
@@ -44483,7 +44033,7 @@
     {
       "type": "REFERS_TO",
       "source": "m0104-11700-11707",
-      "target": "harker",
+      "target": "jonathan_harker",
       "method": "same_sentence_pronoun",
       "score": 1.0,
       "surface": "himself",
@@ -44528,7 +44078,7 @@
     {
       "type": "REFERS_TO",
       "source": "m0104-13224-13226",
-      "target": "harker",
+      "target": "jonathan_harker",
       "method": "same_sentence_pronoun",
       "score": 1.0,
       "surface": "he",
@@ -44537,7 +44087,7 @@
     {
       "type": "REFERS_TO",
       "source": "m0104-13233-13235",
-      "target": "harker",
+      "target": "jonathan_harker",
       "method": "same_sentence_pronoun",
       "score": 1.0,
       "surface": "he",
@@ -44546,7 +44096,7 @@
     {
       "type": "REFERS_TO",
       "source": "m0104-13265-13268",
-      "target": "harker",
+      "target": "jonathan_harker",
       "method": "same_sentence_pronoun",
       "score": 1.0,
       "surface": "his",
@@ -44555,7 +44105,7 @@
     {
       "type": "REFERS_TO",
       "source": "m0104-13315-13321",
-      "target": "harker",
+      "target": "jonathan_harker",
       "method": "exact",
       "score": 1.0,
       "surface": "Harker",
@@ -44564,7 +44114,7 @@
     {
       "type": "REFERS_TO",
       "source": "m0104-13331-13335",
-      "target": "harker",
+      "target": "jonathan_harker",
       "method": "same_sentence_pronoun",
       "score": 1.0,
       "surface": "them",
@@ -44573,7 +44123,7 @@
     {
       "type": "REFERS_TO",
       "source": "m0104-13399-13401",
-      "target": "harker",
+      "target": "jonathan_harker",
       "method": "same_sentence_pronoun",
       "score": 1.0,
       "surface": "he",
@@ -44582,7 +44132,7 @@
     {
       "type": "REFERS_TO",
       "source": "m0104-13414-13418",
-      "target": "harker",
+      "target": "jonathan_harker",
       "method": "same_sentence_pronoun",
       "score": 1.0,
       "surface": "them",
@@ -44600,7 +44150,7 @@
     {
       "type": "REFERS_TO",
       "source": "m0104-13488-13494",
-      "target": "harker",
+      "target": "jonathan_harker",
       "method": "exact",
       "score": 1.0,
       "surface": "Harker",
@@ -44663,7 +44213,7 @@
     {
       "type": "REFERS_TO",
       "source": "m0104-14208-14209",
-      "target": "harker",
+      "target": "jonathan_harker",
       "method": "same_sentence_pronoun",
       "score": 1.0,
       "surface": "I",
@@ -44672,7 +44222,7 @@
     {
       "type": "REFERS_TO",
       "source": "m0104-14225-14227",
-      "target": "harker",
+      "target": "jonathan_harker",
       "method": "same_sentence_pronoun",
       "score": 1.0,
       "surface": "he",
@@ -44681,7 +44231,7 @@
     {
       "type": "REFERS_TO",
       "source": "m0104-14248-14250",
-      "target": "harker",
+      "target": "jonathan_harker",
       "method": "same_sentence_pronoun",
       "score": 1.0,
       "surface": "he",
@@ -44690,7 +44240,7 @@
     {
       "type": "REFERS_TO",
       "source": "m0104-14268-14274",
-      "target": "harker",
+      "target": "jonathan_harker",
       "method": "exact",
       "score": 1.0,
       "surface": "Harker",
@@ -44816,7 +44366,7 @@
     {
       "type": "REFERS_TO",
       "source": "m0104-15679-15681",
-      "target": "harker",
+      "target": "jonathan_harker",
       "method": "same_sentence_pronoun",
       "score": 1.0,
       "surface": "we",
@@ -44825,7 +44375,7 @@
     {
       "type": "REFERS_TO",
       "source": "m0104-15705-15711",
-      "target": "harker",
+      "target": "jonathan_harker",
       "method": "exact",
       "score": 1.0,
       "surface": "Harker",
@@ -44833,35 +44383,8 @@
     },
     {
       "type": "REFERS_TO",
-      "source": "m0104-15751-15754",
-      "target": "harker",
-      "method": "same_sentence_pronoun",
-      "score": 1.0,
-      "surface": "she",
-      "entry_index": 104
-    },
-    {
-      "type": "REFERS_TO",
-      "source": "m0104-15764-15767",
-      "target": "harker",
-      "method": "same_sentence_pronoun",
-      "score": 1.0,
-      "surface": "her",
-      "entry_index": 104
-    },
-    {
-      "type": "REFERS_TO",
-      "source": "m0104-15811-15814",
-      "target": "harker",
-      "method": "same_sentence_pronoun",
-      "score": 1.0,
-      "surface": "her",
-      "entry_index": 104
-    },
-    {
-      "type": "REFERS_TO",
       "source": "m0104-15838-15841",
-      "target": "harker",
+      "target": "jonathan_harker",
       "method": "same_sentence_pronoun",
       "score": 1.0,
       "surface": "him",
@@ -46085,7 +45608,7 @@
     {
       "type": "REFERS_TO",
       "source": "m0105-2172-2177",
-      "target": "lloyd",
+      "target": "lloyds",
       "method": "exact",
       "score": 1.0,
       "surface": "Lloyd",
@@ -46112,7 +45635,7 @@
     {
       "type": "REFERS_TO",
       "source": "m0105-2359-2368",
-      "target": "doolittle_wharf",
+      "target": "doolittles_wharf",
       "method": "subset",
       "score": 1.0,
       "surface": "Doolittle",
@@ -46157,7 +45680,7 @@
     {
       "type": "REFERS_TO",
       "source": "m0105-2508-2525",
-      "target": "doolittle_wharf",
+      "target": "doolittles_wharf",
       "method": "subset",
       "score": 1.0,
       "surface": "Doolittle's Wharf",
@@ -46480,15 +46003,6 @@
     },
     {
       "type": "REFERS_TO",
-      "source": "m0105-10985-10990",
-      "target": "king_cross",
-      "method": "exact",
-      "score": 1.0,
-      "surface": "Cross",
-      "entry_index": 105
-    },
-    {
-      "type": "REFERS_TO",
       "source": "m0105-11105-11107",
       "target": "count_dracula",
       "method": "same_sentence_pronoun",
@@ -46548,15 +46062,6 @@
       "method": "exact",
       "score": 1.0,
       "surface": "Turkey",
-      "entry_index": 105
-    },
-    {
-      "type": "REFERS_TO",
-      "source": "m0105-12922-12927",
-      "target": "devil",
-      "method": "exact",
-      "score": 1.0,
-      "surface": "Devil",
       "entry_index": 105
     },
     {
@@ -47272,15 +46777,6 @@
     },
     {
       "type": "REFERS_TO",
-      "source": "m0106-6503-6514",
-      "target": "winchesters",
-      "method": "exact",
-      "score": 1.0,
-      "surface": "Winchesters",
-      "entry_index": 106
-    },
-    {
-      "type": "REFERS_TO",
       "source": "m0106-6636-6639",
       "target": "arthur_holmwood",
       "method": "exact",
@@ -47327,7 +46823,7 @@
     {
       "type": "REFERS_TO",
       "source": "m0106-7202-7204",
-      "target": "harker",
+      "target": "jonathan_harker",
       "method": "same_sentence_pronoun",
       "score": 1.0,
       "surface": "We",
@@ -47336,7 +46832,7 @@
     {
       "type": "REFERS_TO",
       "source": "m0106-7217-7223",
-      "target": "harker",
+      "target": "jonathan_harker",
       "method": "exact",
       "score": 1.0,
       "surface": "Harker",
@@ -47345,7 +46841,7 @@
     {
       "type": "REFERS_TO",
       "source": "m0106-7272-7274",
-      "target": "harker",
+      "target": "jonathan_harker",
       "method": "same_sentence_pronoun",
       "score": 1.0,
       "surface": "us",
@@ -47381,7 +46877,7 @@
     {
       "type": "REFERS_TO",
       "source": "m0106-7375-7381",
-      "target": "harker",
+      "target": "jonathan_harker",
       "method": "exact",
       "score": 1.0,
       "surface": "Harker",
@@ -47390,7 +46886,7 @@
     {
       "type": "REFERS_TO",
       "source": "m0106-7444-7446",
-      "target": "harker",
+      "target": "jonathan_harker",
       "method": "same_sentence_pronoun",
       "score": 1.0,
       "surface": "us",
@@ -48272,7 +47768,7 @@
     {
       "type": "REFERS_TO",
       "source": "m0109-246-251",
-      "target": "lloyd",
+      "target": "lloyds",
       "method": "exact",
       "score": 1.0,
       "surface": "Lloyd",
@@ -48398,7 +47894,7 @@
     {
       "type": "REFERS_TO",
       "source": "m0110-179-184",
-      "target": "lloyd",
+      "target": "lloyds",
       "method": "exact",
       "score": 1.0,
       "surface": "Lloyd",
@@ -48443,7 +47939,7 @@
     {
       "type": "REFERS_TO",
       "source": "m0110-910-916",
-      "target": "harker",
+      "target": "jonathan_harker",
       "method": "exact",
       "score": 1.0,
       "surface": "Harker",
@@ -48452,7 +47948,7 @@
     {
       "type": "REFERS_TO",
       "source": "m0110-936-939",
-      "target": "harker",
+      "target": "jonathan_harker",
       "method": "same_sentence_pronoun",
       "score": 1.0,
       "surface": "his",
@@ -48461,7 +47957,7 @@
     {
       "type": "REFERS_TO",
       "source": "m0110-950-952",
-      "target": "harker",
+      "target": "jonathan_harker",
       "method": "same_sentence_pronoun",
       "score": 1.0,
       "surface": "he",
@@ -48470,7 +47966,7 @@
     {
       "type": "REFERS_TO",
       "source": "m0110-963-965",
-      "target": "harker",
+      "target": "jonathan_harker",
       "method": "same_sentence_pronoun",
       "score": 1.0,
       "surface": "we",
@@ -48578,7 +48074,7 @@
     {
       "type": "REFERS_TO",
       "source": "m0110-2040-2042",
-      "target": "harker",
+      "target": "jonathan_harker",
       "method": "same_sentence_pronoun",
       "score": 1.0,
       "surface": "We",
@@ -48587,7 +48083,7 @@
     {
       "type": "REFERS_TO",
       "source": "m0110-2088-2094",
-      "target": "harker",
+      "target": "jonathan_harker",
       "method": "exact",
       "score": 1.0,
       "surface": "Harker",
@@ -48596,7 +48092,7 @@
     {
       "type": "REFERS_TO",
       "source": "m0110-2109-2112",
-      "target": "harker",
+      "target": "jonathan_harker",
       "method": "same_sentence_pronoun",
       "score": 1.0,
       "surface": "his",
@@ -48605,7 +48101,7 @@
     {
       "type": "REFERS_TO",
       "source": "m0110-2152-2153",
-      "target": "harker",
+      "target": "jonathan_harker",
       "method": "same_sentence_pronoun",
       "score": 1.0,
       "surface": "I",
@@ -48614,7 +48110,7 @@
     {
       "type": "REFERS_TO",
       "source": "m0110-2160-2163",
-      "target": "harker",
+      "target": "jonathan_harker",
       "method": "same_sentence_pronoun",
       "score": 1.0,
       "surface": "him",
@@ -48623,7 +48119,7 @@
     {
       "type": "REFERS_TO",
       "source": "m0110-2215-2217",
-      "target": "harker",
+      "target": "jonathan_harker",
       "method": "same_sentence_pronoun",
       "score": 1.0,
       "surface": "he",
@@ -48632,7 +48128,7 @@
     {
       "type": "REFERS_TO",
       "source": "m0110-2242-2245",
-      "target": "harker",
+      "target": "jonathan_harker",
       "method": "same_sentence_pronoun",
       "score": 1.0,
       "surface": "him",
@@ -48776,7 +48272,7 @@
     {
       "type": "REFERS_TO",
       "source": "m0111-973-974",
-      "target": "harker",
+      "target": "jonathan_harker",
       "method": "same_sentence_pronoun",
       "score": 1.0,
       "surface": "I",
@@ -48785,7 +48281,7 @@
     {
       "type": "REFERS_TO",
       "source": "m0111-992-995",
-      "target": "harker",
+      "target": "jonathan_harker",
       "method": "same_sentence_pronoun",
       "score": 1.0,
       "surface": "him",
@@ -48794,7 +48290,7 @@
     {
       "type": "REFERS_TO",
       "source": "m0111-1006-1012",
-      "target": "harker",
+      "target": "jonathan_harker",
       "method": "exact",
       "score": 1.0,
       "surface": "Harker",
@@ -48803,7 +48299,7 @@
     {
       "type": "REFERS_TO",
       "source": "m0111-1036-1038",
-      "target": "harker",
+      "target": "jonathan_harker",
       "method": "same_sentence_pronoun",
       "score": 1.0,
       "surface": "he",
@@ -48843,15 +48339,6 @@
       "method": "singleton",
       "score": 1.0,
       "surface": "H. B. M. Vice",
-      "entry_index": 112
-    },
-    {
-      "type": "REFERS_TO",
-      "source": "m0112-70-76",
-      "target": "consul",
-      "method": "exact",
-      "score": 1.0,
-      "surface": "Consul",
       "entry_index": 112
     },
     {
@@ -49037,7 +48524,7 @@
     {
       "type": "REFERS_TO",
       "source": "m0113-1358-1364",
-      "target": "harker",
+      "target": "jonathan_harker",
       "method": "exact",
       "score": 1.0,
       "surface": "Harker",
@@ -49046,7 +48533,7 @@
     {
       "type": "REFERS_TO",
       "source": "m0113-1462-1465",
-      "target": "harker",
+      "target": "jonathan_harker",
       "method": "same_sentence_pronoun",
       "score": 1.0,
       "surface": "his",
@@ -49055,7 +48542,7 @@
     {
       "type": "REFERS_TO",
       "source": "m0113-1480-1483",
-      "target": "harker",
+      "target": "jonathan_harker",
       "method": "same_sentence_pronoun",
       "score": 1.0,
       "surface": "his",
@@ -49064,7 +48551,7 @@
     {
       "type": "REFERS_TO",
       "source": "m0113-1495-1498",
-      "target": "harker",
+      "target": "jonathan_harker",
       "method": "same_sentence_pronoun",
       "score": 1.0,
       "surface": "his",
@@ -49523,7 +49010,7 @@
     {
       "type": "REFERS_TO",
       "source": "m0113-3950-3956",
-      "target": "harker_2",
+      "target": "jonathan_harker",
       "method": "exact",
       "score": 1.0,
       "surface": "Harker",
@@ -49532,7 +49019,7 @@
     {
       "type": "REFERS_TO",
       "source": "m0113-3974-3980",
-      "target": "castle",
+      "target": "castle_dracula",
       "method": "exact",
       "score": 1.0,
       "surface": "Castle",
@@ -50342,7 +49829,7 @@
     {
       "type": "REFERS_TO",
       "source": "m0114-1414-1420",
-      "target": "harker",
+      "target": "jonathan_harker",
       "method": "exact",
       "score": 1.0,
       "surface": "Harker",
@@ -50800,15 +50287,6 @@
     },
     {
       "type": "REFERS_TO",
-      "source": "m0115-560-566",
-      "target": "consul",
-      "method": "exact",
-      "score": 1.0,
-      "surface": "Consul",
-      "entry_index": 115
-    },
-    {
-      "type": "REFERS_TO",
       "source": "m0115-719-734",
       "target": "jonathan_harker",
       "method": "exact",
@@ -51039,15 +50517,6 @@
       "method": "same_sentence_pronoun",
       "score": 1.0,
       "surface": "Mine",
-      "entry_index": 116
-    },
-    {
-      "type": "REFERS_TO",
-      "source": "m0116-1770-1775",
-      "target": "devil",
-      "method": "exact",
-      "score": 1.0,
-      "surface": "Devil",
       "entry_index": 116
     },
     {
@@ -51467,7 +50936,7 @@
     {
       "type": "REFERS_TO",
       "source": "m0116-5904-5910",
-      "target": "slovak",
+      "target": "slovaks",
       "method": "exact",
       "score": 1.0,
       "surface": "Slovak",
@@ -51935,7 +51404,7 @@
     {
       "type": "REFERS_TO",
       "source": "m0116-11819-11825",
-      "target": "slovak",
+      "target": "slovaks",
       "method": "exact",
       "score": 1.0,
       "surface": "Slovak",
@@ -52142,7 +51611,7 @@
     {
       "type": "REFERS_TO",
       "source": "m0116-13265-13275",
-      "target": "borgo_pass_2",
+      "target": "borgo_pass",
       "method": "exact",
       "score": 1.0,
       "surface": "Borgo Pass",
@@ -52286,19 +51755,10 @@
     {
       "type": "REFERS_TO",
       "source": "m0116-14387-14393",
-      "target": "slovak_2",
-      "method": "singleton",
+      "target": "slovaks",
+      "method": "exact",
       "score": 1.0,
       "surface": "Slovak",
-      "entry_index": 116
-    },
-    {
-      "type": "REFERS_TO",
-      "source": "m0116-14419-14421",
-      "target": "slovak_2",
-      "method": "same_sentence_pronoun",
-      "score": 1.0,
-      "surface": "he",
       "entry_index": 116
     },
     {
@@ -53060,7 +52520,7 @@
     {
       "type": "REFERS_TO",
       "source": "m0116-21571-21577",
-      "target": "castle",
+      "target": "castle_dracula",
       "method": "exact",
       "score": 1.0,
       "surface": "Castle",
@@ -53185,38 +52645,11 @@
     },
     {
       "type": "REFERS_TO",
-      "source": "m0117-1217-1221",
-      "target": "fundu_2",
-      "method": "same_sentence_pronoun",
-      "score": 1.0,
-      "surface": "they",
-      "entry_index": 117
-    },
-    {
-      "type": "REFERS_TO",
       "source": "m0117-1230-1235",
-      "target": "fundu_2",
-      "method": "singleton",
+      "target": "fundu",
+      "method": "exact",
       "score": 1.0,
       "surface": "Fundu",
-      "entry_index": 117
-    },
-    {
-      "type": "REFERS_TO",
-      "source": "m0117-1240-1244",
-      "target": "fundu_2",
-      "method": "same_sentence_pronoun",
-      "score": 1.0,
-      "surface": "they",
-      "entry_index": 117
-    },
-    {
-      "type": "REFERS_TO",
-      "source": "m0117-1260-1262",
-      "target": "fundu_2",
-      "method": "same_sentence_pronoun",
-      "score": 1.0,
-      "surface": "us",
       "entry_index": 117
     },
     {
@@ -53240,8 +52673,8 @@
     {
       "type": "REFERS_TO",
       "source": "m0117-1340-1345",
-      "target": "fundu_3",
-      "method": "singleton",
+      "target": "fundu",
+      "method": "exact",
       "score": 1.0,
       "surface": "Fundu",
       "entry_index": 117
@@ -53753,7 +53186,7 @@
     {
       "type": "REFERS_TO",
       "source": "m0122-3437-3441",
-      "target": "pass",
+      "target": "borgo_pass",
       "method": "exact",
       "score": 1.0,
       "surface": "Pass",
@@ -53951,7 +53384,7 @@
     {
       "type": "REFERS_TO",
       "source": "m0123-1265-1275",
-      "target": "borgo_pass_2",
+      "target": "borgo_pass",
       "method": "exact",
       "score": 1.0,
       "surface": "Borgo Pass",
@@ -53987,7 +53420,7 @@
     {
       "type": "REFERS_TO",
       "source": "m0123-1741-1745",
-      "target": "pass",
+      "target": "borgo_pass",
       "method": "exact",
       "score": 1.0,
       "surface": "Pass",
@@ -56299,15 +55732,6 @@
     },
     {
       "type": "REFERS_TO",
-      "source": "m0125-10697-10708",
-      "target": "winchesters",
-      "method": "exact",
-      "score": 1.0,
-      "surface": "Winchesters",
-      "entry_index": 125
-    },
-    {
-      "type": "REFERS_TO",
       "source": "m0125-10730-10744",
       "target": "arthur_holmwood",
       "method": "exact",
@@ -56664,15 +56088,6 @@
       "method": "singleton",
       "score": 1.0,
       "surface": "MIDDLE TEMPLE MURDER RAVENSDENE COURT",
-      "entry_index": 125
-    },
-    {
-      "type": "REFERS_TO",
-      "source": "m0125-16578-16586",
-      "target": "new_york",
-      "method": "subset",
-      "score": 1.0,
-      "surface": "NEW YORK",
       "entry_index": 125
     },
     {
@@ -57538,18 +56953,6 @@
     },
     {
       "type": "APPEARS_IN",
-      "source": "bay",
-      "target": "entry:34",
-      "mention_count": 1
-    },
-    {
-      "type": "APPEARS_IN",
-      "source": "bay",
-      "target": "entry:37",
-      "mention_count": 1
-    },
-    {
-      "type": "APPEARS_IN",
       "source": "berkeley_hotel",
       "target": "entry:67",
       "mention_count": 1
@@ -57683,8 +57086,20 @@
     {
       "type": "APPEARS_IN",
       "source": "borgo_pass",
-      "target": "entry:116",
+      "target": "entry:3",
+      "mention_count": 6
+    },
+    {
+      "type": "APPEARS_IN",
+      "source": "borgo_pass",
+      "target": "entry:14",
       "mention_count": 1
+    },
+    {
+      "type": "APPEARS_IN",
+      "source": "borgo_pass",
+      "target": "entry:116",
+      "mention_count": 2
     },
     {
       "type": "APPEARS_IN",
@@ -57696,31 +57111,13 @@
       "type": "APPEARS_IN",
       "source": "borgo_pass",
       "target": "entry:122",
-      "mention_count": 1
+      "mention_count": 2
     },
     {
       "type": "APPEARS_IN",
-      "source": "borgo_pass_2",
-      "target": "entry:3",
-      "mention_count": 1
-    },
-    {
-      "type": "APPEARS_IN",
-      "source": "borgo_pass_2",
-      "target": "entry:14",
-      "mention_count": 1
-    },
-    {
-      "type": "APPEARS_IN",
-      "source": "borgo_pass_2",
-      "target": "entry:116",
-      "mention_count": 1
-    },
-    {
-      "type": "APPEARS_IN",
-      "source": "borgo_pass_2",
+      "source": "borgo_pass",
       "target": "entry:123",
-      "mention_count": 1
+      "mention_count": 2
     },
     {
       "type": "APPEARS_IN",
@@ -57912,24 +57309,12 @@
       "type": "APPEARS_IN",
       "source": "carter_paterson",
       "target": "entry:93",
-      "mention_count": 3
+      "mention_count": 1
     },
     {
       "type": "APPEARS_IN",
       "source": "carter_paterson",
       "target": "entry:94",
-      "mention_count": 3
-    },
-    {
-      "type": "APPEARS_IN",
-      "source": "castle",
-      "target": "entry:113",
-      "mention_count": 1
-    },
-    {
-      "type": "APPEARS_IN",
-      "source": "castle",
-      "target": "entry:116",
       "mention_count": 1
     },
     {
@@ -57960,6 +57345,12 @@
       "type": "APPEARS_IN",
       "source": "castle_dracula",
       "target": "entry:113",
+      "mention_count": 2
+    },
+    {
+      "type": "APPEARS_IN",
+      "source": "castle_dracula",
+      "target": "entry:116",
       "mention_count": 1
     },
     {
@@ -58002,18 +57393,6 @@
       "type": "APPEARS_IN",
       "source": "conquistadores",
       "target": "entry:65",
-      "mention_count": 1
-    },
-    {
-      "type": "APPEARS_IN",
-      "source": "consul",
-      "target": "entry:112",
-      "mention_count": 1
-    },
-    {
-      "type": "APPEARS_IN",
-      "source": "consul",
-      "target": "entry:115",
       "mention_count": 1
     },
     {
@@ -58116,7 +57495,7 @@
       "type": "APPEARS_IN",
       "source": "count_dracula",
       "target": "entry:97",
-      "mention_count": 4
+      "mention_count": 6
     },
     {
       "type": "APPEARS_IN",
@@ -58165,18 +57544,6 @@
       "source": "count_dracula",
       "target": "entry:125",
       "mention_count": 6
-    },
-    {
-      "type": "APPEARS_IN",
-      "source": "crescent",
-      "target": "entry:19",
-      "mention_count": 1
-    },
-    {
-      "type": "APPEARS_IN",
-      "source": "crescent",
-      "target": "entry:40",
-      "mention_count": 1
     },
     {
       "type": "APPEARS_IN",
@@ -58384,24 +57751,6 @@
     },
     {
       "type": "APPEARS_IN",
-      "source": "devil",
-      "target": "entry:104",
-      "mention_count": 1
-    },
-    {
-      "type": "APPEARS_IN",
-      "source": "devil",
-      "target": "entry:105",
-      "mention_count": 1
-    },
-    {
-      "type": "APPEARS_IN",
-      "source": "devil",
-      "target": "entry:116",
-      "mention_count": 1
-    },
-    {
-      "type": "APPEARS_IN",
       "source": "disraeli",
       "target": "entry:50",
       "mention_count": 1
@@ -58414,7 +57763,7 @@
     },
     {
       "type": "APPEARS_IN",
-      "source": "doolittle_wharf",
+      "source": "doolittles_wharf",
       "target": "entry:105",
       "mention_count": 2
     },
@@ -58456,21 +57805,9 @@
     },
     {
       "type": "APPEARS_IN",
-      "source": "east",
-      "target": "entry:1",
-      "mention_count": 2
-    },
-    {
-      "type": "APPEARS_IN",
-      "source": "east",
+      "source": "east_cliff",
       "target": "entry:40",
       "mention_count": 2
-    },
-    {
-      "type": "APPEARS_IN",
-      "source": "east",
-      "target": "entry:103",
-      "mention_count": 1
     },
     {
       "type": "APPEARS_IN",
@@ -58674,24 +58011,12 @@
       "type": "APPEARS_IN",
       "source": "fundu",
       "target": "entry:117",
-      "mention_count": 1
+      "mention_count": 3
     },
     {
       "type": "APPEARS_IN",
       "source": "fundu",
       "target": "entry:119",
-      "mention_count": 1
-    },
-    {
-      "type": "APPEARS_IN",
-      "source": "fundu_2",
-      "target": "entry:117",
-      "mention_count": 4
-    },
-    {
-      "type": "APPEARS_IN",
-      "source": "fundu_3",
-      "target": "entry:117",
       "mention_count": 1
     },
     {
@@ -58936,126 +58261,6 @@
     },
     {
       "type": "APPEARS_IN",
-      "source": "harker",
-      "target": "entry:82",
-      "mention_count": 1
-    },
-    {
-      "type": "APPEARS_IN",
-      "source": "harker",
-      "target": "entry:87",
-      "mention_count": 6
-    },
-    {
-      "type": "APPEARS_IN",
-      "source": "harker",
-      "target": "entry:93",
-      "mention_count": 15
-    },
-    {
-      "type": "APPEARS_IN",
-      "source": "harker",
-      "target": "entry:96",
-      "mention_count": 4
-    },
-    {
-      "type": "APPEARS_IN",
-      "source": "harker",
-      "target": "entry:97",
-      "mention_count": 2
-    },
-    {
-      "type": "APPEARS_IN",
-      "source": "harker",
-      "target": "entry:98",
-      "mention_count": 1
-    },
-    {
-      "type": "APPEARS_IN",
-      "source": "harker",
-      "target": "entry:100",
-      "mention_count": 1
-    },
-    {
-      "type": "APPEARS_IN",
-      "source": "harker",
-      "target": "entry:101",
-      "mention_count": 4
-    },
-    {
-      "type": "APPEARS_IN",
-      "source": "harker",
-      "target": "entry:102",
-      "mention_count": 13
-    },
-    {
-      "type": "APPEARS_IN",
-      "source": "harker",
-      "target": "entry:104",
-      "mention_count": 37
-    },
-    {
-      "type": "APPEARS_IN",
-      "source": "harker",
-      "target": "entry:106",
-      "mention_count": 5
-    },
-    {
-      "type": "APPEARS_IN",
-      "source": "harker",
-      "target": "entry:110",
-      "mention_count": 11
-    },
-    {
-      "type": "APPEARS_IN",
-      "source": "harker",
-      "target": "entry:111",
-      "mention_count": 4
-    },
-    {
-      "type": "APPEARS_IN",
-      "source": "harker",
-      "target": "entry:113",
-      "mention_count": 4
-    },
-    {
-      "type": "APPEARS_IN",
-      "source": "harker",
-      "target": "entry:114",
-      "mention_count": 1
-    },
-    {
-      "type": "APPEARS_IN",
-      "source": "harker_2",
-      "target": "entry:104",
-      "mention_count": 1
-    },
-    {
-      "type": "APPEARS_IN",
-      "source": "harker_2",
-      "target": "entry:113",
-      "mention_count": 1
-    },
-    {
-      "type": "APPEARS_IN",
-      "source": "harker_jonathan",
-      "target": "entry:5",
-      "mention_count": 1
-    },
-    {
-      "type": "APPEARS_IN",
-      "source": "harkers",
-      "target": "entry:100",
-      "mention_count": 1
-    },
-    {
-      "type": "APPEARS_IN",
-      "source": "harkers",
-      "target": "entry:102",
-      "mention_count": 1
-    },
-    {
-      "type": "APPEARS_IN",
       "source": "herewith",
       "target": "entry:43",
       "mention_count": 1
@@ -59080,44 +58285,44 @@
     },
     {
       "type": "APPEARS_IN",
-      "source": "hillingham_2",
+      "source": "hillingham",
       "target": "entry:51",
       "mention_count": 1
     },
     {
       "type": "APPEARS_IN",
-      "source": "hillingham_2",
+      "source": "hillingham",
       "target": "entry:55",
       "mention_count": 1
     },
     {
       "type": "APPEARS_IN",
-      "source": "hillingham_2",
+      "source": "hillingham",
       "target": "entry:62",
       "mention_count": 2
     },
     {
       "type": "APPEARS_IN",
-      "source": "hillingham_2",
+      "source": "hillingham",
       "target": "entry:65",
       "mention_count": 1
     },
     {
       "type": "APPEARS_IN",
-      "source": "hillingham_2",
+      "source": "hillingham",
+      "target": "entry:67",
+      "mention_count": 1
+    },
+    {
+      "type": "APPEARS_IN",
+      "source": "hillingham",
       "target": "entry:70",
       "mention_count": 1
     },
     {
       "type": "APPEARS_IN",
-      "source": "hillingham_2",
+      "source": "hillingham",
       "target": "entry:73",
-      "mention_count": 1
-    },
-    {
-      "type": "APPEARS_IN",
-      "source": "hillingham_3",
-      "target": "entry:67",
       "mention_count": 1
     },
     {
@@ -59158,12 +58363,6 @@
     },
     {
       "type": "APPEARS_IN",
-      "source": "husband_jonathan",
-      "target": "entry:83",
-      "mention_count": 5
-    },
-    {
-      "type": "APPEARS_IN",
       "source": "hush",
       "target": "entry:104",
       "mention_count": 7
@@ -59176,27 +58375,9 @@
     },
     {
       "type": "APPEARS_IN",
-      "source": "i",
-      "target": "entry:102",
-      "mention_count": 1
-    },
-    {
-      "type": "APPEARS_IN",
-      "source": "i_bersicker",
-      "target": "entry:61",
-      "mention_count": 3
-    },
-    {
-      "type": "APPEARS_IN",
-      "source": "i_bersicker",
-      "target": "entry:68",
-      "mention_count": 1
-    },
-    {
-      "type": "APPEARS_IN",
       "source": "icelander",
       "target": "entry:97",
-      "mention_count": 1
+      "mention_count": 2
     },
     {
       "type": "APPEARS_IN",
@@ -59634,7 +58815,7 @@
       "type": "APPEARS_IN",
       "source": "jonathan_harker",
       "target": "entry:5",
-      "mention_count": 1
+      "mention_count": 12
     },
     {
       "type": "APPEARS_IN",
@@ -59729,14 +58910,20 @@
     {
       "type": "APPEARS_IN",
       "source": "jonathan_harker",
+      "target": "entry:82",
+      "mention_count": 1
+    },
+    {
+      "type": "APPEARS_IN",
+      "source": "jonathan_harker",
       "target": "entry:83",
-      "mention_count": 59
+      "mention_count": 64
     },
     {
       "type": "APPEARS_IN",
       "source": "jonathan_harker",
       "target": "entry:87",
-      "mention_count": 1
+      "mention_count": 7
     },
     {
       "type": "APPEARS_IN",
@@ -59754,7 +58941,7 @@
       "type": "APPEARS_IN",
       "source": "jonathan_harker",
       "target": "entry:93",
-      "mention_count": 2
+      "mention_count": 17
     },
     {
       "type": "APPEARS_IN",
@@ -59765,8 +58952,20 @@
     {
       "type": "APPEARS_IN",
       "source": "jonathan_harker",
+      "target": "entry:96",
+      "mention_count": 4
+    },
+    {
+      "type": "APPEARS_IN",
+      "source": "jonathan_harker",
       "target": "entry:97",
-      "mention_count": 41
+      "mention_count": 43
+    },
+    {
+      "type": "APPEARS_IN",
+      "source": "jonathan_harker",
+      "target": "entry:98",
+      "mention_count": 1
     },
     {
       "type": "APPEARS_IN",
@@ -59778,13 +58977,19 @@
       "type": "APPEARS_IN",
       "source": "jonathan_harker",
       "target": "entry:100",
+      "mention_count": 5
+    },
+    {
+      "type": "APPEARS_IN",
+      "source": "jonathan_harker",
+      "target": "entry:101",
       "mention_count": 4
     },
     {
       "type": "APPEARS_IN",
       "source": "jonathan_harker",
       "target": "entry:102",
-      "mention_count": 22
+      "mention_count": 35
     },
     {
       "type": "APPEARS_IN",
@@ -59796,7 +59001,7 @@
       "type": "APPEARS_IN",
       "source": "jonathan_harker",
       "target": "entry:104",
-      "mention_count": 19
+      "mention_count": 57
     },
     {
       "type": "APPEARS_IN",
@@ -59808,13 +59013,31 @@
       "type": "APPEARS_IN",
       "source": "jonathan_harker",
       "target": "entry:106",
-      "mention_count": 7
+      "mention_count": 12
+    },
+    {
+      "type": "APPEARS_IN",
+      "source": "jonathan_harker",
+      "target": "entry:110",
+      "mention_count": 11
+    },
+    {
+      "type": "APPEARS_IN",
+      "source": "jonathan_harker",
+      "target": "entry:111",
+      "mention_count": 4
     },
     {
       "type": "APPEARS_IN",
       "source": "jonathan_harker",
       "target": "entry:113",
-      "mention_count": 13
+      "mention_count": 18
+    },
+    {
+      "type": "APPEARS_IN",
+      "source": "jonathan_harker",
+      "target": "entry:114",
+      "mention_count": 1
     },
     {
       "type": "APPEARS_IN",
@@ -59908,30 +59131,6 @@
     },
     {
       "type": "APPEARS_IN",
-      "source": "king_cross",
-      "target": "entry:43",
-      "mention_count": 3
-    },
-    {
-      "type": "APPEARS_IN",
-      "source": "king_cross",
-      "target": "entry:94",
-      "mention_count": 2
-    },
-    {
-      "type": "APPEARS_IN",
-      "source": "king_cross",
-      "target": "entry:103",
-      "mention_count": 1
-    },
-    {
-      "type": "APPEARS_IN",
-      "source": "king_cross",
-      "target": "entry:105",
-      "mention_count": 1
-    },
-    {
-      "type": "APPEARS_IN",
       "source": "king_vampire",
       "target": "entry:124",
       "mention_count": 1
@@ -59941,6 +59140,18 @@
       "source": "kingdom_come",
       "target": "entry:15",
       "mention_count": 3
+    },
+    {
+      "type": "APPEARS_IN",
+      "source": "kings_cross",
+      "target": "entry:43",
+      "mention_count": 3
+    },
+    {
+      "type": "APPEARS_IN",
+      "source": "kings_cross",
+      "target": "entry:94",
+      "mention_count": 2
     },
     {
       "type": "APPEARS_IN",
@@ -60016,19 +59227,19 @@
     },
     {
       "type": "APPEARS_IN",
-      "source": "lloyd",
+      "source": "lloyds",
       "target": "entry:105",
       "mention_count": 1
     },
     {
       "type": "APPEARS_IN",
-      "source": "lloyd",
+      "source": "lloyds",
       "target": "entry:109",
       "mention_count": 1
     },
     {
       "type": "APPEARS_IN",
-      "source": "lloyd",
+      "source": "lloyds",
       "target": "entry:110",
       "mention_count": 1
     },
@@ -60240,18 +59451,6 @@
       "type": "APPEARS_IN",
       "source": "london_directory",
       "target": "entry:5",
-      "mention_count": 1
-    },
-    {
-      "type": "APPEARS_IN",
-      "source": "lordship",
-      "target": "entry:88",
-      "mention_count": 1
-    },
-    {
-      "type": "APPEARS_IN",
-      "source": "lordship",
-      "target": "entry:100",
       "mention_count": 1
     },
     {
@@ -60516,7 +59715,7 @@
       "type": "APPEARS_IN",
       "source": "lucy_westenra",
       "target": "entry:85",
-      "mention_count": 21
+      "mention_count": 25
     },
     {
       "type": "APPEARS_IN",
@@ -61114,18 +60313,6 @@
     },
     {
       "type": "APPEARS_IN",
-      "source": "new_york",
-      "target": "entry:19",
-      "mention_count": 1
-    },
-    {
-      "type": "APPEARS_IN",
-      "source": "new_york",
-      "target": "entry:125",
-      "mention_count": 1
-    },
-    {
-      "type": "APPEARS_IN",
       "source": "newcastle",
       "target": "entry:7",
       "mention_count": 1
@@ -61139,14 +60326,14 @@
     {
       "type": "APPEARS_IN",
       "source": "north_foreland",
-      "target": "entry:1",
+      "target": "entry:34",
       "mention_count": 1
     },
     {
       "type": "APPEARS_IN",
-      "source": "north_foreland",
+      "source": "north_sea",
       "target": "entry:34",
-      "mention_count": 2
+      "mention_count": 1
     },
     {
       "type": "APPEARS_IN",
@@ -61224,30 +60411,12 @@
       "type": "APPEARS_IN",
       "source": "pampas",
       "target": "entry:73",
-      "mention_count": 4
+      "mention_count": 1
     },
     {
       "type": "APPEARS_IN",
       "source": "pampas",
       "target": "entry:85",
-      "mention_count": 1
-    },
-    {
-      "type": "APPEARS_IN",
-      "source": "pass",
-      "target": "entry:3",
-      "mention_count": 5
-    },
-    {
-      "type": "APPEARS_IN",
-      "source": "pass",
-      "target": "entry:122",
-      "mention_count": 1
-    },
-    {
-      "type": "APPEARS_IN",
-      "source": "pass",
-      "target": "entry:123",
       "mention_count": 1
     },
     {
@@ -61756,13 +60925,13 @@
     },
     {
       "type": "APPEARS_IN",
-      "source": "saxon",
+      "source": "saxons",
       "target": "entry:5",
-      "mention_count": 3
+      "mention_count": 1
     },
     {
       "type": "APPEARS_IN",
-      "source": "saxon",
+      "source": "saxons",
       "target": "entry:97",
       "mention_count": 1
     },
@@ -61822,18 +60991,6 @@
     },
     {
       "type": "APPEARS_IN",
-      "source": "sirs",
-      "target": "entry:43",
-      "mention_count": 1
-    },
-    {
-      "type": "APPEARS_IN",
-      "source": "sirs",
-      "target": "entry:44",
-      "mention_count": 1
-    },
-    {
-      "type": "APPEARS_IN",
       "source": "sister",
       "target": "entry:46",
       "mention_count": 4
@@ -61846,24 +61003,6 @@
     },
     {
       "type": "APPEARS_IN",
-      "source": "slovak",
-      "target": "entry:13",
-      "mention_count": 1
-    },
-    {
-      "type": "APPEARS_IN",
-      "source": "slovak",
-      "target": "entry:116",
-      "mention_count": 2
-    },
-    {
-      "type": "APPEARS_IN",
-      "source": "slovak_2",
-      "target": "entry:116",
-      "mention_count": 2
-    },
-    {
-      "type": "APPEARS_IN",
       "source": "slovaks",
       "target": "entry:1",
       "mention_count": 1
@@ -61872,13 +61011,13 @@
       "type": "APPEARS_IN",
       "source": "slovaks",
       "target": "entry:3",
-      "mention_count": 1
+      "mention_count": 2
     },
     {
       "type": "APPEARS_IN",
       "source": "slovaks",
       "target": "entry:13",
-      "mention_count": 2
+      "mention_count": 4
     },
     {
       "type": "APPEARS_IN",
@@ -61890,24 +61029,12 @@
       "type": "APPEARS_IN",
       "source": "slovaks",
       "target": "entry:116",
-      "mention_count": 5
+      "mention_count": 8
     },
     {
       "type": "APPEARS_IN",
       "source": "slovaks",
       "target": "entry:117",
-      "mention_count": 1
-    },
-    {
-      "type": "APPEARS_IN",
-      "source": "slovaks_2",
-      "target": "entry:3",
-      "mention_count": 1
-    },
-    {
-      "type": "APPEARS_IN",
-      "source": "slovaks_2",
-      "target": "entry:13",
       "mention_count": 1
     },
     {
@@ -61921,36 +61048,6 @@
       "source": "son",
       "target": "entry:103",
       "mention_count": 5
-    },
-    {
-      "type": "APPEARS_IN",
-      "source": "south",
-      "target": "entry:1",
-      "mention_count": 1
-    },
-    {
-      "type": "APPEARS_IN",
-      "source": "south",
-      "target": "entry:6",
-      "mention_count": 1
-    },
-    {
-      "type": "APPEARS_IN",
-      "source": "south",
-      "target": "entry:7",
-      "mention_count": 1
-    },
-    {
-      "type": "APPEARS_IN",
-      "source": "south",
-      "target": "entry:103",
-      "mention_count": 1
-    },
-    {
-      "type": "APPEARS_IN",
-      "source": "south",
-      "target": "entry:104",
-      "mention_count": 1
     },
     {
       "type": "APPEARS_IN",
@@ -61972,13 +61069,13 @@
     },
     {
       "type": "APPEARS_IN",
-      "source": "st_mary_church",
+      "source": "st_marys_church",
       "target": "entry:40",
       "mention_count": 1
     },
     {
       "type": "APPEARS_IN",
-      "source": "st_mary_church",
+      "source": "st_marys_church",
       "target": "entry:99",
       "mention_count": 1
     },
@@ -61990,32 +61087,8 @@
     },
     {
       "type": "APPEARS_IN",
-      "source": "ste",
-      "target": "entry:46",
-      "mention_count": 1
-    },
-    {
-      "type": "APPEARS_IN",
-      "source": "ste",
-      "target": "entry:47",
-      "mention_count": 2
-    },
-    {
-      "type": "APPEARS_IN",
       "source": "straits",
       "target": "entry:34",
-      "mention_count": 1
-    },
-    {
-      "type": "APPEARS_IN",
-      "source": "superintendent",
-      "target": "entry:68",
-      "mention_count": 1
-    },
-    {
-      "type": "APPEARS_IN",
-      "source": "superintendent",
-      "target": "entry:69",
       "mention_count": 1
     },
     {
@@ -62112,6 +61185,18 @@
       "type": "APPEARS_IN",
       "source": "thames",
       "target": "entry:116",
+      "mention_count": 1
+    },
+    {
+      "type": "APPEARS_IN",
+      "source": "the_crescent",
+      "target": "entry:19",
+      "mention_count": 1
+    },
+    {
+      "type": "APPEARS_IN",
+      "source": "the_crescent",
+      "target": "entry:40",
       "mention_count": 1
     },
     {
@@ -62242,18 +61327,6 @@
     },
     {
       "type": "APPEARS_IN",
-      "source": "turk",
-      "target": "entry:3",
-      "mention_count": 3
-    },
-    {
-      "type": "APPEARS_IN",
-      "source": "turk",
-      "target": "entry:97",
-      "mention_count": 1
-    },
-    {
-      "type": "APPEARS_IN",
       "source": "turkey",
       "target": "entry:97",
       "mention_count": 1
@@ -62269,6 +61342,18 @@
       "source": "turkey",
       "target": "entry:113",
       "mention_count": 2
+    },
+    {
+      "type": "APPEARS_IN",
+      "source": "turks",
+      "target": "entry:3",
+      "mention_count": 1
+    },
+    {
+      "type": "APPEARS_IN",
+      "source": "turks",
+      "target": "entry:97",
+      "mention_count": 1
     },
     {
       "type": "APPEARS_IN",
@@ -62404,20 +61489,14 @@
     },
     {
       "type": "APPEARS_IN",
-      "source": "west",
-      "target": "entry:1",
-      "mention_count": 2
-    },
-    {
-      "type": "APPEARS_IN",
-      "source": "west",
-      "target": "entry:40",
+      "source": "west_lighthouse",
+      "target": "entry:45",
       "mention_count": 1
     },
     {
       "type": "APPEARS_IN",
-      "source": "west",
-      "target": "entry:45",
+      "source": "west_pier",
+      "target": "entry:40",
       "mention_count": 1
     },
     {
@@ -62554,18 +61633,6 @@
     },
     {
       "type": "APPEARS_IN",
-      "source": "winchesters",
-      "target": "entry:106",
-      "mention_count": 1
-    },
-    {
-      "type": "APPEARS_IN",
-      "source": "winchesters",
-      "target": "entry:125",
-      "mention_count": 1
-    },
-    {
-      "type": "APPEARS_IN",
       "source": "windham",
       "target": "entry:97",
       "mention_count": 1
@@ -62590,6 +61657,12 @@
     },
     {
       "type": "APPEARS_IN",
+      "source": "york",
+      "target": "entry:19",
+      "mention_count": 1
+    },
+    {
+      "type": "APPEARS_IN",
       "source": "yorkshire",
       "target": "entry:5",
       "mention_count": 1
@@ -62611,6 +61684,71 @@
       "source": "zoological_gardens",
       "target": "entry:68",
       "mention_count": 1
+    },
+    {
+      "type": "RELATION",
+      "rel": "married_to",
+      "source": "jonathan_harker",
+      "target": "mina_harker",
+      "evidence": [
+        "m0046-796-797",
+        "m0046-818-819",
+        "m0046-843-851",
+        "m0046-853-855"
+      ],
+      "method": "stated",
+      "support": 1,
+      "entry_index": 46,
+      "quote": "I must write no more; I must keep it to say to Jonathan, my husband."
+    },
+    {
+      "type": "RELATION",
+      "rel": "partner_of",
+      "source": "jonathan_harker",
+      "target": "peter_hawkins",
+      "evidence": [
+        "m0075-1334-1342",
+        "m0075-1347-1358",
+        "m0075-1391-1399",
+        "m0075-1414-1425",
+        "m0079-167-175",
+        "m0079-221-229",
+        "m0079-231-239",
+        "m0079-294-305",
+        "m0079-327-335"
+      ],
+      "method": "stated",
+      "support": 2,
+      "entry_index": 75,
+      "quote": "Jonathan and Mr. Hawkins are busy all day; for, now that Jonathan is a partner, Mr. Hawkins wants to tell him all about the clients."
+    },
+    {
+      "type": "RELATION",
+      "rel": "friend_of",
+      "source": "lucy_westenra",
+      "target": "mina_harker",
+      "evidence": [
+        "m0083-4574-4585",
+        "m0083-4645-4658"
+      ],
+      "method": "stated",
+      "support": 1,
+      "entry_index": 83,
+      "quote": "\"It is Mina Murray that I came to see that was friend of that poor dear child Lucy Westenra."
+    },
+    {
+      "type": "RELATION",
+      "rel": "owns",
+      "source": "count_dracula",
+      "target": "carfax",
+      "evidence": [
+        "m0123-3916-3922",
+        "m0123-3943-3952"
+      ],
+      "method": "stated",
+      "support": 1,
+      "entry_index": 123,
+      "quote": "She is now quite awake, and look so well as I never saw her since that night at Carfax when we first enter the Count's house."
     },
     {
       "type": "RELATION",

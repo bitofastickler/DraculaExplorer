@@ -2,8 +2,9 @@
 """Slim data/kg/graph.json into docs/data/graph.json for the GitHub Pages viewer.
 
 Needs only the standard library, so the site can be refreshed without spaCy.
-Keeps entities, the entries they appear in, and co-appearance links
-(two entities appearing in the same entry). Mention-level REFERS_TO edges
+Keeps entities, the entries they appear in, co-appearance links
+(two entities appearing in the same entry), and relations with their
+evidence sentence. Mention-level REFERS_TO edges
 are dropped; they point at mention ids that have no node in graph.json.
 """
 from __future__ import annotations
@@ -74,9 +75,20 @@ def main() -> None:
         if shared >= MIN_SHARED:
             links.append({"source": a["id"], "target": b["id"], "shared": shared})
 
+    # Stated relations carry the sentence that supports them. Curated edges
+    # (part_of from config) have no sentence.
+    kept = {r["id"] for r in entities}
     relations = [
-        {"source": e["source"], "target": e["target"], "rel": e["rel"]}
-        for e in edges if e["type"] == "RELATION"
+        {
+            "source": e["source"],
+            "target": e["target"],
+            "rel": e["rel"],
+            "method": e.get("method") or "curated",
+            "quote": e.get("quote"),
+            "entry": e.get("entry_index"),
+        }
+        for e in edges
+        if e["type"] == "RELATION" and e["source"] in kept and e["target"] in kept
     ]
 
     eval_path = ROOT / "data" / "kg" / "eval.json"
@@ -91,7 +103,10 @@ def main() -> None:
         "relations": relations,
         "heldout": scores.get("heldout_with_knowledge"),
     }, ensure_ascii=False, separators=(",", ":")), encoding="utf-8")
-    print(f"Wrote {OUT} ({len(entities)} entities, {len(links)} links, {OUT.stat().st_size // 1024} KB)")
+    print(
+        f"Wrote {OUT} ({len(entities)} entities, {len(links)} links, "
+        f"{len(relations)} relations, {OUT.stat().st_size // 1024} KB)"
+    )
 
 
 if __name__ == "__main__":

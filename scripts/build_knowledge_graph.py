@@ -30,6 +30,7 @@ def main() -> None:
         "tune_with_knowledge": scored["tune_with_knowledge"],
         "nominals": scored["nominals"],
         "n_relations": scored["n_relations"],
+        "n_stated_relations": scored["n_stated_relations"],
         "queries": scored["queries"],
     })
     if prepared["review"]:
@@ -51,7 +52,10 @@ def main() -> None:
         f"with knowledge {held['f1']:.3f} (P {held['precision']:.3f} R {held['recall']:.3f}), "
         f"without {bare['f1']:.3f}."
     )
-    print(f"Relations emitted: {scored['n_relations']}.")
+    print(
+        f"Relations: {scored['n_relations']} from patterns, "
+        f"{scored['n_stated_relations']} stated relations confirmed in the text."
+    )
     print(f"Wrote {out / 'graph.json'}")
 
 

@@ -257,7 +257,28 @@ def resolve_mentions(
     rare = {tok for tok, forms in surface_forms.items() if 0 < len(forms) < rare_max and tok not in {"the", "a"}}
 
     def ambiguous_surname(surname: str | None) -> bool:
-        return bool(surname) and len(givens_for.get(surname, ())) >= 2
+        # A token used more often as a given name is not a shared surname,
+        # even when spaCy returns "Husband Jonathan" or "Harker Jonathan".
+        if not surname or len(givens_for.get(surname, ())) < 2:
+            return False
+        as_given = sum(full_count.get(surname, {}).values())
+        as_surname = sum(full_count[g].get(surname, 0) for g in givens_for[surname])
+        return as_surname >= as_given
+
+    def bare_surname_owner(surname: str | None) -> str | None:
+        """The given name a bare shared surname refers to, if any.
+
+        In the period's usage a bare "Harker" is the husband. The wife took
+        the name on marriage (she is also attested as Mina Murray) and is
+        written "Mrs. Harker" or by her given name. So when every other
+        holder of the surname married into it, the bare form belongs to
+        the one who did not.
+        """
+        native = [
+            g for g in givens_for.get(surname, ())
+            if not (g in female and len(surnames_for.get(g, ())) == 2)
+        ]
+        return native[0] if len(native) == 1 else None
 
     def cannot(i: int, j: int) -> bool:
         a, b = parts[i], parts[j]
@@ -365,6 +386,12 @@ def resolve_mentions(
                 and ambiguous_surname(short.tokens[0])
                 and short.tokens[0] == (short.surname or short.given)
                 and not married_name_ok(short, full)
+                and not (
+                    short.honorific is None
+                    and full.given
+                    and full.given == bare_surname_owner(short.tokens[0])
+                    and full.surname == short.tokens[0]
+                )
             ):
                 continue
             if (
@@ -384,6 +411,8 @@ def resolve_mentions(
                 len(short.tokens) == 1 and short.given and not short.surname
                 and len(surnames_for.get(short.given, ())) >= 2
                 and full.surname != dominant_surname(short.given)
+                # Mina Murray / Mina Harker are one woman, so "Mina" is not ambiguous.
+                and not (short.given in female and len(surnames_for[short.given]) == 2)
             ):
                 continue
             link(i, j, "subset")

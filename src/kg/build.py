@@ -10,7 +10,7 @@ from src.kg.entries import load_entries
 from src.kg.evaluate import answer_queries, nominal_stats, pairwise_f1
 from src.kg.graph import build_graph
 from src.kg.mentions import apply_alias_types, drop_surfaces, extract_mentions, load_mentions
-from src.kg.relations import find_relations
+from src.kg.relations import find_relations, find_stated_relations
 from src.kg.resolve import apply_gold_labels, resolve_mentions
 
 
@@ -41,6 +41,8 @@ def prepare(root: Path | None = None, use_knowledge: bool = True, mentions=None)
     resolved = resolve_mentions(mentions, entries, config, extra_must=must, extra_cannot=cannot)
     apply_gold_labels(resolved.mentions, gold)
     relations = find_relations(entries, resolved.mentions)
+    stated = (load_yaml(root / "data" / "gold" / "relations.yml") or {}).get("relations") or []
+    relations += find_stated_relations(entries, resolved.mentions, stated, config.get("narrator_to_entity"))
     graph = build_graph(
         entries,
         resolved.mentions,
@@ -84,5 +86,11 @@ def report(root: Path | None = None, mentions_path: Path | None = None) -> dict:
         "heldout_without_knowledge": pairwise_f1(off["mentions"], off["gold"], heldout),
         "nominals": nominal_stats(on["mentions"]),
         "queries": answer_queries(on["entries"], on["mentions"], on["graph"]),
-        "n_relations": len(on["relations"]),
+        # Pattern edges and text-checked stated edges are counted apart.
+        "n_relations": sum(r.get("method") == "pattern" for r in on["relations"]),
+        "n_stated_relations": sum(r.get("method") == "stated" for r in on["relations"]),
+        "relations": [
+            {k: r[k] for k in ("type", "source", "target", "method", "support") if k in r}
+            for r in on["relations"]
+        ],
     }

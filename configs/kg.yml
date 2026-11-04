@@ -31,4 +31,9 @@ part_of:
 # Surfaces the small NER model tags as names that are not entities in the
 # story (document labels, exclamations, common nouns). Dropped before
 # resolution. Case-insensitive; a trailing 's is ignored.
-not_entities: [telegram, letter, memorandum, mem, vampire, wafer, lor, hitherto, ho, ring, god, un-dead, mein gott, herr, mein herr, king laugh, afraid, behold, breakfast, angel, angels]
+not_entities: [
+  telegram, letter, memorandum, mem, vampire, wafer, lor, hitherto, ho, ring, god, un-dead, mein gott, herr, mein herr, king laugh, afraid, behold, breakfast, angel, angels,
+  # Bare compass points ("the East"), saints' titles, forms of address,
+  # objects, a plural couple, and the Gutenberg publisher line.
+  east, west, south, north, ste, devil, cross, bay, consul, superintendent,
+  lordship, sirs, winchesters, harkers, "i.", "i. 'bersicker", new york]

@@ -1,9 +1,14 @@
 # -*- coding: utf-8 -*-
-"""High-precision relation patterns.
+"""Relations between resolved entities, two ways.
 
-A relation is emitted only when a pattern word sits between two adjacent
-mentions (at most 40 characters apart). A keyword elsewhere in the
-sentence does not count. No edge is stored without mention ids.
+``find_relations``: high-precision patterns. A relation is emitted only
+when a pattern word sits between two adjacent mentions (at most 40
+characters apart). The novel rarely writes it that way, so this usually
+finds nothing.
+
+``find_stated_relations``: relations known from reading the book, each
+kept only when a sentence in the text supports it. No edge is stored
+without mention ids.
 """
 from __future__ import annotations
 
@@ -76,6 +81,7 @@ def find_relations(entries: list[Entry], mentions: list[Mention]) -> list[dict]:
                         "type": rel,
                         "source": source,
                         "target": target,
+                        "method": "pattern",
                         "evidence": [],
                     })
                     slot["evidence"].append(a.mention_id)
@@ -103,3 +109,136 @@ def _patient_direction(a: Mention, b: Mention, group: list[Mention]) -> tuple[st
     if a_doc:
         return b.entity_id, a.entity_id
     return a.entity_id, b.entity_id
+
+
+# Sentence ends: . ! ? (plus closing quotes) followed by a space, but not
+# after an abbreviation. The entry text has no line breaks.
+_SENT_END = re.compile(r"(?<!\bMr)(?<!\bMrs)(?<!\bDr)(?<!\bSt)[.!?][\"')\]_]*\s+")
+_FIRST_PERSON = {"i", "me", "my", "mine", "myself"}
+CUE_WINDOW = 40
+_SECTION = re.compile(r"\*(?:\s\*){4}|_(?=[A-Z])[^_]{2,150}_")
+
+
+def _sentence_spans(text: str) -> list[tuple[int, int]]:
+    spans, start = [], 0
+    for match in _SENT_END.finditer(text):
+        spans.append((start, match.end()))
+        start = match.end()
+    if start < len(text):
+        spans.append((start, len(text)))
+    return spans
+
+
+def find_stated_relations(
+    entries: list[Entry],
+    mentions: list[Mention],
+    stated: list[dict],
+    narrator_ids: dict[str, str] | None = None,
+) -> list[dict]:
+    """Keep the known relations that a sentence in the text supports.
+
+    ``stated`` rows come from ``data/gold/relations.yml``. A row becomes an
+    edge only when one sentence mentions both entities and a cue word sits
+    within ``CUE_WINDOW`` characters of a mention of each ("to Jonathan, my
+    husband"). A cue elsewhere in a long sentence is usually about someone
+    else. A first-person pronoun stands for the narrator only outside
+    dialogue: the sentence has no quote mark and an even number of quote
+    marks comes before it in the entry. It is not trusted in a section
+    whose narration calls the narrator by title ("Dr. Seward was out on
+    business"): that section is another writer's pages. The quote
+    kept is the sentence where the cue sits closest to both names.
+    """
+    from bisect import bisect_right
+
+    from src.kg.resolve import parse_name
+
+    narrator_ids = narrator_ids or {}
+    cue_of = {
+        id(row): re.compile(r"\b(?:" + "|".join(re.escape(c) for c in row["cues"]) + r")", re.I)
+        for row in stated
+    }
+    by_entry: dict[int, list[Mention]] = defaultdict(list)
+    for mention in mentions:
+        by_entry[mention.entry_index].append(mention)
+
+    edges: dict[tuple, dict] = {}
+    for entry in entries:
+        group = by_entry.get(entry.entry_index)
+        if not group:
+            continue
+        text = entry.text
+        spans = _sentence_spans(text)
+        starts = [s for s, _e in spans]
+        in_sent: dict[int, list[Mention]] = defaultdict(list)
+        for mention in group:
+            in_sent[bisect_right(starts, mention.start) - 1].append(mention)
+        narrator = narrator_ids.get(entry.narrator or "")
+
+        def narrated(pos: int) -> bool:
+            return text.count('"', 0, pos) % 2 == 0
+
+        # Sections start at "* * * * *" or an italic heading such as
+        # "_Letter, Sister Agatha, ..._". A section whose narration calls the
+        # narrator by title belongs to someone else.
+        cuts = [0] + [b.start() for b in _SECTION.finditer(text)]
+        untrusted = {
+            bisect_right(cuts, m.start) - 1
+            for m in group
+            if m.entity_id == narrator and m.mention_class == "PROP"
+            and parse_name(m.surface).honorific and narrated(m.start)
+        } if narrator else set()
+
+        for k, ms in in_sent.items():
+            s_start, s_end = spans[k]
+            sentence = text[s_start:s_end]
+            present: dict[str, list[Mention]] = defaultdict(list)
+            for m in ms:
+                if m.entity_id and m.mention_class in {"PROP", "NOM"}:
+                    present[m.entity_id].append(m)
+            if (
+                narrator and '"' not in sentence and narrated(s_start)
+                and bisect_right(cuts, s_start) - 1 not in untrusted
+            ):
+                for m in ms:
+                    if m.mention_class == "PRON" and m.surface.lower() in _FIRST_PERSON:
+                        present[narrator].append(m)
+            if len(present) < 2:
+                continue
+            for row in stated:
+                src, dst = row["source"], row["target"]
+                if src not in present or dst not in present:
+                    continue
+                best = None
+                for cue in cue_of[id(row)].finditer(sentence):
+                    at, end = s_start + cue.start(), s_start + cue.end()
+
+                    def gap(group: list[Mention]) -> int:
+                        return min(max(m.start - end, at - m.end, 0) for m in group)
+
+                    d_src, d_dst = gap(present[src]), gap(present[dst])
+                    if d_src <= CUE_WINDOW and d_dst <= CUE_WINDOW and (best is None or d_src + d_dst < best):
+                        best = d_src + d_dst
+                if best is None:
+                    continue
+                key = (row["rel"], src, dst)
+                slot = edges.get(key)
+                if slot is None:
+                    slot = edges[key] = {
+                        "type": row["rel"],
+                        "source": src,
+                        "target": dst,
+                        "method": "stated",
+                        "evidence": [],
+                        "support": 0,
+                        "_best": None,
+                    }
+                slot["support"] += 1
+                slot["evidence"].extend(m.mention_id for m in present[src] + present[dst])
+                if slot["_best"] is None or best < slot["_best"]:
+                    slot["_best"] = best
+                    slot["entry_index"] = entry.entry_index
+                    slot["quote"] = " ".join(sentence.split())[:300]
+    for edge in edges.values():
+        edge["evidence"] = sorted(set(edge["evidence"]))
+        del edge["_best"]
+    return list(edges.values())

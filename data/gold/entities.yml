@@ -10,7 +10,7 @@ entities:
   - id: jonathan_harker
     canonical_name: Jonathan Harker
     entity_type: PER
-    aliases: [jonathan harker, jonathan, mr harker, mr jonathan harker]
+    aliases: [jonathan harker, jonathan, mr harker, mr jonathan harker, harker]
   - id: mina_harker
     canonical_name: Mina Harker
     entity_type: PER
@@ -125,7 +125,7 @@ entities:
   - id: castle_dracula
     canonical_name: Castle Dracula
     entity_type: FAC
-    aliases: [castle dracula]
+    aliases: [castle dracula, castle]
   - id: carfax
     canonical_name: Carfax
     entity_type: FAC
@@ -146,3 +146,112 @@ entities:
     canonical_name: Demeter
     entity_type: VEH
     aliases: [demeter, the demeter]
+  # Long-tail fixes from reading the text (types and splits).
+  - id: borgo_pass
+    canonical_name: "Borgo Pass"
+    entity_type: LOC
+    aliases: [borgo pass, pass]
+  - id: hillingham
+    canonical_name: "Hillingham"
+    entity_type: FAC
+    aliases: [hillingham]
+  - id: kings_cross
+    canonical_name: "King's Cross"
+    entity_type: FAC
+    aliases: [king cross]
+  - id: kettleness
+    canonical_name: "Kettleness"
+    entity_type: GPE
+    aliases: [kettleness]
+  - id: fundu
+    canonical_name: "Fundu"
+    entity_type: GPE
+    aliases: [fundu]
+  - id: haarlem
+    canonical_name: "Haarlem"
+    entity_type: GPE
+    aliases: [haarlem]
+  - id: york
+    canonical_name: "York"
+    entity_type: GPE
+    aliases: [york]
+  - id: pruth
+    canonical_name: "Pruth"
+    entity_type: LOC
+    aliases: [pruth]
+  - id: pampas
+    canonical_name: "Pampas"
+    entity_type: LOC
+    aliases: [pampas]
+  - id: black_sea
+    canonical_name: "Black Sea"
+    entity_type: LOC
+    aliases: [black sea, black-sea]
+  - id: north_sea
+    canonical_name: "North Sea"
+    entity_type: LOC
+    aliases: [north sea]
+  - id: north_foreland
+    canonical_name: "North Foreland"
+    entity_type: LOC
+    aliases: [north foreland]
+  - id: east_cliff
+    canonical_name: "East Cliff"
+    entity_type: LOC
+    aliases: [east cliff]
+  - id: west_pier
+    canonical_name: "West Pier"
+    entity_type: FAC
+    aliases: [west pier]
+  - id: west_lighthouse
+    canonical_name: "West Lighthouse"
+    entity_type: FAC
+    aliases: [west lighthouse]
+  - id: the_crescent
+    canonical_name: "The Crescent"
+    entity_type: FAC
+    aliases: [crescent]
+  - id: st_marys_church
+    canonical_name: "St. Mary's Church"
+    entity_type: FAC
+    aliases: [st mary church]
+  - id: berkeley_hotel
+    canonical_name: "Berkeley Hotel"
+    entity_type: FAC
+    aliases: [berkeley hotel, berkeley]
+  - id: doolittles_wharf
+    canonical_name: "Doolittle's Wharf"
+    entity_type: FAC
+    aliases: [doolittle wharf, doolittle]
+  - id: szgany
+    canonical_name: "Szgany"
+    entity_type: NORP
+    aliases: [szgany]
+  - id: slovaks
+    canonical_name: "Slovaks"
+    entity_type: NORP
+    aliases: [slovaks, slovak]
+  - id: saxons
+    canonical_name: "Saxons"
+    entity_type: NORP
+    aliases: [saxon, saxons]
+  - id: turks
+    canonical_name: "Turks"
+    entity_type: NORP
+    aliases: [turk, turks]
+  - id: huns
+    canonical_name: "Huns"
+    entity_type: NORP
+    aliases: [huns, hun]
+  - id: carter_paterson
+    canonical_name: "Carter, Paterson & Co."
+    entity_type: ORG
+    aliases: [carter paterson, carter]
+  - id: lloyds
+    canonical_name: "Lloyd's"
+    entity_type: ORG
+    aliases: [lloyd]
+  - id: bersicker
+    canonical_name: "Bersicker"
+    entity_type: ANIMAL
+    aliases: [bersicker]
