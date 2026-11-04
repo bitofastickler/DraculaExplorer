@@ -1,0 +1,9 @@
+# Knowledge on top of the automatic rules. The evaluation report scores
+# chapters 14-27 twice: once with this file and once without it.
+pairs:
+  - [mina murray, mina harker]
+  - [arthur holmwood, lord godalming]
+  - [arthur holmwood, godalming]
+cannot:
+  - [mrs westenra, lucy westenra]
+  - [mrs westenra, lucy]

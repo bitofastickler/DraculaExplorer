@@ -1,0 +1,26 @@
+# Weights were frozen before scoring chapters 14-27.
+# male_givens / female_givens are a small honorific-agreement prior, not a
+# name census. They only block Mr/Mrs clashes such as Mrs Harker vs Jonathan.
+auto_merge_threshold: 0.85
+review_threshold: 0.60
+jaro_block: 0.92
+rare_token_max_surfaces: 30
+weights:
+  jaro: 0.40
+  surname: 0.30
+  given: 0.20
+  honorific: 0.10
+male_givens: [jonathan, arthur, john, abraham, quincey, quincy, peter]
+female_givens: [mina, lucy, wilhelmina]
+diminutives:
+  wilhelmina: mina
+  quincy: quincey
+narrator_to_entity:
+  Jonathan Harker: jonathan_harker
+  Mina Murray: mina_harker
+  Mina Harker: mina_harker
+  Lucy Westenra: lucy_westenra
+  Dr. John Seward: john_seward
+  Abraham Van Helsing: abraham_van_helsing
+part_of:
+  - [carfax, london]

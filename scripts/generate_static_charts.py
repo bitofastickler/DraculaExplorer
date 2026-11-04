@@ -28,6 +28,13 @@ def main(n_topics=8):
     fig = plot_chapter_map(pts, labs); fig.savefig(OUT/"chapter_map.png", bbox_inches="tight")
     co = character_cooccurrence(corpus)
     fig = plot_cooccurrence_heatmap(co); fig.savefig(OUT/"character_cooccurrence.png", bbox_inches="tight")
+    graph_path = DATA_DIR / "kg" / "graph.json"
+    if not graph_path.exists():
+        try:
+            from scripts.build_knowledge_graph import main as build_kg
+            build_kg()
+        except Exception as exc:
+            print("[skip] knowledge graph:", exc)
     print("Saved charts to", OUT)
 
 if __name__ == "__main__":

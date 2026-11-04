@@ -42,12 +42,13 @@ def plot_chapter_map(points: np.ndarray, labels: List[str]):
     ax.set_title("Chapter map (TF-IDF → PCA)")
     fig.tight_layout(); return fig
 
-def plot_cooccurrence_heatmap(co: pd.DataFrame):
-    fig, ax = plt.subplots(figsize=(6,5))
+def plot_cooccurrence_heatmap(co: pd.DataFrame, title: str = "Character co-occurrence (by entry)"):
+    side = 6 if max(co.shape) <= 9 else 8
+    fig, ax = plt.subplots(figsize=(side, side - 1))
     im = ax.imshow(co.values)
     ax.set_xticks(range(co.shape[1])); ax.set_yticks(range(co.shape[0]))
     ax.set_xticklabels(co.columns, rotation=45, ha="right")
     ax.set_yticklabels(co.index)
-    ax.set_title("Character co-occurrence (by entry)")
+    ax.set_title(title)
     fig.colorbar(im, ax=ax, fraction=0.046, pad=0.04)
     fig.tight_layout(); return fig

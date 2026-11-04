@@ -1,0 +1,77 @@
+# Alias strings are the normalized forms produced by parse_name
+# (lowercase, honorific kept when it is part of the surface).
+# A proper mention matches an entity when one of its forms hits this list
+# and the entity types agree. "dracula" is not an alias of the castle.
+entities:
+  - id: count_dracula
+    canonical_name: Count Dracula
+    entity_type: PER
+    aliases: [count dracula, dracula, the count]
+  - id: jonathan_harker
+    canonical_name: Jonathan Harker
+    entity_type: PER
+    aliases: [jonathan harker, jonathan, mr harker, mr jonathan harker]
+  - id: mina_harker
+    canonical_name: Mina Harker
+    entity_type: PER
+    aliases: [mina harker, mina murray, mina, mrs harker, mrs murray, miss murray, miss mina murray, wilhelmina murray, miss wilhelmina murray, madam mina]
+  - id: lucy_westenra
+    canonical_name: Lucy Westenra
+    entity_type: PER
+    aliases: [lucy westenra, lucy, miss westenra, miss lucy westenra]
+  - id: arthur_holmwood
+    canonical_name: Arthur Holmwood
+    entity_type: PER
+    aliases: [arthur holmwood, arthur, lord godalming, godalming, mr holmwood]
+  - id: quincey_morris
+    canonical_name: Quincey Morris
+    entity_type: PER
+    aliases: [quincey morris, quincey p morris, quincey, quincy morris, mr morris]
+  - id: john_seward
+    canonical_name: John Seward
+    entity_type: PER
+    aliases: [john seward, seward, dr seward, doctor seward, dr john seward]
+  - id: abraham_van_helsing
+    canonical_name: Abraham Van Helsing
+    entity_type: PER
+    aliases: [abraham van helsing, van helsing, dr van helsing, professor van helsing]
+  - id: rm_renfield
+    canonical_name: R. M. Renfield
+    entity_type: PER
+    aliases: [r m renfield, rm renfield, renfield, mr renfield]
+  - id: mrs_westenra
+    canonical_name: Mrs. Westenra
+    entity_type: PER
+    aliases: [mrs westenra]
+  - id: peter_hawkins
+    canonical_name: Peter Hawkins
+    entity_type: PER
+    aliases: [peter hawkins, mr hawkins, mr peter hawkins, hawkins]
+  - id: mr_swales
+    canonical_name: Mr. Swales
+    entity_type: PER
+    aliases: [mr swales, swales]
+  - id: castle_dracula
+    canonical_name: Castle Dracula
+    entity_type: FAC
+    aliases: [castle dracula]
+  - id: carfax
+    canonical_name: Carfax
+    entity_type: FAC
+    aliases: [carfax, carfax abbey]
+  - id: london
+    canonical_name: London
+    entity_type: GPE
+    aliases: [london]
+  - id: whitby
+    canonical_name: Whitby
+    entity_type: GPE
+    aliases: [whitby]
+  - id: bistritz
+    canonical_name: Bistritz
+    entity_type: GPE
+    aliases: [bistritz]
+  - id: demeter
+    canonical_name: Demeter
+    entity_type: VEH
+    aliases: [demeter, the demeter]

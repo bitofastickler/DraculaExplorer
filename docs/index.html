@@ -1,0 +1,502 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Dracula Knowledge Graph</title>
+<meta name="description" content="Who appears with whom in Bram Stoker's Dracula: an entity-resolution knowledge graph built from the novel's journals, letters and diaries.">
+<style>
+:root {
+  color-scheme: light;
+  --page: #f9f9f7;
+  --surface: #fcfcfb;
+  --ink: #0b0b0b;
+  --ink-2: #52514e;
+  --muted: #898781;
+  --grid: #e1e0d9;
+  --axis: #c3c2b7;
+  --ring: rgba(11,11,11,0.10);
+  --accent: #8a1c1c;
+  --person: #2a78d6;
+  --place: #eb6834;
+  --other: #1baf7a;
+  --link: rgba(82,81,78,0.22);
+  --link-hi: rgba(82,81,78,0.75);
+  --wash: rgba(11,11,11,0.04);
+}
+@media (prefers-color-scheme: dark) {
+  :root:not([data-theme="light"]) {
+    color-scheme: dark;
+    --page: #0d0d0d;
+    --surface: #1a1a19;
+    --ink: #f0efec;
+    --ink-2: #c3c2b7;
+    --muted: #898781;
+    --grid: #2c2c2a;
+    --axis: #383835;
+    --ring: rgba(255,255,255,0.10);
+    --accent: #e66767;
+    --person: #3987e5;
+    --place: #d95926;
+    --other: #199e70;
+    --link: rgba(195,194,183,0.16);
+    --link-hi: rgba(195,194,183,0.7);
+    --wash: rgba(255,255,255,0.05);
+  }
+}
+:root[data-theme="dark"] {
+  color-scheme: dark;
+  --page: #0d0d0d;
+  --surface: #1a1a19;
+  --ink: #f0efec;
+  --ink-2: #c3c2b7;
+  --muted: #898781;
+  --grid: #2c2c2a;
+  --axis: #383835;
+  --ring: rgba(255,255,255,0.10);
+  --accent: #e66767;
+  --person: #3987e5;
+  --place: #d95926;
+  --other: #199e70;
+  --link: rgba(195,194,183,0.16);
+  --link-hi: rgba(195,194,183,0.7);
+  --wash: rgba(255,255,255,0.05);
+}
+* { box-sizing: border-box; }
+body {
+  margin: 0;
+  background: var(--page);
+  color: var(--ink);
+  font: 15px/1.5 system-ui, -apple-system, "Segoe UI", sans-serif;
+}
+header, main, footer { max-width: 1280px; margin: 0 auto; padding: 0 16px; }
+header { padding-top: 28px; }
+h1 { font-size: 26px; margin: 0 0 4px; letter-spacing: -0.01em; }
+h1 span { color: var(--accent); }
+.lede { color: var(--ink-2); margin: 0 0 16px; max-width: 70ch; }
+.note {
+  border: 1px solid var(--ring); border-left: 3px solid var(--accent);
+  background: var(--surface); border-radius: 8px;
+  padding: 10px 14px; color: var(--ink-2); font-size: 13.5px; margin-bottom: 16px;
+}
+.note summary { cursor: pointer; color: var(--ink); font-weight: 600; }
+.note ul { margin: 8px 0 0; padding-left: 20px; }
+.controls {
+  display: flex; flex-wrap: wrap; gap: 10px 18px; align-items: center;
+  margin-bottom: 12px;
+}
+.controls label { color: var(--ink-2); font-size: 13.5px; display: inline-flex; gap: 6px; align-items: center; }
+input[type=search] {
+  font: inherit; padding: 6px 10px; border-radius: 8px; width: 220px; max-width: 100%;
+  border: 1px solid var(--axis); background: var(--surface); color: var(--ink);
+}
+input[type=range] { width: 110px; accent-color: var(--accent); }
+.val { font-variant-numeric: tabular-nums; color: var(--ink); min-width: 2ch; display: inline-block; }
+.seg { display: inline-flex; border: 1px solid var(--axis); border-radius: 8px; overflow: hidden; }
+.seg button {
+  font: inherit; font-size: 13.5px; border: 0; background: var(--surface); color: var(--ink-2);
+  padding: 5px 12px; cursor: pointer;
+}
+.seg button[aria-pressed=true] { background: var(--ink); color: var(--surface); }
+.legend { display: inline-flex; gap: 12px; flex-wrap: wrap; }
+.legend label { cursor: pointer; }
+.legend svg { flex: none; }
+.layout { display: grid; grid-template-columns: minmax(0, 1fr) 340px; gap: 16px; }
+@media (max-width: 900px) { .layout { grid-template-columns: 1fr; } }
+.card {
+  background: var(--surface); border: 1px solid var(--ring); border-radius: 12px;
+  position: relative; overflow: hidden;
+}
+#graph { height: min(72vh, 760px); min-height: 420px; }
+#graph svg { width: 100%; height: 100%; display: block; cursor: grab; touch-action: none; }
+#graph svg:active { cursor: grabbing; }
+.node { cursor: pointer; }
+.node path { stroke: var(--surface); stroke-width: 2px; }
+.node.dim { opacity: 0.15; }
+.node.sel path { stroke: var(--ink); stroke-width: 2.5px; }
+.node text {
+  font-size: 11.5px; fill: var(--ink); pointer-events: none;
+  paint-order: stroke; stroke: var(--surface); stroke-width: 3px; stroke-linejoin: round;
+}
+.lk { stroke: var(--link); }
+.lk.hi { stroke: var(--link-hi); }
+.lk.dim { opacity: 0.08; }
+.hint { position: absolute; left: 12px; bottom: 10px; font-size: 12px; color: var(--muted); pointer-events: none; }
+.tip {
+  position: absolute; pointer-events: none; background: var(--surface); color: var(--ink);
+  border: 1px solid var(--ring); border-radius: 8px; padding: 8px 10px; font-size: 13px;
+  box-shadow: 0 4px 16px rgba(0,0,0,0.12); opacity: 0; transition: opacity .1s; max-width: 240px;
+}
+.tip b { display: block; }
+.tip .sub { color: var(--ink-2); }
+#panel { padding: 16px; max-height: min(72vh, 760px); min-height: 420px; overflow: auto; }
+@media (max-width: 900px) { #panel { max-height: none; min-height: 0; } }
+#panel h2 { font-size: 19px; margin: 0 0 2px; }
+#panel h3 { font-size: 12px; text-transform: uppercase; letter-spacing: .06em; color: var(--muted); margin: 18px 0 6px; }
+.meta { color: var(--ink-2); font-size: 13.5px; }
+.stats { display: grid; grid-template-columns: repeat(3, 1fr); gap: 8px; margin-top: 12px; }
+.stat { background: var(--wash); border-radius: 8px; padding: 8px 10px; }
+.stat b { display: block; font-size: 20px; }
+.stat span { font-size: 12px; color: var(--ink-2); }
+.chips { display: flex; flex-wrap: wrap; gap: 6px; }
+.chip { font-size: 12.5px; padding: 2px 8px; border-radius: 999px; border: 1px solid var(--axis); color: var(--ink-2); }
+.nb { list-style: none; margin: 0; padding: 0; }
+.nb li button {
+  all: unset; box-sizing: border-box; width: 100%; display: grid; grid-template-columns: 12px 1fr auto; gap: 8px;
+  align-items: center; padding: 4px 6px; border-radius: 6px; cursor: pointer; font-size: 13.5px;
+}
+.nb li button:hover, .nb li button:focus-visible { background: var(--wash); }
+.nb .n { color: var(--ink-2); font-variant-numeric: tabular-nums; }
+.entries { list-style: none; margin: 0; padding: 0; font-size: 13px; }
+.entries li { padding: 4px 0; border-top: 1px solid var(--grid); color: var(--ink-2); }
+.entries li b { color: var(--ink); font-weight: 600; }
+.empty { color: var(--ink-2); }
+.empty p { margin: 0 0 10px; }
+#tableWrap { display: none; overflow: auto; max-height: min(72vh, 760px); }
+table { border-collapse: collapse; width: 100%; font-size: 13.5px; }
+th, td { text-align: left; padding: 7px 12px; border-bottom: 1px solid var(--grid); }
+th { position: sticky; top: 0; background: var(--surface); color: var(--ink-2); font-weight: 600; cursor: pointer; white-space: nowrap; }
+td.num, th.num { text-align: right; font-variant-numeric: tabular-nums; }
+tbody tr { cursor: pointer; }
+tbody tr:hover { background: var(--wash); }
+footer { color: var(--muted); font-size: 13px; padding-top: 20px; padding-bottom: 32px; }
+a { color: var(--accent); }
+.theme { margin-left: auto; }
+.theme button { all: unset; cursor: pointer; color: var(--ink-2); font-size: 13.5px; padding: 4px 8px; border-radius: 6px; border: 1px solid var(--axis); }
+</style>
+</head>
+<body>
+<header>
+  <div style="display:flex;align-items:baseline;gap:12px;flex-wrap:wrap">
+    <h1><span>Dracula</span> knowledge graph</h1>
+    <div class="theme"><button id="themeBtn" type="button">Toggle theme</button></div>
+  </div>
+  <p class="lede">Who shows up with whom in Bram Stoker's novel. Each journal entry, letter, diary page and newspaper cutting is one document. Names are detected with spaCy and grouped into people and places. Two entities are linked when they appear in the same document; thicker lines mean more shared documents.</p>
+  <details class="note">
+    <summary>Built automatically: read before trusting it</summary>
+    <ul>
+      <li>Some different people are merged. The "John" node mixes Dr. John Seward with John Paxton and John Rawlings, and "Art" (Arthur's nickname) landed on Van Helsing.</li>
+      <li>Some people are split. Seward also appears as "Seward", and Dracula as "Count Dracula" and "Dracula".</li>
+      <li>Some types are wrong: Galatz and Exeter are tagged as people, and the ship <i>Czarina Catherine</i> as a person.</li>
+      <li>The <span id="f1">reported held-out score</span> only covers names in a hand-made alias list, so it can't see these errors.</li>
+    </ul>
+  </details>
+  <div class="controls">
+    <input id="q" type="search" placeholder="Find a name or alias" aria-label="Find a name or alias" list="names">
+    <datalist id="names"></datalist>
+    <label>Min mentions <input id="minM" type="range" min="2" max="40" value="5"><span class="val" id="minMv">5</span></label>
+    <label>Min shared entries <input id="minS" type="range" min="2" max="25" value="4"><span class="val" id="minSv">4</span></label>
+    <span class="legend" id="legend"></span>
+    <span class="seg" role="group" aria-label="View">
+      <button type="button" id="vGraph" aria-pressed="true">Graph</button>
+      <button type="button" id="vTable" aria-pressed="false">Table</button>
+    </span>
+  </div>
+</header>
+<main>
+  <div class="layout">
+    <div class="card" id="viewCard">
+      <div id="graph"></div>
+      <div id="tableWrap"><table><thead><tr>
+        <th data-k="name">Name</th><th data-k="group">Type</th>
+        <th class="num" data-k="mentions">Mentions</th><th class="num" data-k="nEntries">Entries</th>
+        <th class="num" data-k="degree">Links</th>
+      </tr></thead><tbody id="tbody"></tbody></table></div>
+      <div class="tip" id="tip"></div>
+    </div>
+    <aside class="card" id="panel" aria-live="polite"></aside>
+  </div>
+</main>
+<footer>
+  Source text: Project Gutenberg's <i>Dracula</i> (1897). Data and code: <a href="https://github.com/bitofastickler/DraculaExplorer">DraculaExplorer on GitHub</a>.
+  Rebuild with <code>python scripts/build_knowledge_graph.py</code>, then <code>python scripts/export_site_graph.py</code>.
+</footer>
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/d3/7.9.0/d3.min.js"></script>
+<script>
+(function () {
+  const GROUPS = [
+    { key: "person", label: "Person", shape: d3.symbolCircle },
+    { key: "place", label: "Place", shape: d3.symbolSquare },
+    { key: "other", label: "Other", shape: d3.symbolDiamond },
+  ];
+  const shapeOf = Object.fromEntries(GROUPS.map(g => [g.key, g.shape]));
+  const labelOf = Object.fromEntries(GROUPS.map(g => [g.key, g.label]));
+  const color = k => `var(--${k})`;
+  const state = { minM: 5, minS: 4, groups: new Set(GROUPS.map(g => g.key)), selected: null, view: "graph", sortK: "mentions", sortDir: -1 };
+  let render = () => {};  // replaced once the data loads
+
+  // Theme toggle: flips data-theme against whatever is showing now.
+  const root = document.documentElement;
+  document.getElementById("themeBtn").addEventListener("click", () => {
+    const dark = getComputedStyle(root).colorScheme === "dark";
+    root.setAttribute("data-theme", dark ? "light" : "dark");
+    try { localStorage.setItem("dkg-theme", root.getAttribute("data-theme")); } catch (e) {}
+  });
+  try { const t = localStorage.getItem("dkg-theme"); if (t) root.setAttribute("data-theme", t); } catch (e) {}
+
+  // Legend doubles as the type filter.
+  const legend = d3.select("#legend");
+  GROUPS.forEach(g => {
+    const lab = legend.append("label");
+    lab.append("input").attr("type", "checkbox").property("checked", true)
+      .on("change", function () { this.checked ? state.groups.add(g.key) : state.groups.delete(g.key); render(); });
+    lab.append("svg").attr("width", 14).attr("height", 14).attr("aria-hidden", "true")
+      .append("path").attr("transform", "translate(7,7)").attr("d", d3.symbol(g.shape, 90)()).attr("fill", color(g.key));
+    lab.append("span").text(g.label);
+  });
+
+  fetch("data/graph.json").then(r => r.json()).then(init).catch(err => {
+    document.getElementById("graph").innerHTML = `<p style="padding:16px">Could not load data/graph.json (${err}). Serve this folder over HTTP rather than opening the file directly.</p>`;
+  });
+
+  function init(data) {
+    const docs = data.documents;
+    const ents = data.entities;
+    const byId = new Map(ents.map(e => [e.id, e]));
+    if (data.heldout) {
+      document.getElementById("f1").textContent = `reported held-out F1 of ${data.heldout.f1.toFixed(2)}`;
+    }
+    d3.select("#names").selectAll("option").data(ents).join("option").attr("value", d => d.name);
+
+    const width = () => document.getElementById("graph").clientWidth;
+    const height = () => document.getElementById("graph").clientHeight;
+    const svg = d3.select("#graph").append("svg").attr("role", "img")
+      .attr("aria-label", "Network of characters and places linked by shared documents");
+    const zoomG = svg.append("g");
+    const linkG = zoomG.append("g");
+    const nodeG = zoomG.append("g");
+    const hint = d3.select("#graph").append("div").attr("class", "hint").text("Drag to pan, scroll to zoom, click a node for details");
+    const zoom = d3.zoom().scaleExtent([0.3, 5]).on("zoom", ev => zoomG.attr("transform", ev.transform));
+    svg.call(zoom).on("dblclick.zoom", null);
+    svg.on("click", ev => { if (ev.target === svg.node()) select(null); });
+
+    const r = d => 4 + Math.sqrt(d.mentions) * 1.15;
+    const area = d => Math.PI * r(d) * r(d) * (d.group === "person" ? 1 : 0.85);
+    const sim = d3.forceSimulation()
+      .force("charge", d3.forceManyBody().strength(d => -120 - d.mentions * 2.5))
+      .force("link", d3.forceLink().id(d => d.id).distance(l => 70 + r(l.source) + r(l.target)).strength(l => Math.min(0.35, 0.03 + l.shared / 120)))
+      .force("collide", d3.forceCollide().radius(d => r(d) + 6))
+      .force("x", d3.forceX().strength(0.09))
+      .force("y", d3.forceY().strength(0.12));
+
+    let visNodes = [], visLinks = [], adj = new Map();
+    const tip = d3.select("#tip");
+    const card = document.getElementById("viewCard");
+
+    function filtered() {
+      const nodes = ents.filter(e => e.mentions >= state.minM && state.groups.has(e.group));
+      const keep = new Set(nodes.map(n => n.id));
+      const links = data.links.filter(l => l.shared >= state.minS && keep.has(idOf(l.source)) && keep.has(idOf(l.target)));
+      return { nodes, links };
+    }
+    const idOf = x => (typeof x === "object" ? x.id : x);
+
+    render = function () {
+      const { nodes, links } = filtered();
+      // Reuse positions so the layout doesn't jump when a filter changes.
+      const old = new Map(visNodes.map(n => [n.id, n]));
+      visNodes = nodes.map(n => Object.assign(old.get(n.id) || { ...n }, n));
+      visLinks = links.map(l => ({ source: idOf(l.source), target: idOf(l.target), shared: l.shared }));
+      adj = new Map(visNodes.map(n => [n.id, new Map()]));
+      visLinks.forEach(l => { adj.get(l.source).set(l.target, l.shared); adj.get(l.target).set(l.source, l.shared); });
+      visNodes.forEach(n => n.degree = adj.get(n.id).size);
+
+      const maxS = d3.max(visLinks, l => l.shared) || 1;
+      linkG.selectAll("line").data(visLinks, l => l.source + "|" + l.target).join("line")
+        .attr("class", "lk").attr("stroke-width", l => 0.6 + 3.4 * Math.sqrt(l.shared / maxS));
+
+      const ng = nodeG.selectAll("g.node").data(visNodes, d => d.id).join(enter => {
+        const g = enter.append("g").attr("class", "node").attr("tabindex", 0).attr("role", "button");
+        g.append("path");
+        g.append("text").attr("dy", "0.32em");
+        return g;
+      });
+      ng.attr("aria-label", d => `${d.name}, ${labelOf[d.group]}, ${d.mentions} mentions`);
+      ng.select("path").attr("d", d => d3.symbol(shapeOf[d.group], area(d))()).attr("fill", d => color(d.group));
+      ng.select("text").attr("x", d => r(d) + 4).text(d => d.name);
+      ng.on("mouseenter", (ev, d) => showTip(ev, d)).on("mousemove", (ev, d) => showTip(ev, d))
+        .on("mouseleave", () => { tip.style("opacity", 0); highlight(); })
+        .on("click", (ev, d) => { ev.stopPropagation(); select(d.id); })
+        .on("keydown", (ev, d) => { if (ev.key === "Enter" || ev.key === " ") { ev.preventDefault(); select(d.id); } })
+        .call(d3.drag()
+          .on("start", (ev, d) => { if (!ev.active) sim.alphaTarget(0.2).restart(); d.fx = d.x; d.fy = d.y; })
+          .on("drag", (ev, d) => { d.fx = ev.x; d.fy = ev.y; })
+          .on("end", (ev, d) => { if (!ev.active) sim.alphaTarget(0); d.fx = null; d.fy = null; }));
+
+      sim.nodes(visNodes);
+      sim.force("link").links(visLinks);
+      sim.on("tick", () => {
+        linkG.selectAll("line").attr("x1", l => l.source.x).attr("y1", l => l.source.y).attr("x2", l => l.target.x).attr("y2", l => l.target.y);
+        nodeG.selectAll("g.node").attr("transform", d => `translate(${d.x},${d.y})`);
+      });
+      sim.alpha(0.8).restart();
+      if (state.selected && !adj.has(state.selected)) state.selected = null;
+      highlight();
+      renderTable();
+      renderPanel();
+    };
+
+    function showTip(ev, d) {
+      highlight(d.id);
+      const box = card.getBoundingClientRect();
+      tip.html(`<b>${esc(d.name)}</b><span class="sub">${labelOf[d.group]} · ${d.mentions} mentions · ${d.entries.length} entries · ${d.degree} links</span>`)
+        .style("opacity", 1);
+      const tw = tip.node().offsetWidth;
+      let x = ev.clientX - box.left + 14, y = ev.clientY - box.top + 14;
+      if (x + tw > box.width - 8) x = ev.clientX - box.left - tw - 14;
+      tip.style("left", x + "px").style("top", y + "px");
+    }
+
+    // Labels: big nodes always, plus the focused node and its neighbours.
+    function highlight(hoverId) {
+      const focus = hoverId || state.selected;
+      const nbrs = focus ? adj.get(focus) : null;
+      const big = visNodes.length > 40 ? 30 : 0;
+      nodeG.selectAll("g.node")
+        .classed("dim", d => !!nbrs && d.id !== focus && !nbrs.has(d.id))
+        .classed("sel", d => d.id === state.selected)
+        .select("text").style("display", d => (d.mentions >= big || d.id === focus || (nbrs && nbrs.has(d.id))) ? null : "none");
+      linkG.selectAll("line")
+        .classed("hi", l => !!focus && (l.source.id === focus || l.target.id === focus))
+        .classed("dim", l => !!focus && l.source.id !== focus && l.target.id !== focus);
+    }
+
+    function select(id) {
+      state.selected = id;
+      highlight();
+      renderPanel();
+      if (id && state.view === "graph") {
+        const n = visNodes.find(v => v.id === id);
+        if (n && n.x != null) {
+          svg.transition().duration(500).call(zoom.translateTo, n.x, n.y);
+        }
+      }
+    }
+
+    function renderPanel() {
+      const p = d3.select("#panel");
+      const e = state.selected && byId.get(state.selected);
+      if (!e) {
+        const top = visNodes.slice().sort((a, b) => b.mentions - a.mentions).slice(0, 8);
+        p.html(`<div class="empty"><h2>Explore the cast</h2>
+          <p>${visNodes.length} entities and ${visLinks.length} links shown, from ${Object.keys(docs).length} documents.</p>
+          <p>Click any node, row or name for its aliases, the documents it appears in, and who it appears with most.</p></div>
+          <h3>Most mentioned</h3><ul class="nb" id="topList"></ul>`);
+        neighbourList("#topList", top.map(n => [n, n.mentions]));
+        return;
+      }
+      const nb = [...(adj.get(e.id) || new Map())].map(([id, s]) => [byId.get(id), s]).sort((a, b) => b[1] - a[1]).slice(0, 12);
+      const byCh = d3.rollup(e.entries, v => v.length, i => docs[i] && docs[i].chapter);
+      p.html(`<h2>${esc(e.name)}</h2>
+        <div class="meta">${labelOf[e.group]} · spaCy type ${esc(e.type)} · id <code>${esc(e.id)}</code></div>
+        <div class="stats">
+          <div class="stat"><b>${e.mentions}</b><span>name mentions</span></div>
+          <div class="stat"><b>${e.entries.length}</b><span>documents</span></div>
+          <div class="stat"><b>${e.narrated}</b><span>narrated</span></div>
+        </div>
+        <h3>Documents per chapter</h3><div id="chStrip"></div>
+        <h3>Aliases found</h3><div class="chips">${e.aliases.map(a => `<span class="chip">${esc(a)}</span>`).join("") || '<span class="meta">none</span>'}</div>
+        <h3>Appears most with (shared documents)</h3><ul class="nb" id="nbList"></ul>
+        <h3>Documents</h3><ul class="entries">${e.entries.map(i => {
+          const d = docs[i] || {};
+          return `<li><b>Ch. ${d.chapter ?? "?"}</b>${d.date ? " · " + esc(d.date) : ""} · ${esc(d.title || d.kind || "")}</li>`;
+        }).join("")}</ul>`);
+      neighbourList("#nbList", nb);
+      if (!nb.length) d3.select("#nbList").append("li").attr("class", "meta").text("No links at the current filter settings.");
+      chapterStrip("#chStrip", byCh, e.group);
+    }
+
+    function neighbourList(sel, rows) {
+      const li = d3.select(sel).selectAll("li").data(rows).join("li").append("button").attr("type", "button")
+        .on("click", (ev, [n]) => select(n.id));
+      li.append("svg").attr("width", 12).attr("height", 12).attr("aria-hidden", "true")
+        .append("path").attr("transform", "translate(6,6)").attr("d", ([n]) => d3.symbol(shapeOf[n.group], 70)()).attr("fill", ([n]) => color(n.group));
+      li.append("span").text(([n]) => n.name);
+      li.append("span").attr("class", "n").text(([, v]) => v);
+    }
+
+    // 27 chapter columns; bar height = documents in that chapter mentioning the entity.
+    function chapterStrip(sel, byCh, group) {
+      const W = 300, H = 56, pad = 14;
+      const max = d3.max(byCh.values()) || 1;
+      const x = d3.scaleBand().domain(d3.range(1, 28)).range([0, W]).paddingInner(0.25);
+      const s = d3.select(sel).append("svg").attr("viewBox", `0 0 ${W} ${H + pad}`).attr("width", "100%")
+        .attr("role", "img").attr("aria-label", "Documents per chapter, chapters 1 to 27");
+      s.append("line").attr("x1", 0).attr("x2", W).attr("y1", H + 0.5).attr("y2", H + 0.5).attr("stroke", "var(--axis)");
+      const g = s.selectAll("g").data(x.domain()).join("g").attr("transform", c => `translate(${x(c)},0)`);
+      g.append("title").text(c => `Chapter ${c}: ${byCh.get(c) || 0} documents`);
+      g.append("rect").attr("width", x.bandwidth()).attr("height", H).attr("fill", "transparent");
+      g.filter(c => byCh.get(c)).append("path").attr("fill", color(group))
+        .attr("d", c => {
+          const h = Math.max(3, (byCh.get(c) / max) * (H - 4)), w = x.bandwidth(), rr = Math.min(3, w / 2, h);
+          return `M0,${H}V${H - h + rr}Q0,${H - h} ${rr},${H - h}H${w - rr}Q${w},${H - h} ${w},${H - h + rr}V${H}Z`;
+        });
+      s.selectAll("text").data([1, 9, 18, 27]).join("text").attr("x", c => x(c) + x.bandwidth() / 2).attr("y", H + 12)
+        .attr("text-anchor", "middle").attr("font-size", 10).attr("fill", "var(--muted)").text(c => c);
+    }
+
+    function renderTable() {
+      const rows = visNodes.map(n => ({ ...n, nEntries: n.entries.length }));
+      const k = state.sortK, dir = state.sortDir;
+      rows.sort((a, b) => (a[k] > b[k] ? 1 : a[k] < b[k] ? -1 : 0) * dir);
+      d3.select("#tbody").selectAll("tr").data(rows, d => d.id).join("tr")
+        .on("click", (ev, d) => select(d.id))
+        .html(d => `<td>${esc(d.name)}</td><td>${labelOf[d.group]}</td><td class="num">${d.mentions}</td><td class="num">${d.nEntries}</td><td class="num">${d.degree}</td>`)
+        .order();
+    }
+    d3.selectAll("th[data-k]").on("click", function () {
+      const k = this.dataset.k;
+      state.sortDir = state.sortK === k ? -state.sortDir : (k === "name" || k === "group" ? 1 : -1);
+      state.sortK = k;
+      renderTable();
+    });
+
+    function setView(v) {
+      state.view = v;
+      document.getElementById("vGraph").setAttribute("aria-pressed", v === "graph");
+      document.getElementById("vTable").setAttribute("aria-pressed", v === "table");
+      document.getElementById("graph").style.display = v === "graph" ? "" : "none";
+      document.getElementById("tableWrap").style.display = v === "table" ? "block" : "none";
+    }
+    document.getElementById("vGraph").onclick = () => setView("graph");
+    document.getElementById("vTable").onclick = () => setView("table");
+
+    const bindRange = (id, key) => {
+      const el = document.getElementById(id), out = document.getElementById(id + "v");
+      el.addEventListener("input", () => { state[key] = +el.value; out.textContent = el.value; render(); });
+    };
+    bindRange("minM", "minM");
+    bindRange("minS", "minS");
+
+    document.getElementById("q").addEventListener("change", ev => {
+      const q = ev.target.value.trim().toLowerCase();
+      if (!q) return;
+      const hit = ents.find(e => e.name.toLowerCase() === q)
+        || ents.find(e => e.aliases.some(a => a.toLowerCase() === q))
+        || ents.find(e => e.name.toLowerCase().includes(q) || e.aliases.some(a => a.toLowerCase().includes(q)));
+      if (!hit) return;
+      if (hit.mentions < state.minM || !state.groups.has(hit.group)) {
+        state.minM = Math.max(2, Math.min(state.minM, hit.mentions));
+        document.getElementById("minM").value = state.minM;
+        document.getElementById("minMv").textContent = state.minM;
+        state.groups.add(hit.group);
+        d3.selectAll("#legend input").property("checked", (d, i) => state.groups.has(GROUPS[i].key));
+        render();
+      }
+      select(hit.id);
+    });
+
+    const center = () => svg.attr("viewBox", [-width() / 2, -height() / 2, width(), height()]);
+    center();
+    window.addEventListener("resize", center);
+    render();
+  }
+
+  function esc(s) {
+    return String(s ?? "").replace(/[&<>"']/g, c => ({ "&": "&amp;", "<": "&lt;", ">": "&gt;", '"': "&quot;", "'": "&#39;" }[c]));
+  }
+})();
+</script>
+</body>
+</html>

@@ -64,6 +64,7 @@ dracula_ascii_rag.json – {"entries":[...]} with chapter_number, narrator, date
 # from the repo root
 python -m pip install --upgrade pip
 python -m pip install -r requirements.txt
+python -m spacy download en_core_web_sm
 ```
 ### 2) Install Olama and Pull a Small Model
 Windows (PowerShell)
@@ -151,9 +152,31 @@ Evidence-first prompting: The model is asked to list short evidence bullets (wit
 **What it is:** For each entry (our atomic unit), we detect which canonical character names appear, then count pairwise co‑mentions across entries.
 
 **How to read:** Lighter cells mean two characters are frequently mentioned together.  
-**Caveat:** Simple name matching only (no coreference); pronouns aren’t resolved.
+**Caveat:** Simple name matching only (no coreference); pronouns aren’t resolved. `Mina` matches both Mina Murray and Mina Harker, and the string `Dracula` also matches Castle Dracula.
 
 **Why it matters:** Rough map of who tends to share scenes/plot beats.
+
+### Resolved co-occurrence
+![Resolved character co-occurrence](assets/charts/character_cooccurrence_resolved.png)
+
+**What it is:** The same heatmap, counted on entity ids instead of substrings. Mentions are detected on de-overlapped entry text (the RAG chunks overlap by about 150 characters), then clustered: exact names, token subsets (`Jonathan` inside `Jonathan Harker`), comma apposition (`Arthur Holmwood, Lord Godalming`), and a same-given surname change (`Mina Murray` / `Mina Harker`). `Mrs` joins a surname only when that given name is already attested with two surnames, so Mrs Westenra stays off Lucy.
+
+**How to read:** `castle_dracula` is a facility and `count_dracula` is a person. Narrator labels `Mina Murray` and `Mina Harker` are two strings on one entity. Title nominals such as `the Count` attach only when a single cluster in that chapter already has the title.
+
+**Rebuild:** `python scripts/build_knowledge_graph.py` after `python -m spacy download en_core_web_sm`. Outputs land in `data/kg/`. The held-out score is pairwise F1 on proper names in chapters 14–27. Notebooks in `notebooks/` walk the same code.
+
+### Interactive graph (GitHub Pages)
+**Live:** https://bitofastickler.github.io/DraculaExplorer/
+
+`docs/index.html` draws characters and places as a network, linked when they appear in the same entry. Click a node for its aliases, documents, and closest co-appearances; a table view lists the same data.
+
+**Refresh the site data** after rebuilding the graph (standard library only, no spaCy needed):
+```
+python scripts/export_site_graph.py
+```
+Preview locally with `python -m http.server 8765 --directory docs` and open http://localhost:8765.
+
+**Known errors:** the resolver over-merges some first names (the `john` node mixes John Seward, John Paxton and John Rawlings), splits some people (`seward_2`, `dracula_2`), and mistypes a few places as people. The held-out F1 only scores names on the gold alias list, so it does not see these.
 
 ---
 ## Notes

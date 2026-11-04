@@ -1,0 +1,15 @@
+# Structural checks. Count snapshots are filled after the first full build
+# and compared again by tests/test_queries.py.
+expect:
+  ids_differ: true
+  narrators:
+    - abraham_van_helsing
+    - john_seward
+    - jonathan_harker
+    - lucy_westenra
+    - mina_harker
+  mina_early_surname: murray
+  mina_late_surname: harker
+  seward_renfield_nonempty: true
+  count_dracula_present: true
+  castle_dracula_present: true
