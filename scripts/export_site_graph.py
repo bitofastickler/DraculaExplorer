@@ -86,6 +86,7 @@ def main() -> None:
             "method": e.get("method") or "curated",
             "quote": e.get("quote"),
             "entry": e.get("entry_index"),
+            "quotes": [{"text": q["text"], "entry": q["entry_index"]} for q in e.get("quotes") or []],
         }
         for e in edges
         if e["type"] == "RELATION" and e["source"] in kept and e["target"] in kept

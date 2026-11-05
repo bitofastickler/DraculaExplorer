@@ -22,7 +22,7 @@ def test_deoverlap_removes_the_chunk_boundary_repeat():
 
 def test_load_entries_keeps_narrator_and_chapters():
     entries = load_entries(CORPUS)
-    assert len(entries) == 125
+    assert len(entries) == 192
     chapters = {e.chapter_number for e in entries}
     assert chapters == set(range(1, 28))
     first = entries[0]
@@ -47,24 +47,29 @@ def _writer_of(docs, phrase):
     return hits[0].narrator
 
 
-def test_split_documents_follows_the_section_headings():
-    from src.kg.entries import Entry, split_documents
-    raw = [
-        Entry(1, 1, "Mina Murray's Journal", "Mina Murray", "1 May", None, "journal",
-              "I wrote today. _Letter, Lucy Westenra to Mina Murray._ \"Dear Mina, all well. _Dr. Seward's Diary._", 1),
-        Entry(2, 1, "Mina Murray's Journal", "Mina Murray", "2 May", None, "journal", "Renfield ate a fly.", 1),
+def test_parse_book_cuts_at_headings_and_dates():
+    from src.kg.corpus import parse_book
+    toc = "CHAPTER I. Jonathan Harker\u2019s Journal\nCHAPTER II. Mina Murray\u2019s Journal\n"
+    paras = [
+        "CHAPTER I", "JONATHAN HARKER\u2019S JOURNAL", "_3 May._--Left Munich.", "_4 May._--Arrived.",
+        "_Letter, Lucy Westenra to Mina Murray_.", "\u201c_17 May._", "\u201cMy dear.\u201d",
+        "CHAPTER II", "_Dr. Seward\u2019s Diary._", "_5 June._--Renfield.", "THE END",
     ]
-    docs = split_documents(raw, {"Dr. Seward": "Dr. John Seward"})
-    assert [d.narrator for d in docs] == ["Mina Murray", "Lucy Westenra", "Dr. John Seward"]
-    assert docs[2].text.startswith("_Dr. Seward's Diary._ Renfield")
-    assert [d.source_entry for d in docs] == [1, 1, 2]
-    assert docs[1].date_str is None and docs[2].date_str == "2 May"
+    raw = toc + "\n" + "\n\n".join(paras) + "\n"
+    secs = parse_book(raw, {"Dr. Seward": "Dr. John Seward"})
+    assert [(s.chapter, s.narrator, s.date_str) for s in secs] == [
+        (1, "Jonathan Harker", "3 May"),
+        (1, "Jonathan Harker", "4 May"),
+        (1, "Lucy Westenra", "17 May"),
+        (2, "Dr. John Seward", "5 June"),
+    ]
+    assert secs[2].paragraphs[0].startswith("_Letter, Lucy Westenra")
 
 
 def test_document_narrators_match_the_book():
     docs = _docs()
     assert docs[0].narrator == "Jonathan Harker"
-    # The source labels these Mina Murray / Dr. Seward; the text says otherwise.
+    # The first corpus labelled these Mina Murray / Dr. Seward; the book says otherwise.
     assert _writer_of(docs, "The case of Renfield grows even more interesting") == "Dr. John Seward"
     assert _writer_of(docs, "Zoophagous patient still keeps up our interest") == "Dr. John Seward"
     assert _writer_of(docs, "Poor fellows, neither of them is aware") == "Mina Harker"
@@ -72,3 +77,17 @@ def test_document_narrators_match_the_book():
     assert _writer_of(docs, "I placed a man in the corridor last night") == "Dr. John Seward"
     assert _writer_of(docs, "Won't you just hitch up alongside of me") == "Lucy Westenra"
     assert _writer_of(docs, "Have you said anything to our young friend the lover") == "Dr. John Seward"
+
+
+def test_sections_missing_from_the_first_corpus_are_back():
+    docs = _docs()
+    by = lambda phrase: next(d for d in docs if phrase in d.text)
+    budapest = by("Buda-Pesth, 24 August")
+    assert (budapest.chapter_number, budapest.narrator) == (9, "Mina Harker")
+    phonograph = by("This to Jonathan Harker.")
+    assert (phonograph.chapter_number, phonograph.narrator, phonograph.kind) == (24, "Abraham Van Helsing", "phonograph")
+    snelling = by("I found Thomas Snelling in his house")
+    assert (snelling.chapter_number, snelling.narrator) == (20, "Jonathan Harker")
+    assert by("Seven years ago we all went through the flames").narrator == "Jonathan Harker"
+    # Chapter VIII ends with Seward's 19 August entry; IX opens with Mina's letter.
+    assert by("The case of Renfield grows even more interesting").chapter_number == 9

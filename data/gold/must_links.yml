@@ -12,3 +12,6 @@ pairs:
 cannot:
   - [mrs westenra, lucy westenra]
   - [mrs westenra, lucy]
+  # "St. Joseph" in Sister Agatha's letter is the saint.
+  - [joseph, joseph smollet]
+  - [joseph, mr joseph smollet]

@@ -6,7 +6,7 @@ import copy
 from pathlib import Path
 
 from src.kg.config import ROOT, load_config, load_yaml
-from src.kg.entries import load_documents
+from src.kg.entries import load_entries
 from src.kg.evaluate import answer_queries, nominal_stats, pairwise_f1
 from src.kg.graph import build_graph
 from src.kg.mentions import apply_alias_types, drop_surfaces, extract_mentions, load_mentions
@@ -22,13 +22,14 @@ def _pairs(blob: dict, key: str) -> list[tuple[str, str]]:
     return rows
 
 
-def documents(root: Path, config: dict):
-    """The source entries cut at their section headings, with checked narrators."""
-    return load_documents(
-        root / "data" / "dracula_ascii_rag.json",
-        config.get("writer_labels"),
-        {int(k): v for k, v in (config.get("entry_overrides") or {}).items()},
-    )
+def documents(root: Path, config: dict | None = None):
+    """The corpus entries: one per dated entry, letter, telegram or cutting.
+
+    ``scripts/build_corpus.py`` builds them from the Gutenberg text, with
+    chapters and narrators from the book's own headings. ``config`` is
+    accepted for callers that pass it; it is not needed.
+    """
+    return load_entries(root / "data" / "dracula_ascii_rag.json")
 
 
 def prepare(root: Path | None = None, use_knowledge: bool = True, mentions=None):

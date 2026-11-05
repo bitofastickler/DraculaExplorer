@@ -250,6 +250,16 @@ def resolve_mentions(
         best = max(counts, key=counts.get)
         return best if counts[best] / total >= given_dominance else None
 
+    local_full: dict[tuple[str, int], dict[str, int]] = defaultdict(lambda: defaultdict(int))
+    for i, part in enumerate(parts):
+        if props[i].entity_type == "PER" and part.surname and part.given and len(part.tokens) >= 2 and len(part.given) > 1:
+            local_full[(part.given, props[i].entry_index)][part.surname] += 1
+
+    def local_surname(given: str, entry_index: int) -> str | None:
+        """The one surname this given name carries in full in this document."""
+        counts = local_full.get((given, entry_index)) or {}
+        return next(iter(counts)) if len(counts) == 1 else None
+
     surface_forms: dict[str, set[str]] = defaultdict(set)
     for part in parts:
         for tok in part.tokens:
@@ -342,11 +352,27 @@ def resolve_mentions(
             compatible = [g for g in pool if g not in male]
         return len(compatible) == 1 and full.given in compatible
 
+    def surfaces_match(part: NameParts, needle: str) -> bool:
+        needle = needle.lower().strip()
+        return part.token_str == needle or (part.honorific and f"{part.honorific} {part.token_str}" == needle)
+
+    # Knowledge cannot-links block structural links as well as clustering.
+    blocked_cannot: set[tuple[int, int]] = set()
+    for a_s, b_s in extra_cannot or []:
+        left = [i for i, part in enumerate(parts) if surfaces_match(part, a_s)]
+        right = [i for i, part in enumerate(parts) if surfaces_match(part, b_s)]
+        for i in left:
+            for j in right:
+                if i == j:
+                    continue
+                pair = (i, j) if i < j else (j, i)
+                blocked_cannot.add(pair)
+
     uf = _UF(n)
     must_reason: dict[tuple[int, int], str] = {}
 
     def link(i: int, j: int, reason: str) -> None:
-        if i == j or cannot(i, j):
+        if i == j or cannot(i, j) or ((i, j) if i < j else (j, i)) in blocked_cannot:
             return
         a, b = (i, j) if i < j else (j, i)
         must_reason[(a, b)] = reason
@@ -405,12 +431,17 @@ def resolve_mentions(
                     continue
             if _gender_clash(short, full, male, female):
                 continue
-            # A bare given name shared by several people joins only the
-            # dominant one ("John" -> John Seward, not John Paxton).
+            # A bare given name shared by several people joins the one named
+            # in full in the same document ("Thomas" in the zoo interview is
+            # Thomas Bilder), else the dominant one ("John" -> John Seward,
+            # not John Paxton).
+            bare_i = i if short is a else j
             if (
                 len(short.tokens) == 1 and short.given and not short.surname
                 and len(surnames_for.get(short.given, ())) >= 2
-                and full.surname != dominant_surname(short.given)
+                and full.surname != (
+                    local_surname(short.given, props[bare_i].entry_index) or dominant_surname(short.given)
+                )
                 # Mina Murray / Mina Harker are one woman, so "Mina" is not ambiguous.
                 and not (short.given in female and len(surnames_for[short.given]) == 2)
             ):
@@ -449,27 +480,12 @@ def resolve_mentions(
         for i in members[1:]:
             link(members[0], i, "surname_change")
 
-    def surfaces_match(part: NameParts, needle: str) -> bool:
-        needle = needle.lower().strip()
-        return part.token_str == needle or (part.honorific and f"{part.honorific} {part.token_str}" == needle)
-
     for a_s, b_s in extra_must or []:
         left = [i for i, part in enumerate(parts) if surfaces_match(part, a_s)]
         right = [i for i, part in enumerate(parts) if surfaces_match(part, b_s)]
         for i in left:
             for j in right:
                 link(i, j, "gazetteer_must")
-
-    blocked_cannot: set[tuple[int, int]] = set()
-    for a_s, b_s in extra_cannot or []:
-        left = [i for i, part in enumerate(parts) if surfaces_match(part, a_s)]
-        right = [i for i, part in enumerate(parts) if surfaces_match(part, b_s)]
-        for i in left:
-            for j in right:
-                if i == j:
-                    continue
-                pair = (i, j) if i < j else (j, i)
-                blocked_cannot.add(pair)
 
     def blocked(i: int, j: int) -> bool:
         a, b = parts[i], parts[j]

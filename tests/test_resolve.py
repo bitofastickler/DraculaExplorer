@@ -184,3 +184,17 @@ def test_bare_surname_of_two_brothers_stays_alone():
     result = resolve_mentions(mentions, [_entry(text)], CFG)
     ids = [m.entity_id for m in result.mentions]
     assert ids[2] not in (ids[0], ids[1])
+
+
+def test_bare_given_prefers_the_full_name_in_its_own_document():
+    # "Thomas Snelling" dominates overall, but entry 2 names Thomas Bilder.
+    mentions, text = _place(["Thomas Snelling", "Thomas Snelling", "Thomas Snelling"])
+    other = "Thomas Bilder. Thomas. "
+    mentions += [
+        _mention("Thomas Bilder", 0, 13, entry=2, sent=0),
+        _mention("Thomas", 15, 21, entry=2, sent=1),
+    ]
+    mentions[-1].mention_id, mentions[-2].mention_id = "m2-15", "m2-0"
+    result = resolve_mentions(mentions, [_entry(text), _entry(other, idx=2)], CFG)
+    ids = [m.entity_id for m in result.mentions]
+    assert ids[4] == ids[3] != ids[0]

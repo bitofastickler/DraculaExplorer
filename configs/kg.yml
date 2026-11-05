@@ -29,6 +29,7 @@ narrator_to_entity:
   Arthur Holmwood: arthur_holmwood
   Quincey Morris: quincey_morris
 # Writers as section headings name them -> the narrator labels above.
+# Used by scripts/build_corpus.py.
 writer_labels:
   Dr. Seward: Dr. John Seward
   Seward: Dr. John Seward
@@ -36,19 +37,6 @@ writer_labels:
   Van Helsing: Abraham Van Helsing
   Mrs. Harker: Mina Harker
   Quincey P. Morris: Quincey Morris
-# Source entries whose opening section heading is missing from the text,
-# checked by reading each one against the novel. Key: source entry_index.
-entry_overrides:
-  15: {narrator: Mina Murray, title: "Letter, Mina Murray to Lucy Westenra", kind: letter}
-  49: {narrator: Dr. John Seward, title: "Dr. Seward's Diary", kind: diary}
-  60: {narrator: Dr. John Seward, title: "Letter, Dr. Seward to Hon. Arthur Holmwood", kind: letter}
-  79: {narrator: Mina Harker, title: "Mina Harker's Journal", kind: journal}
-  81: {narrator: Abraham Van Helsing, title: "Letter, Abraham Van Helsing to Mrs. Harker", kind: letter}
-  90: {narrator: Mina Harker, title: "Mina Harker's Journal", kind: journal}
-  98: {narrator: Dr. John Seward, title: "Dr. Seward's Diary", kind: diary}
-  100: {narrator: Dr. John Seward, title: "Dr. Seward's Diary", kind: diary}
-  105: {narrator: Jonathan Harker, title: "Jonathan Harker's Journal", kind: journal}
-  107: {narrator: Jonathan Harker, title: "Jonathan Harker's Journal", kind: journal}
 part_of:
   - [carfax, london]
 # Surfaces the small NER model tags as names that are not entities in the
@@ -59,4 +47,5 @@ not_entities: [
   # Bare compass points ("the East"), saints' titles, forms of address,
   # objects, a plural couple, and the Gutenberg publisher line.
   east, west, south, north, ste, devil, cross, bay, consul, superintendent,
-  lordship, sirs, winchesters, harkers, "i.", "i. 'bersicker", new york]
+  lordship, sirs, winchesters, harkers, "i.", "i. 'bersicker", new york,
+  sacred wafer, woe]

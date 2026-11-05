@@ -182,8 +182,8 @@ a { color: var(--accent); }
       <li>A bare "Harker" is counted as Jonathan. In the novel Mina is always "Mrs. Harker", "Madam Mina" or "Mina".</li>
       <li>Types of the less frequent names were checked by hand against the text, down to two mentions. Names mentioned once are not shown.</li>
       <li>The <span id="f1">score</span> is measured against a hand-made answer key that was extended while fixing these errors, so it is not an independent test.</li>
-      <li>Links mean "appear in the same document". Stated relationships (married, engaged, proposed to, patient of, preys on and others) are listed in a node's details with the passage of the novel that states them. Each passage was picked by hand and the build checks it is in the text.</li>
-      <li>Documents follow the book's own section headings, so a letter inside a journal is its own document with its own writer. The source file mislabelled many of these; the narrators shown were checked against the text.</li>
+      <li>Links mean "appear in the same document". Stated relationships (married, engaged, proposed to, patient of, preys on and others) are listed in a node's details with the passage of the novel that states them. Each passage was picked by hand and the build checks it is in the text. Some relationships are plain from context across several passages, and show all of them.</li>
+      <li>The text is the full novel from Project Gutenberg. Each document is one diary or journal entry, letter, telegram or cutting, with the chapter and writer the book's own headings give.</li>
     </ul>
   </details>
   <div class="controls">
@@ -418,6 +418,7 @@ a { color: var(--accent); }
       married_to: "is married to", engaged_to: "is engaged to", proposed_to: "proposed to",
       mother_of: "is the mother of", patient_of: "is a patient of", teacher_of: "was the teacher of",
       partner_of: "is a partner of", friend_of: "is a friend of", prisoner_of: "is held prisoner by",
+      employed_by: "is employed by", client_of: "is a client of",
       preys_on: "preys on", owns: "owns", lives_at: "lives at", travels_on: "travels on", part_of: "is part of",
     };
 
@@ -431,8 +432,11 @@ a { color: var(--accent); }
         // Always a full sentence, the other entity in bold.
         const name = n => n.id === e.id ? esc(n.name) : `<b>${esc(n.name)}</b>`;
         const phrase = `${name(byId.get(r.source))} ${verb} ${name(byId.get(r.target))}.`;
-        const d = docs[r.entry] || {};
-        const src = r.quote ? `<q>${esc(r.quote)}</q><span class="meta">Ch. ${d.chapter ?? "?"} · ${esc(d.title || "")}</span>` : `<span class="meta">from the project config, not a sentence</span>`;
+        const qs = (r.quotes && r.quotes.length) ? r.quotes : (r.quote ? [{ text: r.quote, entry: r.entry }] : []);
+        const src = qs.length ? qs.map(q => {
+          const d = docs[q.entry] || {};
+          return `<q>${esc(q.text)}</q><span class="meta">Ch. ${d.chapter ?? "?"} · ${esc(d.title || "")}</span>`;
+        }).join("") : `<span class="meta">from the project config, not a sentence</span>`;
         return `<li>${phrase}${src}</li>`;
       }).join("")}</ul>`;
     }

@@ -1,13 +1,12 @@
-# Relationships the novel states, each with the passage that states it.
+# Relationships in the novel, each with the passage that states it.
 #
 # `quote` is copied from the text. Parts joined by " ... " must appear in
 # that order in one document; underscores (italics) and line breaks are
 # ignored. The build fails if a quote is not found, so nothing here can
-# drift away from the book. Only relationships the novel states in so many
-# words are listed. Not listed, because the source text never says them
-# plainly: Jonathan as Hawkins's clerk (only "partner" is stated), the
-# Count as Hawkins's client, and the Count sailing on the Demeter (the text
-# says his boxes came on her).
+# drift away from the book. `quote` may be a list when the relationship is
+# plain from context across several passages rather than said in one
+# (the Count sailing on the Demeter: the ship's arrival, the dog that
+# leapt ashore, his boxes in her hold).
 #
 # A row without `quote` falls back to the automatic check: one sentence
 # that names both entities with a cue word within 40 characters of each.
@@ -48,6 +47,18 @@ relations:
     target: john_seward
     cues: [master, teacher, pupil, student]
     quote: "told her that my old master, Van Helsing, the great specialist, was coming to stay with me"
+  - rel: employed_by
+    source: jonathan_harker
+    target: peter_hawkins
+    cues: [employer, clerk]
+    quote:
+      - "a solicitor's clerk sent out to explain the purchase of a London estate to a foreigner ... I handed to him the sealed letter which Mr. Hawkins had entrusted to me."
+      - "When your master, employer, what you will, engaged that someone should come on his behalf"
+  - rel: client_of
+    source: count_dracula
+    target: jonathan_harker
+    cues: [client]
+    quote: "You come to me not alone as agent of my friend Peter Hawkins, of Exeter, to tell me all about my new estate in London. ... We went thoroughly into the business of the purchase of the estate at Purfleet. When I had told him the facts and got his signature to the necessary papers"
   - rel: partner_of
     source: jonathan_harker
     target: peter_hawkins
@@ -93,3 +104,11 @@ relations:
     target: czarina_catherine
     cues: [ship, board, aboard]
     quote: "She is the Czarina Catherine, and she sail from Doolittle's Wharf for Varna ... 'this is the ship whereon is the Count.'"
+  - rel: travels_on
+    source: count_dracula
+    target: demeter
+    cues: [ship, schooner, board]
+    quote:
+      - "It turns out that the schooner is a Russian from Varna, and is called the Demeter."
+      - "He can transform himself to wolf, as we gather from the ship arrival in Whitby, when he tear open the dog"
+      - "all the boxes which arrived at Whitby from Varna in the Demeter were safely deposited in the old chapel at Carfax."

@@ -255,3 +255,68 @@ entities:
     canonical_name: "Bersicker"
     entity_type: ANIMAL
     aliases: [bersicker]
+  # Names from the sections restored from the Gutenberg text.
+  - id: sam_bloxam
+    canonical_name: "Sam Bloxam"
+    entity_type: PER
+    aliases: [sam bloxam, bloxam, mr bloxam]
+  - id: joseph_smollet
+    canonical_name: "Joseph Smollet"
+    entity_type: PER
+    aliases: [joseph smollet, mr joseph smollet, smollet, mr smollet]
+  - id: szekelys
+    canonical_name: "Szekelys"
+    entity_type: NORP
+    aliases: [szekelys, szekely]
+  - id: magyars
+    canonical_name: "Magyars"
+    entity_type: NORP
+    aliases: [magyar, magyars]
+  - id: attila
+    canonical_name: "Attila"
+    entity_type: PER
+    aliases: [attila]
+  - id: bermondsey
+    canonical_name: "Bermondsey"
+    entity_type: GPE
+    aliases: [bermondsey]
+  - id: bethnal_green
+    canonical_name: "Bethnal Green"
+    entity_type: GPE
+    aliases: [bethnal green]
+  - id: buda_pesth
+    canonical_name: "Buda-Pesth"
+    entity_type: GPE
+    aliases: [buda pesth, buda-pesth]
+  - id: liverpool_street
+    canonical_name: "Liverpool Street"
+    entity_type: FAC
+    aliases: [liverpool street]
+  - id: potters_court
+    canonical_name: "Potter's Court"
+    entity_type: LOC
+    aliases: [potter court]
+  - id: mulgrave_woods
+    canonical_name: "Mulgrave Woods"
+    entity_type: LOC
+    aliases: [mulgrave woods]
+  - id: piccadilly
+    canonical_name: "Piccadilly"
+    entity_type: GPE
+    aliases: [piccadilly]
+  - id: robin_hoods_bay
+    canonical_name: "Robin Hood's Bay"
+    entity_type: LOC
+    aliases: [robin hood, robin hood bay]
+  - id: zoological_gardens
+    canonical_name: "Zoological Gardens"
+    entity_type: FAC
+    aliases: [zoological gardens]
+  - id: east_pier
+    canonical_name: "East Pier"
+    entity_type: FAC
+    aliases: [east pier]
+  - id: mitchell_sons_candy
+    canonical_name: "Mitchell, Sons & Candy"
+    entity_type: ORG
+    aliases: [mitchell, mitchell sons candy]

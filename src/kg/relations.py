@@ -248,42 +248,53 @@ def _plain(text: str) -> str:
     return " ".join(text.replace("_", "").split())
 
 
+def _find_quote(plain: list[tuple[Entry, str]], quote: str) -> Entry | None:
+    parts = [_plain(p) for p in quote.split(" ... ")]
+    for entry, text in plain:
+        at = 0
+        for part in parts:
+            at = text.find(part, at)
+            if at < 0:
+                break
+            at += len(part)
+        else:
+            return entry
+    return None
+
+
 def find_quoted_relations(entries: list[Entry], stated: list[dict]) -> list[dict]:
     """Edges for rows of ``relations.yml`` that carry a ``quote``.
 
-    The quote is copied from the novel. Its parts, joined by " ... ", must
+    A quote is copied from the novel. Its parts, joined by " ... ", must
     appear in that order in one document, ignoring italics underscores and
-    whitespace. A quote that is not found raises ``ValueError``: the file is
+    whitespace. ``quote`` may be a list when the relationship is plain from
+    context across documents (the Demeter's arrival, the Count's boxes).
+    A quote that is not found raises ``ValueError``: the file is
     hand-written, so a typo should stop the build rather than drop the edge.
     """
     plain = [(entry, _plain(entry.text)) for entry in entries]
     edges = []
     for row in stated:
-        quote = row.get("quote")
-        if not quote:
+        quotes = row.get("quote")
+        if not quotes:
             continue
-        parts = [_plain(p) for p in quote.split(" ... ")]
-        hit = None
-        for entry, text in plain:
-            at = 0
-            for part in parts:
-                at = text.find(part, at)
-                if at < 0:
-                    break
-                at += len(part)
-            else:
-                hit = entry
-                break
-        if hit is None:
-            raise ValueError(f"quote for {row['rel']} {row['source']} -> {row['target']} not found: {quote[:80]}")
+        if isinstance(quotes, str):
+            quotes = [quotes]
+        found = []
+        for quote in quotes:
+            hit = _find_quote(plain, quote)
+            if hit is None:
+                raise ValueError(f"quote for {row['rel']} {row['source']} -> {row['target']} not found: {quote[:80]}")
+            found.append({"text": _plain(quote), "entry_index": hit.entry_index})
         edges.append({
             "type": row["rel"],
             "source": row["source"],
             "target": row["target"],
             "method": "quoted",
             "evidence": [],
-            "support": 1,
-            "entry_index": hit.entry_index,
-            "quote": _plain(quote),
+            "support": len(found),
+            "entry_index": found[0]["entry_index"],
+            "quote": found[0]["text"],
+            "quotes": found,
         })
     return edges

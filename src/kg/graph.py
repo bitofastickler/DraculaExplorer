@@ -52,7 +52,6 @@ def build_graph(
             "id": node_id,
             "label": "Document",
             "entry_index": entry.entry_index,
-            "source_entry": entry.source_entry,
             "chapter_number": entry.chapter_number,
             "section_title": entry.section_title,
             "narrator": entry.narrator,
@@ -123,7 +122,7 @@ def build_graph(
                 "source": rel["source"],
                 "target": rel["target"],
                 "evidence": rel.get("evidence") or [],
-                **{k: rel[k] for k in ("method", "support", "entry_index", "quote") if k in rel},
+                **{k: rel[k] for k in ("method", "support", "entry_index", "quote", "quotes") if k in rel},
             })
 
     for pair in config.get("part_of") or []:
