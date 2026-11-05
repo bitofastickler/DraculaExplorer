@@ -52,6 +52,7 @@ def build_graph(
             "id": node_id,
             "label": "Document",
             "entry_index": entry.entry_index,
+            "source_entry": entry.source_entry,
             "chapter_number": entry.chapter_number,
             "section_title": entry.section_title,
             "narrator": entry.narrator,
@@ -64,8 +65,7 @@ def build_graph(
         if narrator_id:
             edges.append({"type": "NARRATED_BY", "source": node_id, "target": narrator_id})
         if entry.kind == "phonograph":
-            # The corpus labels these entries as Van Helsing speaking.
-            # The section title says the words were taken down on Seward's phonograph.
+            # A phonograph diary is spoken into Seward's machine, whoever speaks.
             edges.append({
                 "type": "RECORDED_BY",
                 "source": node_id,

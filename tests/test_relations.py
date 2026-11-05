@@ -50,3 +50,25 @@ def test_section_naming_the_narrator_by_title_is_someone_else():
     edges = _found(text, [("Miss Murray", "mina", "PROP"), ("I", "", "PRON"),
                           ("Jonathan", "jonathan", "PROP"), ("my", "", "PRON")])
     assert edges == []
+
+
+def test_quote_parts_must_appear_in_order():
+    import pytest
+    from src.kg.relations import find_quoted_relations
+    entries = [_entry("It was _very_ late. Then Mina said she would sail with Jonathan, her husband, at dawn. ")]
+    row = {"rel": "married_to", "source": "jonathan", "target": "mina", "cues": []}
+    edges = find_quoted_relations(entries, [dict(row, quote="It was very late. ... Jonathan, her husband")])
+    assert edges[0]["method"] == "quoted" and edges[0]["entry_index"] == 1
+    with pytest.raises(ValueError):
+        find_quoted_relations(entries, [dict(row, quote="Jonathan, her husband ... It was very late.")])
+
+
+def test_every_quote_in_relations_yml_is_in_the_book():
+    from pathlib import Path
+    from src.kg.build import documents
+    from src.kg.config import load_config, load_yaml
+    from src.kg.relations import find_quoted_relations
+    root = Path(__file__).resolve().parents[1]
+    rows = load_yaml(root / "data" / "gold" / "relations.yml")["relations"]
+    edges = find_quoted_relations(documents(root, load_config(root / "configs" / "kg.yml")), rows)
+    assert len(edges) == sum(1 for r in rows if r.get("quote"))

@@ -4,10 +4,12 @@ expect:
   ids_differ: true
   narrators:
     - abraham_van_helsing
+    - arthur_holmwood
     - john_seward
     - jonathan_harker
     - lucy_westenra
     - mina_harker
+    - quincey_morris
   mina_early_surname: murray
   mina_late_surname: harker
   seward_renfield_nonempty: true

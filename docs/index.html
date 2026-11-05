@@ -182,7 +182,8 @@ a { color: var(--accent); }
       <li>A bare "Harker" is counted as Jonathan. In the novel Mina is always "Mrs. Harker", "Madam Mina" or "Mina".</li>
       <li>Types of the less frequent names were checked by hand against the text, down to two mentions. Names mentioned once are not shown.</li>
       <li>The <span id="f1">score</span> is measured against a hand-made answer key that was extended while fixing these errors, so it is not an independent test.</li>
-      <li>Links mean "appear in the same document". Stated relationships (married, partners, friends, owns) are listed in a node's details only when a sentence in the novel names both sides next to a cue word. That sentence is shown as the evidence. Many true relationships are never stated that plainly, so the list is short.</li>
+      <li>Links mean "appear in the same document". Stated relationships (married, engaged, proposed to, patient of, preys on and others) are listed in a node's details with the passage of the novel that states them. Each passage was picked by hand and the build checks it is in the text.</li>
+      <li>Documents follow the book's own section headings, so a letter inside a journal is its own document with its own writer. The source file mislabelled many of these; the narrators shown were checked against the text.</li>
     </ul>
   </details>
   <div class="controls">
@@ -413,14 +414,23 @@ a { color: var(--accent); }
       chapterStrip("#chStrip", byCh, e.group);
     }
 
-    // Stated relationships for one entity, with the supporting sentence.
+    const VERBS = {
+      married_to: "is married to", engaged_to: "is engaged to", proposed_to: "proposed to",
+      mother_of: "is the mother of", patient_of: "is a patient of", teacher_of: "was the teacher of",
+      partner_of: "is a partner of", friend_of: "is a friend of", prisoner_of: "is held prisoner by",
+      preys_on: "preys on", owns: "owns", lives_at: "lives at", travels_on: "travels on", part_of: "is part of",
+    };
+
+    // Stated relationships for one entity, with the passage that states it.
     function relationsHtml(e) {
       const rows = rels.filter(r => r.source === e.id || r.target === e.id);
       if (!rows.length) return "";
       return `<h3>Stated relationships</h3><ul class="rels">${rows.map(r => {
         const other = byId.get(r.source === e.id ? r.target : r.source);
-        const verb = r.rel.replace(/_/g, " ");
-        const phrase = r.source === e.id ? `${verb} <b>${esc(other.name)}</b>` : `<b>${esc(other.name)}</b> ${verb} ${esc(e.name)}`;
+        const verb = VERBS[r.rel] || r.rel.replace(/_/g, " ");
+        // Always a full sentence, the other entity in bold.
+        const name = n => n.id === e.id ? esc(n.name) : `<b>${esc(n.name)}</b>`;
+        const phrase = `${name(byId.get(r.source))} ${verb} ${name(byId.get(r.target))}.`;
         const d = docs[r.entry] || {};
         const src = r.quote ? `<q>${esc(r.quote)}</q><span class="meta">Ch. ${d.chapter ?? "?"} · ${esc(d.title || "")}</span>` : `<span class="meta">from the project config, not a sentence</span>`;
         return `<li>${phrase}${src}</li>`;

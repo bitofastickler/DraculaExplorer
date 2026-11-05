@@ -1,27 +1,27 @@
 {
   "heldout_with_knowledge": {
-    "mentions": 1127,
+    "mentions": 1130,
     "precision": 1.0,
     "recall": 1.0,
     "f1": 1.0,
-    "gold_pairs": 60740,
-    "pred_pairs": 60740
+    "gold_pairs": 61178,
+    "pred_pairs": 61178
   },
   "heldout_without_knowledge": {
-    "mentions": 1127,
+    "mentions": 1130,
     "precision": 1.0,
-    "recall": 0.9356931182087587,
-    "f1": 0.9667783693673772,
-    "gold_pairs": 60740,
-    "pred_pairs": 56834
+    "recall": 0.9361535192389421,
+    "f1": 0.9670240607851414,
+    "gold_pairs": 61178,
+    "pred_pairs": 57272
   },
   "tune_with_knowledge": {
-    "mentions": 703,
+    "mentions": 705,
     "precision": 1.0,
     "recall": 1.0,
     "f1": 1.0,
-    "gold_pairs": 24398,
-    "pred_pairs": 24398
+    "gold_pairs": 24493,
+    "pred_pairs": 24493
   },
   "nominals": {
     "title_nominals": 226,
@@ -29,17 +29,17 @@
     "unresolved_rate": 0.18584070796460173
   },
   "n_relations": 0,
-  "n_stated_relations": 4,
+  "n_stated_relations": 16,
   "queries": {
     "people_alias_counts": [
       {
-        "id": "jonathan_harker",
-        "canonical_name": "Jonathan Harker",
-        "alias_count": 10
-      },
-      {
         "id": "mina_harker",
         "canonical_name": "Mina Harker",
+        "alias_count": 11
+      },
+      {
+        "id": "jonathan_harker",
+        "canonical_name": "Jonathan Harker",
         "alias_count": 10
       },
       {
@@ -630,12 +630,20 @@
       ]
     },
     "seward_entries_mentioning_renfield": [
-      76,
-      93,
+      23,
+      29,
+      30,
+      31,
+      50,
+      51,
+      52,
       94,
-      96,
-      97,
-      102
+      102,
+      106,
+      108,
+      111,
+      113,
+      114
     ],
     "first_entry_string_dracula": 1,
     "first_entry_person_dracula": 1,
@@ -711,6 +719,7 @@
       "berkeley_hotel",
       "norway",
       "jamrach",
+      "zoo",
       "antwerp",
       "pampas",
       "hyde_park_corner",
@@ -759,10 +768,12 @@
     ],
     "narrators": [
       "abraham_van_helsing",
+      "arthur_holmwood",
       "john_seward",
       "jonathan_harker",
       "lucy_westenra",
-      "mina_harker"
+      "mina_harker",
+      "quincey_morris"
     ],
     "count_dracula_surfaces": {
       "I": 117,
@@ -892,7 +903,8 @@
       "vienna",
       "whitby",
       "york",
-      "yorkshire"
+      "yorkshire",
+      "zoo"
     ],
     "early_people_who_never_narrate": [
       "buda_pesth",
@@ -914,6 +926,6 @@
     "castle_id": "castle_dracula",
     "count_id": "count_dracula",
     "ids_differ": true,
-    "document_count": 125
+    "document_count": 146
   }
 }

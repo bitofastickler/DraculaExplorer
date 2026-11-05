@@ -6,11 +6,11 @@ import copy
 from pathlib import Path
 
 from src.kg.config import ROOT, load_config, load_yaml
-from src.kg.entries import load_entries
+from src.kg.entries import load_documents
 from src.kg.evaluate import answer_queries, nominal_stats, pairwise_f1
 from src.kg.graph import build_graph
 from src.kg.mentions import apply_alias_types, drop_surfaces, extract_mentions, load_mentions
-from src.kg.relations import find_relations, find_stated_relations
+from src.kg.relations import find_quoted_relations, find_relations, find_stated_relations
 from src.kg.resolve import apply_gold_labels, resolve_mentions
 
 
@@ -22,16 +22,25 @@ def _pairs(blob: dict, key: str) -> list[tuple[str, str]]:
     return rows
 
 
+def documents(root: Path, config: dict):
+    """The source entries cut at their section headings, with checked narrators."""
+    return load_documents(
+        root / "data" / "dracula_ascii_rag.json",
+        config.get("writer_labels"),
+        {int(k): v for k, v in (config.get("entry_overrides") or {}).items()},
+    )
+
+
 def prepare(root: Path | None = None, use_knowledge: bool = True, mentions=None):
     """Resolve and build the graph. Pass ``mentions`` to skip spaCy.
 
     Resolution mutates mention objects, so pass a fresh copy per call.
     """
     root = Path(root) if root else ROOT
-    entries = load_entries(root / "data" / "dracula_ascii_rag.json")
+    config = load_config(root / "configs" / "kg.yml")
+    entries = documents(root, config)
     if mentions is None:
         mentions = extract_mentions(entries)
-    config = load_config(root / "configs" / "kg.yml")
     gold = load_yaml(root / "data" / "gold" / "entities.yml")["entities"]
     mentions = drop_surfaces(mentions, config.get("not_entities") or [])
     apply_alias_types(mentions, gold)
@@ -42,7 +51,10 @@ def prepare(root: Path | None = None, use_knowledge: bool = True, mentions=None)
     apply_gold_labels(resolved.mentions, gold)
     relations = find_relations(entries, resolved.mentions)
     stated = (load_yaml(root / "data" / "gold" / "relations.yml") or {}).get("relations") or []
-    relations += find_stated_relations(entries, resolved.mentions, stated, config.get("narrator_to_entity"))
+    # A hand-picked quote wins; rows without one go through the automatic check.
+    relations += find_quoted_relations(entries, stated)
+    unquoted = [row for row in stated if not row.get("quote")]
+    relations += find_stated_relations(entries, resolved.mentions, unquoted, config.get("narrator_to_entity"))
     graph = build_graph(
         entries,
         resolved.mentions,
@@ -72,7 +84,7 @@ def report(root: Path | None = None, mentions_path: Path | None = None) -> dict:
     ``mentions_path`` reuses a saved ``mentions.jsonl`` instead of running spaCy.
     """
     root = Path(root) if root else ROOT
-    entries = load_entries(root / "data" / "dracula_ascii_rag.json")
+    entries = documents(root, load_config(root / "configs" / "kg.yml"))
     # spaCy runs once. Each pass resolves its own copy of the mentions.
     raw = load_mentions(mentions_path) if mentions_path else extract_mentions(entries)
     on = prepare(root, use_knowledge=True, mentions=copy.deepcopy(raw))
@@ -88,7 +100,7 @@ def report(root: Path | None = None, mentions_path: Path | None = None) -> dict:
         "queries": answer_queries(on["entries"], on["mentions"], on["graph"]),
         # Pattern edges and text-checked stated edges are counted apart.
         "n_relations": sum(r.get("method") == "pattern" for r in on["relations"]),
-        "n_stated_relations": sum(r.get("method") == "stated" for r in on["relations"]),
+        "n_stated_relations": sum(r.get("method") in {"stated", "quoted"} for r in on["relations"]),
         "relations": [
             {k: r[k] for k in ("type", "source", "target", "method", "support") if k in r}
             for r in on["relations"]

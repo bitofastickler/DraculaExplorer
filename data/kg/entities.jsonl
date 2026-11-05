@@ -150,8 +150,8 @@
 {"id": "jerusalem", "label": "Entity", "canonical_name": "Jerusalem", "entity_type": "GPE", "aliases": ["Jerusalem"], "mention_count": 1}
 {"id": "john_paxton", "label": "Entity", "canonical_name": "Sir John Paxton", "entity_type": "PER", "aliases": ["John Paxton", "Sir John Paxton"], "mention_count": 2}
 {"id": "john_rawlings", "label": "Entity", "canonical_name": "John Rawlings", "entity_type": "PER", "aliases": ["John Rawlings"], "mention_count": 1}
-{"id": "john_seward", "label": "Entity", "canonical_name": "John Seward", "entity_type": "PER", "aliases": ["Dr. John Seward", "Dr. Seward", "Dr. Seward's", "Jack", "Jack Seward", "John", "John Seward", "Seward"], "mention_count": 147}
-{"id": "jonathan_harker", "label": "Entity", "canonical_name": "Jonathan Harker", "entity_type": "PER", "aliases": ["HARKER", "Harker", "Harker Jonathan", "Husband Jonathan", "JONATHAN HARKER", "Jonathan", "Jonathan Harker", "Mr. Harker", "Mr. Jonathan", "Mr. Jonathan Harker"], "mention_count": 210}
+{"id": "john_seward", "label": "Entity", "canonical_name": "John Seward", "entity_type": "PER", "aliases": ["Dr. John Seward", "Dr. Seward", "Dr. Seward's", "Jack", "Jack Seward", "John", "John Seward", "Seward"], "mention_count": 149}
+{"id": "jonathan_harker", "label": "Entity", "canonical_name": "Jonathan Harker", "entity_type": "PER", "aliases": ["HARKER", "Harker", "Harker Jonathan", "Husband Jonathan", "JONATHAN HARKER", "Jonathan", "Jonathan Harker", "Mr. Harker", "Mr. Jonathan", "Mr. Jonathan Harker"], "mention_count": 212}
 {"id": "joseph", "label": "Entity", "canonical_name": "Joseph", "entity_type": "PER", "aliases": ["Joseph"], "mention_count": 3}
 {"id": "judas", "label": "Entity", "canonical_name": "Judas", "entity_type": "PER", "aliases": ["Judas"], "mention_count": 1}
 {"id": "keeper", "label": "Entity", "canonical_name": "Keeper", "entity_type": "PER", "aliases": ["Keeper"], "mention_count": 1}
@@ -189,7 +189,7 @@
 {"id": "methuselah", "label": "Entity", "canonical_name": "Methuselah", "entity_type": "ORG", "aliases": ["Methuselah"], "mention_count": 1}
 {"id": "middle_temple_murder_ravensdene_court", "label": "Entity", "canonical_name": "MIDDLE TEMPLE MURDER RAVENSDENE COURT", "entity_type": "ORG", "aliases": ["MIDDLE TEMPLE MURDER RAVENSDENE COURT"], "mention_count": 1}
 {"id": "mile_end", "label": "Entity", "canonical_name": "Mile End", "entity_type": "PER", "aliases": ["Mile End"], "mention_count": 1}
-{"id": "mina_harker", "label": "Entity", "canonical_name": "Mina Harker", "entity_type": "PER", "aliases": ["Madam Mina", "Madam Mina's", "Mina", "Mina Harker", "Mina Murray", "Miss Mina Murray", "Miss Murray", "Miss Wilhelmina Murray", "Mrs. Harker", "Mrs. Harker's"], "mention_count": 220}
+{"id": "mina_harker", "label": "Entity", "canonical_name": "Mina Harker", "entity_type": "PER", "aliases": ["MINA HARKER'S", "Madam Mina", "Madam Mina's", "Mina", "Mina Harker", "Mina Murray", "Miss Mina Murray", "Miss Murray", "Miss Wilhelmina Murray", "Mrs. Harker", "Mrs. Harker's"], "mention_count": 221}
 {"id": "mitchell", "label": "Entity", "canonical_name": "Mitchell", "entity_type": "PER", "aliases": ["Mitchell"], "mention_count": 1}
 {"id": "mittel_land", "label": "Entity", "canonical_name": "Mittel Land", "entity_type": "ORG", "aliases": ["Mittel Land"], "mention_count": 1}
 {"id": "moldavia", "label": "Entity", "canonical_name": "Moldavia", "entity_type": "GPE", "aliases": ["Moldavia"], "mention_count": 1}
@@ -304,5 +304,5 @@
 {"id": "ye_ll", "label": "Entity", "canonical_name": "Ye'll", "entity_type": "PER", "aliases": ["Ye'll"], "mention_count": 1}
 {"id": "york", "label": "Entity", "canonical_name": "York", "entity_type": "GPE", "aliases": ["York"], "mention_count": 1}
 {"id": "yorkshire", "label": "Entity", "canonical_name": "Yorkshire", "entity_type": "GPE", "aliases": ["Yorkshire"], "mention_count": 2}
-{"id": "zoo", "label": "Entity", "canonical_name": "Zoo", "entity_type": "ORG", "aliases": ["Zoo"], "mention_count": 1}
+{"id": "zoo", "label": "Entity", "canonical_name": "Zoo", "entity_type": "GPE", "aliases": ["Zoo"], "mention_count": 1}
 {"id": "zoological_gardens", "label": "Entity", "canonical_name": "Zoological Gardens", "entity_type": "ORG", "aliases": ["Zoological Gardens"], "mention_count": 1}

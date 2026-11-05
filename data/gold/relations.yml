@@ -1,29 +1,95 @@
-# Relationships the novel states, written from a reading of the book.
-# None of these is trusted on its own: the build keeps a row only when a
-# sentence in the text names both entities with one of the cue words
-# close to each name (a word prefix, so "propos" matches "proposals").
-# Rows the text does not confirm stay here as a record of what was tried.
-# A first-person pronoun outside dialogue stands for the document's
-# narrator, so "my husband" in Mina's journal can name her.
-# Friendships among the men are left out: Van Helsing calls everyone
-# "friend", so the cue word does not tell who is whose friend.
+# Relationships the novel states, each with the passage that states it.
+#
+# `quote` is copied from the text. Parts joined by " ... " must appear in
+# that order in one document; underscores (italics) and line breaks are
+# ignored. The build fails if a quote is not found, so nothing here can
+# drift away from the book. Only relationships the novel states in so many
+# words are listed. Not listed, because the source text never says them
+# plainly: Jonathan as Hawkins's clerk (only "partner" is stated), the
+# Count as Hawkins's client, and the Count sailing on the Demeter (the text
+# says his boxes came on her).
+#
+# A row without `quote` falls back to the automatic check: one sentence
+# that names both entities with a cue word within 40 characters of each.
+# "I" and "my" stand for the narrator outside dialogue.
 relations:
-  - {rel: married_to, source: jonathan_harker, target: mina_harker, cues: [husband, wife, married, marriage, wedding]}
-  - {rel: engaged_to, source: arthur_holmwood, target: lucy_westenra, cues: [engaged, engagement, marry, married, fianc, betrothed, lover, wedding]}
-  - {rel: proposed_to, source: john_seward, target: lucy_westenra, cues: [propos, marry]}
-  - {rel: proposed_to, source: quincey_morris, target: lucy_westenra, cues: [propos, marry]}
-  - {rel: mother_of, source: mrs_westenra, target: lucy_westenra, cues: [mother]}
-  - {rel: patient_of, source: rm_renfield, target: john_seward, cues: [patient]}
-  - {rel: teacher_of, source: abraham_van_helsing, target: john_seward, cues: [master, teacher, pupil, student]}
-  - {rel: employed_by, source: jonathan_harker, target: peter_hawkins, cues: [employer, clerk]}
-  - {rel: partner_of, source: jonathan_harker, target: peter_hawkins, cues: [partner]}
-  - {rel: client_of, source: count_dracula, target: peter_hawkins, cues: [client]}
-  - {rel: friend_of, source: lucy_westenra, target: mina_harker, cues: [friend]}
-  - {rel: prisoner_of, source: jonathan_harker, target: count_dracula, cues: [prisoner, captive, guest, host]}
-  - {rel: preys_on, source: count_dracula, target: lucy_westenra, cues: [blood, bite, bitten, vampire, prey, victim]}
-  - {rel: preys_on, source: count_dracula, target: mina_harker, cues: [blood, bite, bitten, vampire, prey, victim, baptism]}
-  - {rel: owns, source: count_dracula, target: carfax, cues: [house, estate, purchase, bought, property]}
-  - {rel: lives_at, source: count_dracula, target: castle_dracula, cues: [home, house, lives, return]}
-  - {rel: lives_at, source: lucy_westenra, target: hillingham, cues: [home, house]}
-  - {rel: travels_on, source: count_dracula, target: demeter, cues: [ship, board, aboard, cargo, boxes]}
-  - {rel: travels_on, source: count_dracula, target: czarina_catherine, cues: [ship, board, aboard, cargo, box]}
+  - rel: married_to
+    source: jonathan_harker
+    target: mina_harker
+    cues: [husband, wife, married, marriage, wedding]
+    quote: "I must write no more; I must keep it to say to Jonathan, my husband."
+  - rel: engaged_to
+    source: arthur_holmwood
+    target: lucy_westenra
+    cues: [engaged, engagement, marry, married, marriage, fianc, betrothed]
+    quote: "she told me all over again about Arthur and their coming marriage."
+  - rel: proposed_to
+    source: john_seward
+    target: lucy_westenra
+    cues: [propos, marry]
+    quote: "THREE proposals in one day! ... number One came just before lunch. I told you of him, Dr. John Seward, the lunatic-asylum man"
+  - rel: proposed_to
+    source: quincey_morris
+    target: lucy_westenra
+    cues: [propos, marry]
+    quote: "Mr. Morris sat down beside me ... I couldn't help feeling a sort of exultation that he was number two in one day."
+  - rel: mother_of
+    source: mrs_westenra
+    target: lucy_westenra
+    cues: [mother, daughter]
+    quote: "Mrs. Westenra has got an idea that sleep-walkers always go out on roofs of houses ... she is naturally anxious about Lucy, and she tells me that her husband, Lucy's father, had the same habit"
+  - rel: patient_of
+    source: rm_renfield
+    target: john_seward
+    cues: [patient]
+    quote: "Dr. Seward, may I ask a favour? I want to see your patient, Mr. Renfield."
+  - rel: teacher_of
+    source: abraham_van_helsing
+    target: john_seward
+    cues: [master, teacher, pupil, student]
+    quote: "told her that my old master, Van Helsing, the great specialist, was coming to stay with me"
+  - rel: partner_of
+    source: jonathan_harker
+    target: peter_hawkins
+    cues: [partner]
+    quote: "Jonathan and Mr. Hawkins are busy all day; for, now that Jonathan is a partner, Mr. Hawkins wants to tell him all about the clients."
+  - rel: friend_of
+    source: lucy_westenra
+    target: mina_harker
+    cues: [friend]
+    quote: "It is Mina Murray that I came to see that was friend of that poor dear child Lucy Westenra."
+  - rel: prisoner_of
+    source: jonathan_harker
+    target: count_dracula
+    cues: [prisoner, captive]
+    quote: "while Count Dracula was speaking, there was that in his eyes and in his bearing which made me remember that I was a prisoner"
+  - rel: preys_on
+    source: count_dracula
+    target: lucy_westenra
+    cues: [blood, bite, bitten, prey, victim]
+    quote: "what had occurred with poor Lucy when the Count had sucked her blood."
+  - rel: preys_on
+    source: count_dracula
+    target: mina_harker
+    cues: [blood, bite, bitten, prey, victim]
+    quote: "we all recognised the Count ... With his left hand he held both Mrs. Harker's hands, keeping them away with her arms at full tension; his right hand gripped her by the back of the neck, forcing her face down on his bosom. Her white nightdress was smeared with blood"
+  - rel: owns
+    source: count_dracula
+    target: carfax
+    cues: [house, estate, purchase, bought, property]
+    quote: "that night at Carfax when we first enter the Count's house."
+  - rel: lives_at
+    source: count_dracula
+    target: castle_dracula
+    cues: [castle, home]
+    quote: "When I asked him if he knew Count Dracula, and could tell me anything of his castle"
+  - rel: lives_at
+    source: lucy_westenra
+    target: hillingham
+    cues: [home, house]
+    quote: "Lucy Westenra's Diary Hillingham, 24 August.--I must imitate Mina, and keep writing things down."
+  - rel: travels_on
+    source: count_dracula
+    target: czarina_catherine
+    cues: [ship, board, aboard]
+    quote: "She is the Czarina Catherine, and she sail from Doolittle's Wharf for Varna ... 'this is the ship whereon is the Count.'"

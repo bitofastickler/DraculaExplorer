@@ -242,3 +242,48 @@ def find_stated_relations(
         edge["evidence"] = sorted(set(edge["evidence"]))
         del edge["_best"]
     return list(edges.values())
+
+
+def _plain(text: str) -> str:
+    return " ".join(text.replace("_", "").split())
+
+
+def find_quoted_relations(entries: list[Entry], stated: list[dict]) -> list[dict]:
+    """Edges for rows of ``relations.yml`` that carry a ``quote``.
+
+    The quote is copied from the novel. Its parts, joined by " ... ", must
+    appear in that order in one document, ignoring italics underscores and
+    whitespace. A quote that is not found raises ``ValueError``: the file is
+    hand-written, so a typo should stop the build rather than drop the edge.
+    """
+    plain = [(entry, _plain(entry.text)) for entry in entries]
+    edges = []
+    for row in stated:
+        quote = row.get("quote")
+        if not quote:
+            continue
+        parts = [_plain(p) for p in quote.split(" ... ")]
+        hit = None
+        for entry, text in plain:
+            at = 0
+            for part in parts:
+                at = text.find(part, at)
+                if at < 0:
+                    break
+                at += len(part)
+            else:
+                hit = entry
+                break
+        if hit is None:
+            raise ValueError(f"quote for {row['rel']} {row['source']} -> {row['target']} not found: {quote[:80]}")
+        edges.append({
+            "type": row["rel"],
+            "source": row["source"],
+            "target": row["target"],
+            "method": "quoted",
+            "evidence": [],
+            "support": 1,
+            "entry_index": hit.entry_index,
+            "quote": _plain(quote),
+        })
+    return edges
