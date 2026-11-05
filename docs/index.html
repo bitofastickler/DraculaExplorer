@@ -8,60 +8,60 @@
 <style>
 :root {
   color-scheme: light;
-  /* Soft blue-grays; scarlet is reserved for accents, never data. */
-  --page: #eef1f5;
-  --surface: #f7f9fb;
-  --ink: #1a2230;
-  --ink-2: #4a5668;
-  --muted: #7a8597;
-  --grid: #dfe4eb;
-  --axis: #c3cbd6;
-  --ring: rgba(26,34,48,0.10);
-  --accent: #b3122e;
-  --person: #3566b0;
-  --place: #c0782f;
-  --other: #7d5cb5;
-  --link: rgba(74,86,104,0.22);
-  --link-hi: rgba(53,102,176,0.7);
-  --wash: rgba(53,102,176,0.07);
+  /* Periwinkle page, sea-mist panels; crimson is reserved for accents, never data. */
+  --page: #c4cedd;
+  --surface: #e6ece9;
+  --ink: #1d2533;
+  --ink-2: #45505f;
+  --muted: #5e6a78;
+  --grid: #d3dbd8;
+  --axis: #b4c0c2;
+  --ring: rgba(29,37,51,0.12);
+  --accent: #c1121f;
+  --person: #2f5d9e;
+  --place: #b8702a;
+  --other: #7656b0;
+  --link: rgba(69,80,95,0.22);
+  --link-hi: rgba(47,93,158,0.7);
+  --wash: rgba(123,140,168,0.14);
 }
 @media (prefers-color-scheme: dark) {
   :root:not([data-theme="light"]) {
     color-scheme: dark;
-    --page: #10161d;
-    --surface: #18202a;
-    --ink: #e8edf3;
-    --ink-2: #a9b4c2;
-    --muted: #7f8b9c;
-    --grid: #263040;
-    --axis: #334052;
-    --ring: rgba(232,237,243,0.10);
-    --accent: #e5485a;
-    --person: #5b8bd6;
-    --place: #c27c3a;
-    --other: #9a7fd0;
-    --link: rgba(169,180,194,0.16);
-    --link-hi: rgba(140,176,230,0.6);
-    --wash: rgba(91,139,214,0.08);
+    --page: #2e3a4b;
+    --surface: #364458;
+    --ink: #f1f4f7;
+    --ink-2: #c3cdd9;
+    --muted: #9fadbf;
+    --grid: #425166;
+    --axis: #53637a;
+    --ring: rgba(241,244,247,0.12);
+    --accent: #ff7a82;
+    --person: #6390d2;
+    --place: #c27c36;
+    --other: #9f80dc;
+    --link: rgba(195,205,217,0.18);
+    --link-hi: rgba(160,190,235,0.65);
+    --wash: rgba(241,244,247,0.06);
   }
 }
 :root[data-theme="dark"] {
   color-scheme: dark;
-  --page: #10161d;
-  --surface: #18202a;
-  --ink: #e8edf3;
-  --ink-2: #a9b4c2;
-  --muted: #7f8b9c;
-  --grid: #263040;
-  --axis: #334052;
-  --ring: rgba(232,237,243,0.10);
-  --accent: #e5485a;
-  --person: #5b8bd6;
-  --place: #c27c3a;
-  --other: #9a7fd0;
-  --link: rgba(169,180,194,0.16);
-  --link-hi: rgba(140,176,230,0.6);
-  --wash: rgba(91,139,214,0.08);
+  --page: #2e3a4b;
+  --surface: #364458;
+  --ink: #f1f4f7;
+  --ink-2: #c3cdd9;
+  --muted: #9fadbf;
+  --grid: #425166;
+  --axis: #53637a;
+  --ring: rgba(241,244,247,0.12);
+  --accent: #ff7a82;
+  --person: #6390d2;
+  --place: #c27c36;
+  --other: #9f80dc;
+  --link: rgba(195,205,217,0.18);
+  --link-hi: rgba(160,190,235,0.65);
+  --wash: rgba(241,244,247,0.06);
 }
 * { box-sizing: border-box; }
 body {
@@ -166,7 +166,7 @@ th { position: sticky; top: 0; background: var(--surface); color: var(--ink-2); 
 td.num, th.num { text-align: right; font-variant-numeric: tabular-nums; }
 tbody tr { cursor: pointer; }
 tbody tr:hover { background: var(--wash); }
-footer { color: var(--muted); font-size: 13px; padding-top: 20px; padding-bottom: 32px; }
+footer { color: var(--ink-2); font-size: 13px; padding-top: 20px; padding-bottom: 32px; }
 a { color: var(--accent); }
 .theme { margin-left: auto; }
 .theme button { all: unset; cursor: pointer; color: var(--ink-2); font-size: 13.5px; padding: 4px 8px; border-radius: 6px; border: 1px solid var(--axis); }
