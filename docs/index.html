@@ -141,6 +141,7 @@ input[type=range] { width: 110px; accent-color: var(--accent); }
 .stat b { display: block; font-size: 20px; }
 .stat span { font-size: 12px; color: var(--ink-2); line-height: 1.3; display: block; }
 .stat[title] { cursor: help; }
+.desc { margin: 12px 0 0; font-size: 14.5px; line-height: 1.55; padding-left: 10px; border-left: 3px solid var(--accent); }
 .defs { font-size: 12px; color: var(--muted); margin: 6px 0 0; }
 .chips { display: flex; flex-wrap: wrap; gap: 6px; }
 .chip { font-size: 12.5px; padding: 2px 8px; border-radius: 999px; border: 1px solid var(--axis); color: var(--ink-2); }
@@ -393,7 +394,7 @@ a { color: var(--accent); }
         const top = visNodes.slice().sort((a, b) => b.mentions - a.mentions).slice(0, 8);
         p.html(`<div class="empty"><h2>Explore the cast</h2>
           <p>${visNodes.length} entities and ${visLinks.length} links shown, from ${Object.keys(docs).length} documents.</p>
-          <p>Click any node, row or name for its aliases, the documents it appears in, and who it appears with most.</p></div>
+          <p>Click any node, row or name for a short description of the character, their aliases, the documents it appears in, and who it appears with most.</p></div>
           <h3>Most mentioned</h3><ul class="nb" id="topList"></ul>`);
         neighbourList("#topList", top.map(n => [n, n.mentions]));
         return;
@@ -402,6 +403,7 @@ a { color: var(--accent); }
       const byCh = d3.rollup(e.entries, v => v.length, i => docs[i] && docs[i].chapter);
       p.html(`<h2>${esc(e.name)}</h2>
         <div class="meta">${labelOf[e.group]} · type ${esc(e.type)} · id <code>${esc(e.id)}</code></div>
+        ${e.description ? `<p class="desc">${esc(e.description)}</p>` : ""}
         <div class="stats">
           <div class="stat" title="Times the text names them or uses a title for them (&quot;Dr. Seward&quot;, &quot;the Count&quot;). Pronouns are not counted."><b>${e.mentions}</b><span>times named</span></div>
           <div class="stat" title="Documents that mention them at least once. A document is one diary or journal entry, letter, telegram, memorandum or newspaper cutting."><b>${e.entries.length}</b><span>of ${nDocs} documents mention them</span></div>
