@@ -8,59 +8,60 @@
 <style>
 :root {
   color-scheme: light;
-  --page: #f9f9f7;
-  --surface: #fcfcfb;
-  --ink: #0b0b0b;
-  --ink-2: #52514e;
-  --muted: #898781;
-  --grid: #e1e0d9;
-  --axis: #c3c2b7;
-  --ring: rgba(11,11,11,0.10);
-  --accent: #8a1c1c;
-  --person: #2a78d6;
-  --place: #eb6834;
-  --other: #1baf7a;
-  --link: rgba(82,81,78,0.22);
-  --link-hi: rgba(82,81,78,0.75);
-  --wash: rgba(11,11,11,0.04);
+  /* Soft blue-grays; scarlet is reserved for accents, never data. */
+  --page: #eef1f5;
+  --surface: #f7f9fb;
+  --ink: #1a2230;
+  --ink-2: #4a5668;
+  --muted: #7a8597;
+  --grid: #dfe4eb;
+  --axis: #c3cbd6;
+  --ring: rgba(26,34,48,0.10);
+  --accent: #b3122e;
+  --person: #3566b0;
+  --place: #c0782f;
+  --other: #7d5cb5;
+  --link: rgba(74,86,104,0.22);
+  --link-hi: rgba(53,102,176,0.7);
+  --wash: rgba(53,102,176,0.07);
 }
 @media (prefers-color-scheme: dark) {
   :root:not([data-theme="light"]) {
     color-scheme: dark;
-    --page: #0d0d0d;
-    --surface: #1a1a19;
-    --ink: #f0efec;
-    --ink-2: #c3c2b7;
-    --muted: #898781;
-    --grid: #2c2c2a;
-    --axis: #383835;
-    --ring: rgba(255,255,255,0.10);
-    --accent: #e66767;
-    --person: #3987e5;
-    --place: #d95926;
-    --other: #199e70;
-    --link: rgba(195,194,183,0.16);
-    --link-hi: rgba(195,194,183,0.7);
-    --wash: rgba(255,255,255,0.05);
+    --page: #10161d;
+    --surface: #18202a;
+    --ink: #e8edf3;
+    --ink-2: #a9b4c2;
+    --muted: #7f8b9c;
+    --grid: #263040;
+    --axis: #334052;
+    --ring: rgba(232,237,243,0.10);
+    --accent: #e5485a;
+    --person: #5b8bd6;
+    --place: #c27c3a;
+    --other: #9a7fd0;
+    --link: rgba(169,180,194,0.16);
+    --link-hi: rgba(140,176,230,0.6);
+    --wash: rgba(91,139,214,0.08);
   }
 }
 :root[data-theme="dark"] {
   color-scheme: dark;
-  --page: #0d0d0d;
-  --surface: #1a1a19;
-  --ink: #f0efec;
-  --ink-2: #c3c2b7;
-  --muted: #898781;
-  --grid: #2c2c2a;
-  --axis: #383835;
-  --ring: rgba(255,255,255,0.10);
-  --accent: #e66767;
-  --person: #3987e5;
-  --place: #d95926;
-  --other: #199e70;
-  --link: rgba(195,194,183,0.16);
-  --link-hi: rgba(195,194,183,0.7);
-  --wash: rgba(255,255,255,0.05);
+  --page: #10161d;
+  --surface: #18202a;
+  --ink: #e8edf3;
+  --ink-2: #a9b4c2;
+  --muted: #7f8b9c;
+  --grid: #263040;
+  --axis: #334052;
+  --ring: rgba(232,237,243,0.10);
+  --accent: #e5485a;
+  --person: #5b8bd6;
+  --place: #c27c3a;
+  --other: #9a7fd0;
+  --link: rgba(169,180,194,0.16);
+  --link-hi: rgba(140,176,230,0.6);
+  --wash: rgba(91,139,214,0.08);
 }
 * { box-sizing: border-box; }
 body {
@@ -97,7 +98,7 @@ input[type=range] { width: 110px; accent-color: var(--accent); }
   font: inherit; font-size: 13.5px; border: 0; background: var(--surface); color: var(--ink-2);
   padding: 5px 12px; cursor: pointer;
 }
-.seg button[aria-pressed=true] { background: var(--ink); color: var(--surface); }
+.seg button[aria-pressed=true] { background: var(--ink); color: var(--surface); box-shadow: inset 0 -2px 0 var(--accent); }
 .legend { display: inline-flex; gap: 12px; flex-wrap: wrap; }
 .legend label { cursor: pointer; }
 .legend svg { flex: none; }
@@ -113,7 +114,8 @@ input[type=range] { width: 110px; accent-color: var(--accent); }
 .node { cursor: pointer; }
 .node path { stroke: var(--surface); stroke-width: 2px; }
 .node.dim { opacity: 0.15; }
-.node.sel path { stroke: var(--ink); stroke-width: 2.5px; }
+.node.sel path { stroke: var(--accent); stroke-width: 2.5px; }
+.node.drac path { stroke: var(--accent); stroke-width: 2px; }
 .node text {
   font-size: 11.5px; fill: var(--ink); pointer-events: none;
   paint-order: stroke; stroke: var(--surface); stroke-width: 3px; stroke-linejoin: round;
@@ -134,10 +136,12 @@ input[type=range] { width: 110px; accent-color: var(--accent); }
 #panel h2 { font-size: 19px; margin: 0 0 2px; }
 #panel h3 { font-size: 12px; text-transform: uppercase; letter-spacing: .06em; color: var(--muted); margin: 18px 0 6px; }
 .meta { color: var(--ink-2); font-size: 13.5px; }
-.stats { display: grid; grid-template-columns: repeat(3, 1fr); gap: 8px; margin-top: 12px; }
+.stats { display: grid; grid-template-columns: repeat(auto-fit, minmax(90px, 1fr)); gap: 8px; margin-top: 12px; }
 .stat { background: var(--wash); border-radius: 8px; padding: 8px 10px; }
 .stat b { display: block; font-size: 20px; }
-.stat span { font-size: 12px; color: var(--ink-2); }
+.stat span { font-size: 12px; color: var(--ink-2); line-height: 1.3; display: block; }
+.stat[title] { cursor: help; }
+.defs { font-size: 12px; color: var(--muted); margin: 6px 0 0; }
 .chips { display: flex; flex-wrap: wrap; gap: 6px; }
 .chip { font-size: 12.5px; padding: 2px 8px; border-radius: 999px; border: 1px solid var(--axis); color: var(--ink-2); }
 .nb { list-style: none; margin: 0; padding: 0; }
@@ -150,7 +154,7 @@ input[type=range] { width: 110px; accent-color: var(--accent); }
 .entries { list-style: none; margin: 0; padding: 0; font-size: 13px; }
 .rels { list-style: none; margin: 0; padding: 0; font-size: 13.5px; }
 .rels li { padding: 6px 0; border-top: 1px solid var(--grid); }
-.rels q { display: block; margin: 4px 0 2px; color: var(--ink-2); font-style: italic; }
+.rels q { display: block; margin: 4px 0 2px; padding-left: 8px; border-left: 2px solid var(--accent); color: var(--ink-2); font-style: italic; }
 .entries li { padding: 4px 0; border-top: 1px solid var(--grid); color: var(--ink-2); }
 .entries li b { color: var(--ink); font-weight: 600; }
 .empty { color: var(--ink-2); }
@@ -189,8 +193,8 @@ a { color: var(--accent); }
   <div class="controls">
     <input id="q" type="search" placeholder="Find a name or alias" aria-label="Find a name or alias" list="names">
     <datalist id="names"></datalist>
-    <label>Min mentions <input id="minM" type="range" min="2" max="40" value="5"><span class="val" id="minMv">5</span></label>
-    <label>Min shared entries <input id="minS" type="range" min="2" max="25" value="4"><span class="val" id="minSv">4</span></label>
+    <label>Min times named <input id="minM" type="range" min="2" max="40" value="5"><span class="val" id="minMv">5</span></label>
+    <label>Min shared documents <input id="minS" type="range" min="2" max="25" value="4"><span class="val" id="minSv">4</span></label>
     <span class="legend" id="legend"></span>
     <span class="seg" role="group" aria-label="View">
       <button type="button" id="vGraph" aria-pressed="true">Graph</button>
@@ -204,7 +208,7 @@ a { color: var(--accent); }
       <div id="graph"></div>
       <div id="tableWrap"><table><thead><tr>
         <th data-k="name">Name</th><th data-k="group">Type</th>
-        <th class="num" data-k="mentions">Mentions</th><th class="num" data-k="nEntries">Entries</th>
+        <th class="num" data-k="mentions" title="Times named, titles included">Times named</th><th class="num" data-k="nEntries" title="Documents that mention them">Documents</th>
         <th class="num" data-k="degree">Links</th>
       </tr></thead><tbody id="tbody"></tbody></table></div>
       <div class="tip" id="tip"></div>
@@ -259,6 +263,7 @@ a { color: var(--accent); }
     const docs = data.documents;
     const ents = data.entities;
     const byId = new Map(ents.map(e => [e.id, e]));
+    const nDocs = Object.keys(docs).length;
     const rels = (data.relations || []).filter(r => byId.has(r.source) && byId.has(r.target));
     if (data.heldout) {
       document.getElementById("f1").textContent = `score (pairwise F1 ${data.heldout.f1.toFixed(2)} on chapters 14-27)`;
@@ -319,6 +324,7 @@ a { color: var(--accent); }
         return g;
       });
       ng.attr("aria-label", d => `${d.name}, ${labelOf[d.group]}, ${d.mentions} mentions`);
+      ng.classed("drac", d => d.id === "count_dracula");
       ng.select("path").attr("d", d => d3.symbol(shapeOf[d.group], area(d))()).attr("fill", d => color(d.group));
       ng.select("text").attr("x", d => r(d) + 4).text(d => d.name);
       ng.on("mouseenter", (ev, d) => showTip(ev, d)).on("mousemove", (ev, d) => showTip(ev, d))
@@ -346,7 +352,7 @@ a { color: var(--accent); }
     function showTip(ev, d) {
       highlight(d.id);
       const box = card.getBoundingClientRect();
-      tip.html(`<b>${esc(d.name)}</b><span class="sub">${labelOf[d.group]} · ${d.mentions} mentions · ${d.entries.length} entries · ${d.degree} links</span>`)
+      tip.html(`<b>${esc(d.name)}</b><span class="sub">${labelOf[d.group]} · named ${d.mentions}× · in ${d.entries.length} documents · ${d.degree} links</span>`)
         .style("opacity", 1);
       const tw = tip.node().offsetWidth;
       let x = ev.clientX - box.left + 14, y = ev.clientY - box.top + 14;
@@ -397,10 +403,11 @@ a { color: var(--accent); }
       p.html(`<h2>${esc(e.name)}</h2>
         <div class="meta">${labelOf[e.group]} · type ${esc(e.type)} · id <code>${esc(e.id)}</code></div>
         <div class="stats">
-          <div class="stat"><b>${e.mentions}</b><span>name &amp; title mentions</span></div>
-          <div class="stat"><b>${e.entries.length}</b><span>documents</span></div>
-          <div class="stat"><b>${e.narrated}</b><span>narrated</span></div>
+          <div class="stat" title="Times the text names them or uses a title for them (&quot;Dr. Seward&quot;, &quot;the Count&quot;). Pronouns are not counted."><b>${e.mentions}</b><span>times named</span></div>
+          <div class="stat" title="Documents that mention them at least once. A document is one diary or journal entry, letter, telegram, memorandum or newspaper cutting."><b>${e.entries.length}</b><span>of ${nDocs} documents mention them</span></div>
+          ${e.group === "person" ? `<div class="stat" title="Documents they wrote: their own diary or journal entries, letters and telegrams."><b>${e.narrated}</b><span>documents they wrote</span></div>` : ""}
         </div>
+        <p class="defs">A document is one diary or journal entry, letter, telegram, memorandum or newspaper cutting. Names include titles such as "the Count"; pronouns are not counted.</p>
         <h3>Documents per chapter</h3><div id="chStrip"></div>
         <h3>Aliases found</h3><div class="chips">${e.aliases.map(a => `<span class="chip">${esc(a)}</span>`).join("") || '<span class="meta">none</span>'}</div>
         ${relationsHtml(e)}
@@ -455,7 +462,8 @@ a { color: var(--accent); }
       const W = 300, H = 56, pad = 14;
       const max = d3.max(byCh.values()) || 1;
       const x = d3.scaleBand().domain(d3.range(1, 28)).range([0, W]).paddingInner(0.25);
-      const s = d3.select(sel).append("svg").attr("viewBox", `0 0 ${W} ${H + pad}`).attr("width", "100%")
+      // Capped so labels stay small when the panel spans the page on narrow screens.
+      const s = d3.select(sel).append("svg").attr("viewBox", `0 0 ${W} ${H + pad}`).attr("width", "100%").style("max-width", "340px").style("display", "block")
         .attr("role", "img").attr("aria-label", "Documents per chapter, chapters 1 to 27");
       s.append("line").attr("x1", 0).attr("x2", W).attr("y1", H + 0.5).attr("y2", H + 0.5).attr("stroke", "var(--axis)");
       const g = s.selectAll("g").data(x.domain()).join("g").attr("transform", c => `translate(${x(c)},0)`);
