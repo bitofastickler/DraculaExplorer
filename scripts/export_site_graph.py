@@ -17,6 +17,7 @@ from pathlib import Path
 ROOT = Path(__file__).resolve().parents[1]
 SRC = ROOT / "data" / "kg" / "graph.json"
 OUT = ROOT / "docs" / "data" / "graph.json"
+DESCRIPTIONS = ROOT / "data" / "descriptions.json"  # hand-written, keyed by entity id
 
 MIN_MENTIONS = 2   # entities with fewer name or title mentions are left out
 MIN_SHARED = 2     # co-appearance links need at least this many shared entries
@@ -52,6 +53,10 @@ def main() -> None:
         elif e["type"] == "NARRATED_BY":
             narrated[e["target"]] += 1
 
+    descriptions = {}
+    if DESCRIPTIONS.exists():
+        descriptions = json.loads(DESCRIPTIONS.read_text(encoding="utf-8"))
+
     entities = []
     for n in nodes:
         mentions = named.get(n["id"], 0)
@@ -66,8 +71,17 @@ def main() -> None:
             "aliases": n.get("aliases") or [],
             "entries": sorted(entries_of.get(n["id"], ())),
             "narrated": narrated.get(n["id"], 0),
+            "description": descriptions.get(n["id"]),
         })
     entities.sort(key=lambda r: -r["mentions"])
+
+    shown = {r["id"] for r in entities}
+    missing = sorted(r["id"] for r in entities if r["group"] == "person" and not r["description"])
+    unknown = sorted(k for k in descriptions if not k.startswith("_") and k not in shown)
+    if missing:
+        print(f"No description for people: {', '.join(missing)}")
+    if unknown:
+        print(f"Descriptions for ids not in the graph: {', '.join(unknown)}")
 
     links = []
     for a, b in combinations(entities, 2):
